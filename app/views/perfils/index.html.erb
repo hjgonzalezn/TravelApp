@@ -1,0 +1,62 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+<!-- <p>&nbsp;</p> -->
+<div class="wrapper">
+<div class="content">
+<div class="form_wrapper">
+<h3>Perfiles de usuario</h3>
+<br/>
+<div class="form buscar">
+<%= form_tag perfils_path, method: 'get' do %>
+
+  &nbsp;
+  <%= label_tag(:prf_nombre, "Nombre") %>
+  <%= text_field(:perfil, :prf_nombre, size:50) %>
+  &nbsp;
+  <%= label_tag(:prf_descripcion, "Descripción") %>
+  <%= text_field(:perfil, :prf_descripcion, size:60) %>
+  
+  <%= submit_tag "Buscar" %>
+</div>
+<% end %>
+<!--div class="table"-->
+	<center>
+<table id="table_index">
+  <thead>
+    <tr>
+      <th width="25%">Nombre</th>
+      <th width="35%">Descripcion</th>
+      <th width="20%">Estado registro</th>
+      <th width="10%"></th>
+      <th width="10%"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @perfils.each do |perfil| %>
+      <tr>
+        <td><%= link_to perfil.prf_nombre, perfil %></td>
+        <td><%= perfil.prf_descripcion %></td>
+        <td><%= perfil.ctlg_valor_desc.capitalize %></td>
+        <td><%= link_to 'Modificar', edit_perfil_path(perfil), class: "cmd edit" %></td>
+        <td><%= link_to 'Eliminar', perfil, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class: "cmd delete" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</center>
+<!--/div-->
+
+<div class="bottom">
+<%= link_to 'Crear Perfil', new_perfil_path, class: "cmd add" %>
+</div>
+
+</div>
+</div>
+</div>

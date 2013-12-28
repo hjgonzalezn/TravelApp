@@ -1,0 +1,203 @@
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* support: IE7 */
+    *height: 1.7em;
+    *top: 0.1em;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+  }
+  </style>
+  <script>
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          //.attr( "title", "Mostrar todas las opciones" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " no es una opción válida" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.data( "ui-autocomplete" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+  </script>
+<script>
+   $(function() {
+    $( "#perfil_prf_estado_registro" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#perfil_prf_estado_registro" ).toggle();
+    });
+  });
+  </script>
+
+<%= form_for(@perfil) do |f| %>
+  <% if @perfil.errors.any? %>
+  	<!-- <div class="error"> -->
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@perfil.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado:</h2>
+
+      		<ul>
+      			<% @perfil.errors.full_messages.each do |msg| %>
+        		<li><%= msg %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+    <!-- </div> -->
+  <% end %>
+	<div class = "form_fields">
+  		<div class="field">
+    		<%= f.label :prf_nombre, "Nombre" %><br>
+    		<%= f.text_field :prf_nombre, size: 50 %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :prf_descripcion, "Descripción" %><br> 
+    		<%= f.text_field :prf_descripcion, size: 50 %>
+  		</div>
+  		<div class="ui-widget">
+  			<div class="field">
+    			<%= f.label :prf_estado_registro, "Estado Registro" %><br/>
+    			<%= f.select :prf_estado_registro, @estados.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}, prompt: '---- SELECCIONE ----', selected: @estado_registro %>
+  			</div>
+  		</div>
+  	</div>
+	<div class="bottom">
+		<div class="actions">
+			<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save" %> |
+				<%= link_to 'Consultar', @perfil, class: "cmd star" %> |
+			<% elsif action_name == "new" or action_name == "create" %>
+				<%= link_to "Aceptar", nil, class: "cmd save", onclick: "$('.new_perfil').submit()" %> |
+			<% end %>
+			<%= link_to 'Regresar', perfils_path, class: "cmd previous" %>
+		</div>
+	</div><!--bottom-->
+
+<% end %>

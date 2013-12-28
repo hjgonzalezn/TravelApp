@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  prf_nombre: MyString
+  prf_descripcion: MyString
+  prf_estado_registro: MyString
+
+two:
+  prf_nombre: MyString
+  prf_descripcion: MyString
+  prf_estado_registro: MyString

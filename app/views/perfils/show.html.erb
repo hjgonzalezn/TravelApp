@@ -1,0 +1,34 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Perfil de usuario</h3>
+			<div class="form">
+				<table>
+					<tbody>
+						<tr>
+  							<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombre:</strong></td>
+  							<td><%= @perfil.prf_nombre %></td>
+						</tr>
+						<tr>
+  							<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Descripci&oacute;n:</strong></td>
+  							<td><%= @perfil.prf_descripcion %></td>
+						</tr>
+						<tr>
+							<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Estado registro:</strong></td>
+  							<td><%= @estado_registro.capitalize %></td>
+  						</tr>
+  					</tbody>
+				</table>
+			</div>
+			<div class="bottom">
+				<%= link_to 'Modificar', edit_perfil_path(@perfil), class: "cmd edit" %> |
+				<%= link_to 'Regresar', perfils_path, class: "cmd previous" %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	
