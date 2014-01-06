@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  usr_tipo_docum_ident: MyString
+  usr_nro_docum_ident: 1
+  usr_nombres: MyString
+  usr_apellidos: MyString
+  usr_correo_electronico: MyString
+  usr_contrasena: MyString
+  usr_tipo_contrasena: MyString
+  usr_fecha_nacimiento: 2014-01-04
+  usr_genero: MyString
+  usr_foto: 
+  usr_fch_ultimo_ingreso: 2014-01-04 17:34:42
+  usr_tipo_cliente: MyString
+  usr_fecha_ultima_salida: 2014-01-04 17:34:42
+  usr_fch_vigencia_contrasena: 
+  usr_estado: MyString
+  perfil_id: 
+
+two:
+  usr_tipo_docum_ident: MyString
+  usr_nro_docum_ident: 1
+  usr_nombres: MyString
+  usr_apellidos: MyString
+  usr_correo_electronico: MyString
+  usr_contrasena: MyString
+  usr_tipo_contrasena: MyString
+  usr_fecha_nacimiento: 2014-01-04
+  usr_genero: MyString
+  usr_foto: 
+  usr_fch_ultimo_ingreso: 2014-01-04 17:34:42
+  usr_tipo_cliente: MyString
+  usr_fecha_ultima_salida: 2014-01-04 17:34:42
+  usr_fch_vigencia_contrasena: 
+  usr_estado: MyString
+  perfil_id: 

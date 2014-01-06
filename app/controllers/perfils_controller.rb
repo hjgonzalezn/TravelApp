@@ -7,35 +7,27 @@ class PerfilsController < ApplicationController
   def index
     condiciones = []
     cadena = "Catalogos.ctlg_categoria = 'ESTADO REGISTRO' AND prf_estado_registro = 'A' "
-    index = 0
-    
+
     @perfil = Perfil.new(perfil_params)
 
     unless @perfil.prf_nombre.blank? then
-      condiciones[index] = "Upper(prf_nombre) LIKE '%#{@perfil.prf_nombre.to_s.upcase}%'"
-      index += 1
+      condiciones.push("Upper(prf_nombre) LIKE '%#{@perfil.prf_nombre.to_s.upcase}%'")
     end
     
     unless @perfil.prf_descripcion.blank? then
-      condiciones[index] = "Upper(prf_descripcion) LIKE '%#{@perfil.prf_descripcion.to_s.upcase}%'"
-      index += 1
+      condiciones.push("Upper(prf_descripcion) LIKE '%#{@perfil.prf_descripcion.to_s.upcase}%'")
     end
     
-    unless condiciones.empty? then
+    if condiciones.any? then
       condiciones.each do |condicion|
         if condicion != nil then
-          # if condiciones.first == condicion then
-            # cadena = cadena + condicion.to_s
-          # else
             cadena = cadena + " AND " + condicion.to_s
-          #end
         end
       end
       
       @perfils = Perfil.select('Perfils.id, prf_nombre, prf_descripcion, ctlg_valor_desc').joins('LEFT OUTER JOIN Catalogos ON Perfils.prf_Estado_Registro = ctlg_valor_cdg').where(cadena).limit(100)
     else
       @perfils = Perfil.select('Perfils.id, prf_nombre, prf_descripcion, ctlg_valor_desc').joins('LEFT OUTER JOIN Catalogos ON Perfils.prf_Estado_Registro = ctlg_valor_cdg').where(cadena).limit(100)
-      #@perfils = Perfil.all.limit(100)
     end
   end
 

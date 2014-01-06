@@ -1,3 +1,22 @@
 // Place all the styles related to the catalogos controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+  table.dataTable tbody td:nth-child(1){
+  width:25%;
+  }
+    table.dataTable tbody td:nth-child(2){
+  width:20%;
+  }
+    table.dataTable tbody td:nth-child(3){
+  width:25%;
+  }
+    table.dataTable tbody td:nth-child(4){
+  width:10%;
+  }
+    table.dataTable tbody td:nth-child(5){
+  width:10%;
+  }
+  table.dataTable tbody td:nth-child(6){
+  width:10%;
+  }
+  

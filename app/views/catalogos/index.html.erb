@@ -1,3 +1,171 @@
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* support: IE7 */
+    *height: 1.7em;
+    *top: 0.1em;
+  }
+  .custom-combobox-input {
+  	
+  	font-size:12px;
+    margin: 0;
+    padding: 0.3em;
+    width: 20em;
+  }
+  </style>
+  <script>
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          //.attr( "title", "Mostrar todas las opciones" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " no es una opción válida" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.data( "ui-autocomplete" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+  </script>
+<script>
+   $(function() {
+    $( "#catalogo_ctlg_categoria" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#catalogo_ctlg_categoria" ).toggle();
+    });
+  });
+  $(function() {
+    $( "#catalogo_ctlg_subcategoria" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#catalogo_ctlg_subcategoria" ).toggle();
+    });
+  });
+  </script>
 <script>
 $(document).ready(function() {
     $('#table_index').dataTable( {
@@ -7,34 +175,46 @@ $(document).ready(function() {
 } );
 </script>
 <div class="wrapper">
-<div class="content">
-<div class="form_wrapper">
-<h3>Cat&aacute;logos</h3>
-<br/>
-<div class="form buscar">
-<%= form_tag perfils_path, method: 'get' do %>
-
-  &nbsp;
-  <%= label_tag(:prf_nombre, "Nombre") %>
-  <%= text_field(:perfil, :prf_nombre, size:50) %>
-  &nbsp;
-  <%= label_tag(:prf_descripcion, "Descripción") %>
-  <%= text_field(:perfil, :prf_descripcion, size:60) %>
-  
-  <%= submit_tag "Buscar" %>
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Cat&aacute;logos</h3>
+			<br/>
+			<div class="form buscar">
+				<%= form_tag catalogos_path, method: 'get' do %>
+					<table width="100%">
+						<tr>
+							<td>
+								&nbsp;&nbsp;&nbsp;
+  								<%= label_tag(:ctlg_categoria, "Categoría") %>&nbsp;&nbsp;&nbsp;
+  								<%= collection_select(:catalogo, :ctlg_categoria, @categorias, :ctlg_categoria, :ctlg_categoria, :prompt => '') %>
+  								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  								<%= label_tag(:ctlg_subcategoria, "Subcategoría") %>&nbsp;
+  								<%= collection_select(:catalogo, :ctlg_subcategoria, @subcategorias, :ctlg_subcategoria, :ctlg_subcategoria) %>
+  								<%= submit_tag "Buscar" %>
+  						</td>
+  						</tr>
+  						<tr>
+  							<td>
+  						&nbsp;&nbsp;&nbsp;
+  						<%= label_tag(:ctlg_valor_desc, "Descripción") %>&nbsp;
+  						<%= text_field(:catalogo, :ctlg_valor_desc, size:40) %>
+  						</td>
+  						</tr>  
+  						
+ 				 	</table>
+				<% end %>
 </div>
-<% end %>
-<!--div class="table"-->
+
 	<center>
 
 <table id="table_index">
   <thead>
     <tr>
-      <th>Categoria</th>
-      <th>Subcategoria</th>
-      <th width="5%">Codigo</th>
+      <th>Categor&iacute;a</th>
+      <th>Subcategor&iacute;a</th>
+      <!-- <th width="5%">Codigo</th> -->
       <th>Descripci&oacute;n</th>
-      <th>Observaci&oacute;n</th>
+      <!--th>Observaci&oacute;n</th-->
       <th>Estado registro</th>
       <th width="10%"></th>
       <th width="10%"></th>
@@ -46,12 +226,12 @@ $(document).ready(function() {
       <tr>
         <td><%= catalogo.ctlg_categoria %></td>
         <td><%= catalogo.ctlg_subcategoria %></td>
-        <td><%= catalogo.ctlg_valor_cdg %></td>
+        <!--td><%#= catalogo.ctlg_valor_cdg %></td-->
         <td><%= link_to catalogo.ctlg_valor_desc, catalogo %></td>
-        <td><%= catalogo.ctlg_observacion %></td>
+        <!--td><%= catalogo.ctlg_observacion %></td-->
         <td><%= catalogo.ctlg_estado_registro %></td>
-        <td><%= link_to 'Modificar', edit_catalogo_path(catalogo), class: "cmd edit" %></td>
-        <td><%= link_to 'Eliminar', catalogo, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } , class: "cmd delete" %></td>
+        <td><%= link_to 'Editar', edit_catalogo_path(catalogo), class: "cmd edit" %></td>
+        <td><%= link_to 'Borrar', catalogo, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } , class: "cmd delete" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -60,7 +240,7 @@ $(document).ready(function() {
 <!--/div-->
 
 <div class="bottom">
-<%= link_to 'Crear catálogo', new_catalogo_path, class: "cmd add" %>
+<%= link_to 'Crear catálogo', new_catalogo_path, class: "cmd add"	 %>
 </div>
 
 </div>
