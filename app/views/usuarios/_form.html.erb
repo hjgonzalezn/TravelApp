@@ -171,20 +171,21 @@
     });
   });
   $(function() {
-    $( "#usuario_perfil" ).combobox();
+    $( "#usuario_perfil_id" ).combobox();
     $( "#toggle" ).click(function() {
-      $( "#usuario_perfil" ).toggle();
+      $( "#usuario_perfil_id" ).toggle();
     });
   });
   
-  $(function() {
-    $( "#usuario_usr_fecha_nacimiento" ).datepicker({
-      changeMonth:true,
-      changeYear:true
+    $(function() {
+    $( "#usuario_usr_tipo_cliente" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#usuario_usr_tipo_cliente" ).toggle();
     });
   });
+  
   </script>
-<%= form_for(@usuario) do |f| %>
+<%= form_for(@usuario, :html => {:multipart => true}) do |f| %>
   	<% if @usuario.errors.any? %>
     	<div id="error_explanation">
       		<h2><%= pluralize(@usuario.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado:</h2>
@@ -196,13 +197,18 @@
       		</ul>
     	</div>
  	<% end %>
+ 	<% @tipos_id = Catalogo.where("ctlg_categoria = 'TIPO DOCUMENTO IDENTIDAD' AND ctlg_estado_registro = 'A'").order(ctlg_valor_desc: :asc) %>
+ 	<% @tipos_cliente = Catalogo.select("ctlg_subcategoria||'-'||ctlg_valor_desc descripcion, ctlg_valor_cdg").where("ctlg_categoria = 'TIPO CLIENTE'") %>
+    <% @generos = Catalogo.where("ctlg_categoria = 'GENERO' AND ctlg_estado_registro = 'A'") %>
+    <% @estados = Catalogo.where("ctlg_categoria = 'ESTADO REGISTRO' AND ctlg_estado_registro = 'A'") %>
+    <% @perfiles = Perfil.where("prf_estado_registro = 'A'") %>
 	<div class = "form_fields">
 		<table width="100%">
 			<tr>
 				<td width="50%" valign="top">
 			<div class="field">
 		    	<%= f.label :Tipo_docum_identidad, "Tipo documento de identidad *" %><br>
-		    	<%= f.select :usr_tipo_docum_ident, @tipos_id.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]} %>
+		    	<%= f.select :usr_tipo_docum_ident, @tipos_id.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]}.insert(nil.to_f,nil) %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Nro_documento_identidad, "Número documento de identidad *" %><br>
@@ -228,25 +234,26 @@
 		  	<td width="50%" valign="top">
 		  	<div class="field">
 		    	<%= f.label :Foto %><br>
-		    	<%= f.text_field :usr_foto %>
+		    	<%= f.file_field :usr_foto %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Genero, "Género *" %><br>
-		    	<%= f.select :usr_genero, @generos.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]} %>
+		    	<%= f.select :usr_genero, @generos.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]}.insert(nil.to_f,nil) %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Tipo_cliente %><br>
-		    	<%= f.text_field :usr_tipo_cliente %>
+		    	<%= f.select :usr_tipo_cliente, @tipos_cliente.map{|t| [t.descripcion, t.ctlg_valor_cdg]}.insert(nil.to_f,nil) %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Estado, "Estado *" %><br>
-		    	<%= f.select :usr_estado, @estados.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]} %>
+		    	<%= f.select :usr_estado, @estados.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]}.insert(nil.to_f,nil) %>
 		  	</div>
 		  	<div class="field">
-		    	<%= f.label :Perfil, "Perfil *" %><br>
-		    	<%= f.select :perfil , @perfiles.map{|t| [t.prf_descripcion, t.id]} %>
+		    	<%= f.label :perfil_id, "Perfil *" %><br>
+		    	<%= f.select :perfil_id , @perfiles.map{|t| [t.prf_descripcion, t.id]}.insert(nil.to_f,nil) %>
 		  	</div>
 		  	</td>
+		  	</tr>
 		</table>
 	</div>
 	<div class="bottom">

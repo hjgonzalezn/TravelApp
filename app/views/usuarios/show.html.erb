@@ -1,84 +1,60 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Usr tipo docum ident:</strong>
-  <%= @usuario.usr_tipo_docum_ident %>
-</p>
-
-<p>
-  <strong>Usr nro docum ident:</strong>
-  <%= @usuario.usr_nro_docum_ident %>
-</p>
-
-<p>
-  <strong>Usr nombres:</strong>
-  <%= @usuario.usr_nombres %>
-</p>
-
-<p>
-  <strong>Usr apellidos:</strong>
-  <%= @usuario.usr_apellidos %>
-</p>
-
-<p>
-  <strong>Usr correo electronico:</strong>
-  <%= @usuario.usr_correo_electronico %>
-</p>
-
-<p>
-  <strong>Usr contrasena:</strong>
-  <%= @usuario.usr_contrasena %>
-</p>
-
-<p>
-  <strong>Usr tipo contrasena:</strong>
-  <%= @usuario.usr_tipo_contrasena %>
-</p>
-
-<p>
-  <strong>Usr fecha nacimiento:</strong>
-  <%= @usuario.usr_fecha_nacimiento %>
-</p>
-
-<p>
-  <strong>Usr genero:</strong>
-  <%= @usuario.usr_genero %>
-</p>
-
-<p>
-  <strong>Usr foto:</strong>
-  <%= @usuario.usr_foto %>
-</p>
-
-<p>
-  <strong>Usr fch ultimo ingreso:</strong>
-  <%= @usuario.usr_fch_ultimo_ingreso %>
-</p>
-
-<p>
-  <strong>Usr tipo cliente:</strong>
-  <%= @usuario.usr_tipo_cliente %>
-</p>
-
-<p>
-  <strong>Usr fecha ultima salida:</strong>
-  <%= @usuario.usr_fecha_ultima_salida %>
-</p>
-
-<p>
-  <strong>Usr fch vigencia contrasena:</strong>
-  <%= @usuario.usr_fch_vigencia_contrasena %>
-</p>
-
-<p>
-  <strong>Usr estado:</strong>
-  <%= @usuario.usr_estado %>
-</p>
-
-<p>
-  <strong>Perfil:</strong>
-  <%= @usuario.perfil %>
-</p>
-
-<%= link_to 'Edit', edit_usuario_path(@usuario) %> |
-<%= link_to 'Back', usuarios_path %>
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Usuario</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+						<tbody>
+							<tr>
+  								<td width="15%"><strong>Tipo docum ident:</strong></td>
+  								<td width="20%"><%= @usuario.usr_tipo_docum_ident %></td>
+								<td width="15%"><strong>Foto:</strong></td>
+  								<td width="20%"><%= @usuario.usr_foto %></td>
+							</tr>
+  								<td><strong>Nro docum ident:</strong></td>
+  								<td><%= @usuario.usr_nro_docum_ident %></td>
+  								<td><strong>Genero:</strong></td>
+  								<%genero = Catalogo.find_by ctlg_categoria: "GENERO", ctlg_valor_cdg: @usuario.usr_genero %>
+  								<td><%= genero.ctlg_valor_desc %></td>
+							</tr>
+							<tr>
+								<td><strong>Nombres:</strong></td>
+  								<td><%= @usuario.usr_nombres %></td>
+  								<td><strong>Tipo cliente:</strong></td>
+  								<%tipo_cliente = Catalogo.find_by ctlg_categoria: "TIPO CLIENTE", ctlg_valor_cdg: @usuario.usr_tipo_cliente %>
+  								<td><%= tipo_cliente.ctlg_subcategoria + " - " + tipo_cliente.ctlg_valor_desc %></td>
+							</tr>
+							<tr>
+								<td><strong>Apellidos:</strong></td>
+  								<td><%= @usuario.usr_apellidos %></td>
+								<td><strong>Estado:</strong></td>
+								<%estado = Catalogo.find_by ctlg_categoria: "ESTADO REGISTRO", ctlg_valor_cdg: @usuario.usr_estado %>
+								<td><%= estado.ctlg_valor_desc %></td>
+							</tr>
+							<tr>
+								<td><strong>Correo electronico:</strong></td>
+  								<td><%= @usuario.usr_correo_electronico %></td>
+  								<td><strong>Usr fecha nacimiento:</strong></td>
+  								<td><%= @usuario.usr_fecha_nacimiento %></td>
+							</tr>
+							<tr>
+								<td><strong>Perfil:</strong></td>
+								<%perfil = Perfil.find(@usuario.perfil)%>
+  								<td><%= perfil.prf_descripcion %></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			<div class="bottom">
+				<%= link_to 'Editar', edit_usuario_path(@usuario), class: "cmd edit" %> |
+				<%= link_to 'Regresar', usuarios_path, class: "cmd previous" %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

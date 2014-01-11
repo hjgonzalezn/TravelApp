@@ -181,8 +181,8 @@ $(document).ready(function() {
 				 		<tr>
 				 			<td>
 				 				&nbsp;&nbsp;&nbsp;
-				 				<%= label_tag(:ctlg_subcategoria, "Perfil") %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<%= collection_select(:perfil, :id, @perfiles, :id, :prf_descripcion) %>
+				 				<%= label_tag(:perfil, "Perfil") %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<%= collection_select(:perfil, :id, @perfiles, :id, :prf_descripcion, :prompt => '') %>
 							</td>
 							<td>
 	  							<%= label_tag(:usr_nro_docum_ident, "Nro. Identificación") %>&nbsp;
@@ -219,11 +219,12 @@ $(document).ready(function() {
 			  		<tbody>
 					    <% @usuarios.each do |usuario| %>
 					      <tr>
-					        <td><%= usuario.usr_tipo_docum_ident %> " - "<%= usuario.usr_nro_docum_ident %></td>
-					        <td><%= link_to usuario.usr_nombres %>&nbsp;<%= usuario.usr_apellidos %>, usuario</td>
-				        	<td><%= usuario.perfil %></td>
-					        <td><%= link_to 'Editar', edit_usuario_path(usuario) %></td>
-					        <td><%= link_to 'Borrar', usuario, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } %></td>
+					        <td><%= usuario.usr_tipo_docum_ident + " - " + usuario.usr_nro_docum_ident.to_s %></td>
+					        <td><%= link_to usuario.usr_nombres + " " + usuario.usr_apellidos , usuario %></td>
+					        <%perfil = Perfil.find(usuario.perfil)%>
+				        	<td><%= perfil.prf_descripcion %></td>
+					        <td><%= link_to 'Editar', edit_usuario_path(usuario), class: "cmd edit" %></td>
+					        <td><%= link_to 'Borrar', usuario, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class: "cmd delete" %></td>
 					      </tr>
 					    <% end %>
 			  		</tbody>
