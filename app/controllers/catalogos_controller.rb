@@ -1,12 +1,15 @@
 class CatalogosController < ApplicationController
+  include ApplicationHelper
+  
   before_action :set_catalogo, only: [:show, :edit, :update, :destroy]
   before_action :set_estado_registro, only: [:show, :edit, :new]
+  before_action :set_datos_basicos, only: [:index, :edit, :new, :create]
   
   # GET /catalogos
   # GET /catalogos.json
   def index
-    @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
-    @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
+    #@categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
+    #@subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
     
     condiciones = []
     cadena = "ctlg_estado_registro = 'A'"
@@ -47,25 +50,16 @@ class CatalogosController < ApplicationController
   # GET /catalogos/new
   def new
     @catalogo = Catalogo.new
-    @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
-    @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
-    @estados = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'ESTADO REGISTRO'")
   end
 
   # GET /catalogos/1/edit
   def edit
-    @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
-    @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
-    @estados = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'ESTADO REGISTRO'")
   end
 
   # POST /catalogos
   # POST /catalogos.json
   def create
     @catalogo = Catalogo.new(catalogo_params)
-    @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
-    @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
-    @estados = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'ESTADO REGISTRO'")
     respond_to do |format|
       if @catalogo.save
         format.html { redirect_to @catalogo, notice: 'Registro creado exitosamente.' }
@@ -102,7 +96,12 @@ class CatalogosController < ApplicationController
   end
 
   private
-  
+    def set_datos_basicos
+      set_estados_registro
+      @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
+      @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
+    end
+      
     def set_estado_registro
       if action_name == "new" then
         @estado_registro = "A"

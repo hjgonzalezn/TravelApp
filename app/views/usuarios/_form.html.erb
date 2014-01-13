@@ -197,11 +197,7 @@
       		</ul>
     	</div>
  	<% end %>
- 	<% @tipos_id = Catalogo.where("ctlg_categoria = 'TIPO DOCUMENTO IDENTIDAD' AND ctlg_estado_registro = 'A'").order(ctlg_valor_desc: :asc) %>
- 	<% @tipos_cliente = Catalogo.select("ctlg_subcategoria||'-'||ctlg_valor_desc descripcion, ctlg_valor_cdg").where("ctlg_categoria = 'TIPO CLIENTE'") %>
-    <% @generos = Catalogo.where("ctlg_categoria = 'GENERO' AND ctlg_estado_registro = 'A'") %>
-    <% @estados = Catalogo.where("ctlg_categoria = 'ESTADO REGISTRO' AND ctlg_estado_registro = 'A'") %>
-    <% @perfiles = Perfil.where("prf_estado_registro = 'A'") %>
+    
 	<div class = "form_fields">
 		<table width="100%">
 			<tr>
@@ -246,7 +242,7 @@
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Estado, "Estado *" %><br>
-		    	<%= f.select :usr_estado, @estados.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]}.insert(nil.to_f,nil) %>
+		    	<%= f.select :usr_estado, @estados_registro.map{|t| [t.ctlg_valor_desc, t.ctlg_valor_cdg]}.insert(nil.to_f,nil) %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :perfil_id, "Perfil *" %><br>

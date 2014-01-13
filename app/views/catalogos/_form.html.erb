@@ -249,7 +249,7 @@
 	  	</div>
 	  	<div class="field">
 	    	<%= f.label :Estado_registro %><br>
-	    	<%= f.select :ctlg_estado_registro, @estados.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}.insert(nil.to_f, nil), selected: @estado_registro %>
+	    	<%= f.select :ctlg_estado_registro, @estados_registro.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}.insert(nil.to_f, nil), selected: @estado_registro %>
 	    	
 	    	<%#= f.text_field :ctlg_estado_registro %>
 	  	</div>

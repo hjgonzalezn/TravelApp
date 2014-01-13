@@ -114,6 +114,13 @@
  
         // Selected an item, nothing to do
         if ( ui.item ) {
+	      	$.ajax({
+					url: "<%= actualizar_subcategorias_path %>",
+					data: {
+  							ctlg_categoria : $('#catalogo_ctlg_categoria').val()
+						  },
+					dataType: "script"
+		 });
           return;
         }
  
@@ -130,6 +137,14 @@
  
         // Found a match, nothing to do
         if ( valid ) {
+        	
+	      	$.ajax({
+					url: "<%= actualizar_subcategorias_path %>",
+					data: {
+  							ctlg_categoria : $('#catalogo_ctlg_categoria').val()
+						  },
+					dataType: "script"
+		 });
           return;
         }
  
@@ -189,7 +204,7 @@ $(document).ready(function() {
   								<%= collection_select(:catalogo, :ctlg_categoria, @categorias, :ctlg_categoria, :ctlg_categoria, :prompt => '') %>
   								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   								<%= label_tag(:ctlg_subcategoria, "Subcategoría") %>&nbsp;
-  								<%= collection_select(:catalogo, :ctlg_subcategoria, @subcategorias, :ctlg_subcategoria, :ctlg_subcategoria) %>
+  								<%= select(:catalogo, :ctlg_subcategoria, []) %>
   								<%= submit_tag "Buscar" %>
   						</td>
   						</tr>

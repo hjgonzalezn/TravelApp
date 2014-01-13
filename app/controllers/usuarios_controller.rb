@@ -1,10 +1,13 @@
 class UsuariosController < ApplicationController
+  include ApplicationHelper
+  
   before_action :set_usuario, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_datos_basicos, only: [:show, :edit, :new, :update]
+  
   # GET /usuarios
   # GET /usuarios.json
   def index
-    @perfiles = Perfil.where("prf_estado_registro = 'A'")
+    set_perfiles
     @usuarios = Usuario.all
   end
 
@@ -16,19 +19,10 @@ class UsuariosController < ApplicationController
   # GET /usuarios/new
   def new
     @usuario = Usuario.new
-    @tipos_id = Catalogo.where("ctlg_categoria = 'TIPO DE DOCUMENTO DE IDENTIDAD' AND ctlg_estado_registro = 'A'").order(ctlg_valor_desc: :asc)
-    @generos = Catalogo.where("ctlg_categoria = 'GENERO' AND ctlg_estado_registro = 'A'")
-    @estados = Catalogo.where("ctlg_categoria = 'ESTADO REGISTRO' AND ctlg_estado_registro = 'A'")
-    @perfiles = Perfil.where("prf_estado_registro = 'A'")
   end
 
   # GET /usuarios/1/edit
   def edit
-    @usuario = Usuario.new
-    @tipos_id = Catalogo.where("ctlg_categoria = 'TIPO DE DOCUMENTO DE IDENTIDAD' AND ctlg_estado_registro = 'A'").order(ctlg_valor_desc: :asc)
-    @generos = Catalogo.where("ctlg_categoria = 'GENERO' AND ctlg_estado_registro = 'A'")
-    @estados = Catalogo.where("ctlg_categoria = 'ESTADO REGISTRO' AND ctlg_estado_registro = 'A'")
-    @perfiles = Perfil.where("prf_estado_registro = 'A'")
   end
 
   # POST /usuarios
@@ -72,6 +66,18 @@ class UsuariosController < ApplicationController
   end
 
   private
+    def set_perfiles
+      @perfiles = Perfil.where("prf_estado_registro = 'A'") 
+    end
+    
+    def set_datos_basicos
+      set_perfiles
+      set_estados_registro
+      @tipos_cliente = Catalogo.select("ctlg_subcategoria||'-'||ctlg_valor_desc descripcion, ctlg_valor_cdg").where("ctlg_categoria = 'TIPO CLIENTE'")
+      @tipos_id = Catalogo.where("ctlg_categoria = 'TIPO DOCUMENTO IDENTIDAD' AND ctlg_estado_registro = 'A'").order(ctlg_valor_desc: :asc)
+      @generos = Catalogo.where("ctlg_categoria = 'GENERO' AND ctlg_estado_registro = 'A'")
+    end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_usuario
       @usuario = Usuario.find(params[:id])
