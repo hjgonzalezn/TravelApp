@@ -1,4 +1,9 @@
+require 'bcrypt'
+
 class Usuario < ActiveRecord::Base
+  before_save :encrypt_password
+  #after_save :clear_password
+
   belongs_to :perfil
   validate :valida_fecha_nacimiento
   validates :usr_tipo_docum_ident, presence: {message: "=> Es un dato requerido"}
@@ -14,5 +19,16 @@ class Usuario < ActiveRecord::Base
     if usr_fecha_nacimiento.present? && usr_fecha_nacimiento > Date.today then
       errors.add(:usr_fecha_nacimiento, "La fecha de nacimiento no puede ser posterior a la fecha actual")
     end 
+  end
+  
+
+  def encrypt_password
+    if usr_contrasena.present?
+      self.usr_contrasena= BCrypt::Engine.hash_secret(usr_contrasena, BCrypt::Engine.generate_salt)
+    end
+  end
+  
+  def clear_password
+    self.usr_contrasena = nil
   end
 end

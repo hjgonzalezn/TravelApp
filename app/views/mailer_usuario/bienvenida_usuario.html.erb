@@ -1,0 +1,10 @@
+<%if @usuario.usr_genero == "M" then%>
+	<p>Apreciado <%= @usuario.usr_nombres %>, </p>
+<%elsif @usuario.usr_genero == "F" then%>
+	<p>Apreciada <%= @usuario.usr_nombres %>, </p>
+<% end %>
+<p>Reciba un cordial saludo, </p>
+<p>Este sitio le da la bienvenida, para activar su cuenta, registrese en nuestra pagina web con los siguientes datos:</p>
+<p>Usuario: <%= @usuario.usr_correo_electronico %></p>
+<p>Contraseña: <%= @usuario.usr_contrasena %></p>
+<p>Bienvenido</p>

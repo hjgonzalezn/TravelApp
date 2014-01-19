@@ -2,7 +2,7 @@ class UsuariosController < ApplicationController
   include ApplicationHelper
   
   before_action :set_usuario, only: [:show, :edit, :update, :destroy]
-  before_action :set_datos_basicos, only: [:show, :edit, :new, :update]
+  before_action :set_datos_basicos, only: [:show, :edit, :new, :update, :create]
   
   # GET /usuarios
   # GET /usuarios.json
@@ -29,9 +29,17 @@ class UsuariosController < ApplicationController
   # POST /usuarios.json
   def create
     @usuario = Usuario.new(usuario_params)
-
+    @usuario.usr_contrasena = SecureRandom.urlsafe_base64
+    contrasena_bkp = @usuario.usr_contrasena
+    @usuario.usr_tipo_contrasena = "TMP" # contraseña provisional, un solo ingreso
+    
     respond_to do |format|
       if @usuario.save
+        #Notificacion de bienvenida al usuario
+        @usuario.usr_contrasena = contrasena_bkp
+        MailerUsuario.bienvenida_usuario(@usuario).deliver
+        #==============
+        
         format.html { redirect_to @usuario, notice: 'Usuario creado exitosamente.' }
         format.json { render action: 'show', status: :created, location: @usuario }
       else
@@ -65,6 +73,14 @@ class UsuariosController < ApplicationController
     end
   end
 
+  def login
+    
+  end
+  
+  def login_attempt
+    
+  end
+  
   private
     def set_perfiles
       @perfiles = Perfil.where("prf_estado_registro = 'A'") 
