@@ -1,0 +1,2 @@
+Validar fecha de vencimiento de contraseña
+Verificar en el cambio de contraseña que ambas sean iguales

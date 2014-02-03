@@ -1,0 +1,38 @@
+<%if @usuario != nil %>
+	<% if @usuario.errors.any? %>
+		<div class="notibox error">
+			<% @usuario.errors.full_messages.each do |msg| %>
+				<p id="notice"><%= msg %></p>
+			<% end %>
+		</div>
+	<% end %>
+<% end %>	
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Iniciar sesión</h3>
+			<br/>
+			<%= form_tag '/usuarios/login_attempt', id:'frmAuthentication' do %>
+				<div class="form_fields">
+				  	<div class="field">
+				    	<%= label :Correo_electronico, "Correo electrónico" %><br>
+				    	<%= text_field :usr_correo_electronico, nil, size:60, maxlength:50 %>
+				  	</div>
+				  	<div class="field">
+				    	<%= label :Contrasena, "Contraseña" %><br>
+				    	<%= password_field :usr_contrasena, nil, size:60, maxlength:30 %>
+				  	</div>
+				</div>
+				<div class="bottom">
+					<%= submit_tag "Iniciar sesión", class: "cmd save" %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

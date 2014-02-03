@@ -39,12 +39,14 @@ class PerfilsController < ApplicationController
   # GET /perfils/new
   def new
     @estados = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'ESTADO REGISTRO'")
+    @tiposPerfil = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'TIPO DE PERFIL DE USUARIO'")
     @perfil = Perfil.new
   end
 
   # GET /perfils/1/edit
   def edit
     @estados = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'ESTADO REGISTRO'")
+    @tiposPerfil = Catalogo.select("ctlg_valor_cdg, ctlg_valor_desc").where("ctlg_categoria = 'TIPO DE PERFIL DE USUARIO'")
   end
 
   # POST /perfils
@@ -104,11 +106,13 @@ class PerfilsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_perfil
       @perfil = Perfil.find(params[:id])
+      catalogo = Catalogo.find_by ctlg_categoria: 'TIPO DE PERFIL DE USUARIO', ctlg_valor_cdg: @perfil.prf_tipo_perfil
+      @perfil.prf_tipo_perfil = catalogo.ctlg_valor_desc.capitalize
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def perfil_params
       #params.require(:perfil).permit(:prf_nombre, :prf_descripcion, :prf_estado_registro)
-      params.fetch(:perfil, {}).permit(:prf_nombre, :prf_descripcion, :prf_estado_registro)
+      params.fetch(:perfil, {}).permit(:prf_nombre, :prf_descripcion, :prf_estado_registro, :prf_tipo_perfil)
     end
 end

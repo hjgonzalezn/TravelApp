@@ -14,7 +14,8 @@
  width: 100%;
  padding: 5px 10px 0px 50px;
  margin: 0px 0px 15px 0px;
- font: normal 12px/12px arial, helvetica, sans-serif;
+ font: inherit;
+ font-weight:bold;
 /* border radius */
  -webkit-border-radius: 4px;  
  -moz-border-radius: 4px;  
@@ -30,6 +31,7 @@ margin-right: 10px;
 
 .success {
 /* background */
+ color: green;
  background: url(success.png), #efffb9;
  background-color: #efffb9;
  background-position: 10px center;
@@ -50,7 +52,8 @@ margin-right: 10px;
 
 .error {
 /* background */
- background: url(../images/error.png), #fccac2;
+ color:#B00100;
+ background: url(error.png), #fccac2;
  background-color: #fccac2;
  background-position: 10px center;
  background-repeat: no-repeat;
@@ -90,7 +93,8 @@ margin-right: 10px;
 
 .information {
 /* background */
- background: url(../images/info.png), #d0e4f4;
+ color:#013953;
+ background: url(info.png), #d0e4f4;
  background-color: #d0e4f4;
  background-position: 10px center;
  background-repeat: no-repeat;
@@ -130,7 +134,8 @@ margin-right: 10px;
 
 .message {
 /* background */
- background: url(../images/message.png), #f2f2f2;
+ 
+ background: url(message.png), #f2f2f2;
  background-color: #f2f2f2;
  background-position: 10px center;
  background-repeat: no-repeat;

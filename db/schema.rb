@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140104223442) do
+ActiveRecord::Schema.define(version: 20140201161207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20140104223442) do
     t.string   "prf_estado_registro"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "prf_tipo_perfil"
   end
 
   create_table "usuarios", force: true do |t|
@@ -54,8 +55,13 @@ ActiveRecord::Schema.define(version: 20140104223442) do
     t.integer  "perfil_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "usr_salt"
   end
 
   add_index "usuarios", ["perfil_id"], name: "index_usuarios_on_perfil_id", using: :btree
+  add_index "usuarios", ["usr_apellidos"], name: "index_usuarios_on_usr_apellidos", using: :btree
+  add_index "usuarios", ["usr_correo_electronico"], name: "index_usuarios_on_usr_correo_electronico", unique: true, using: :btree
+  add_index "usuarios", ["usr_nombres"], name: "index_usuarios_on_usr_nombres", using: :btree
+  add_index "usuarios", ["usr_nro_docum_ident"], name: "index_usuarios_on_usr_nro_docum_ident", unique: true, using: :btree
 
 end

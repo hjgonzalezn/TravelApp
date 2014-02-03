@@ -1,9 +1,17 @@
 TravelApp::Application.routes.draw do  # The priority is based upon order of creation: first created -> highest priority.
-  get 'catalogos/actualizar_subcategorias' => 'catalogos#actualizar_subcategorias', as: :actualizar_subcategorias
-  resources :perfils
-  resources :catalogos
-  resources :usuarios
   
+  resources :perfils
+  
+  get 'catalogos/actualizar_subcategorias' => 'catalogos#actualizar_subcategorias', as: :actualizar_subcategorias
+  resources :catalogos
+  
+  post 'usuarios/change_password' => 'usuarios#change_password', as: :change_password
+  get 'usuarios/new_password' => 'usuarios#new_password', as: :new_password
+  get 'usuarios/login' => 'usuarios#login', as: :login
+  post 'usuarios/login_attempt' => 'usuarios#login_attempt', as: :login_attempt
+  resources :usuarios
+  root 'usuarios#login'
+    
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"

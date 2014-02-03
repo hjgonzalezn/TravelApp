@@ -1,6 +1,8 @@
 require 'bcrypt'
 
 class Usuario < ActiveRecord::Base
+  EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+  
   before_save :encrypt_password
   #after_save :clear_password
 
@@ -24,11 +26,25 @@ class Usuario < ActiveRecord::Base
 
   def encrypt_password
     if usr_contrasena.present?
-      self.usr_contrasena= BCrypt::Engine.hash_secret(usr_contrasena, BCrypt::Engine.generate_salt)
+      self.usr_salt = BCrypt::Engine.generate_salt
+      self.usr_contrasena= BCrypt::Engine.hash_secret(usr_contrasena, self.usr_salt)
     end
   end
   
-  def clear_password
-    self.usr_contrasena = nil
+  def self.authenticate(usr_correo_electronico_in = "", usr_contrasena_in = "")
+    if EMAIL_REGEX.match(usr_correo_electronico_in) then
+      usuario = Usuario.find_by usr_correo_electronico: usr_correo_electronico_in 
+    end
+    
+    if usuario.match_password(usr_contrasena_in)
+       return usuario
+    else
+      return false
+    end
   end
+  
+  def match_password(usr_contrasena_in)
+    self.usr_contrasena == BCrypt::Engine.hash_secret(usr_contrasena_in, self.usr_salt)
+  end
+  
 end

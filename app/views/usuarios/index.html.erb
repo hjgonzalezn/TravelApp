@@ -186,18 +186,18 @@ $(document).ready(function() {
 							</td>
 							<td>
 	  							<%= label_tag(:usr_nro_docum_ident, "Nro. Identificación") %>&nbsp;
-	  							<%= text_field(:usuario, :usr_nro_docum_ident, size:29) %>
+	  							<%= text_field(:usuario, :usr_nro_docum_ident, size:29, maxlength:20) %>
 	  							<%= submit_tag "Buscar" %>
 	  						</td>
 	  					</tr>
 	  					<tr>
 	  						<td>&nbsp;&nbsp;&nbsp;
 	  							<%= label_tag(:usr_nombres, "Nombres") %>&nbsp;
-	  							<%= text_field(:usuario, :usr_nombres, size:40) %>
+	  							<%= text_field(:usuario, :usr_nombres, size:40, maxlength:40) %>
 							</td>
 							<td>
 								<%= label_tag(:usr_apellidos, "Apellidos") %>&nbsp;
-								<%= text_field(:catalogo, :ctlg_valor_desc, size:40) %>
+								<%= text_field(:catalogo, :ctlg_valor_desc, size:40, maxlength:40) %>
 			  					
 							</td>
 						</tr>
