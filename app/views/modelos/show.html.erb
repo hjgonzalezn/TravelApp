@@ -1,0 +1,38 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Usuario</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+						<tbody>
+							<tr>
+							  <td><strong>C&oacute;digo:</strong></td>
+							  <td><%= @modelo.mdl_codigo %></td>
+							</tr>
+							
+							<tr>
+							  <td><strong>Nombre:</strong></td>
+							  <td><%= @modelo.mdl_nombre %></td>
+							</tr>
+							
+							<tr>
+							  <td><strong>Estado registro	:</strong></td>
+							  <td><%= @modelo.mdl_estado_registro %></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			<div class="bottom">
+				<%= link_to 'Editar', edit_modelo_path(@modelo), class: "cmd edit" %> |
+				<%= link_to 'Regresar', modelos_path, class:"cmd previous" %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

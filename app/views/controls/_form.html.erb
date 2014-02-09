@@ -1,0 +1,219 @@
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* support: IE7 */
+    *height: 1.7em;
+    *top: 0.1em;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+  }
+  </style>
+  <script>
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          //.attr( "title", "Mostrar todas las opciones" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+          return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " no es una opción válida" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.data( "ui-autocomplete" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+  </script>
+<script>
+   $(function() {
+    $( "#control_accion_id" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#control_modelo_id" ).toggle();
+    });
+  });
+  $(function() {
+    $( "#control_modelo_id" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#control_modelo_id" ).toggle();
+    });
+  });
+  $(function() {
+    $( "#control_ctrl_tipo" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#control_ctrl_tipo" ).toggle();
+    });
+  });	  
+  </script>
+  <%= form_for(@control) do |f| %>
+  	<% if @control.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@control.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+      		<ul>
+      			<% @control.errors.full_messages.each do |msg| %>
+        			<li><%= msg %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+	
+	<div class="form_fields">
+	  	<div class="field">
+	    	<%= f.label :Descripción %><br>
+	    	<%= f.text_field :ctrl_descripcion, size:50, maxlength:50 %>
+	  	</div>
+	  	<div class="field">
+	    	<%= f.label :ID_HTML, "ID HTML" %><br>
+	    	<%= f.text_field :ctrl_html_id, size:30, maxlength:30 %>
+	  	</div>
+	  	<div class="field">
+	   		<%= f.label :ctrl_tipo, "Tipo de control" %><br>
+			<%= f.select :ctrl_tipo, @tipos_control.map{|t| [t.descripcion, t.codigo]}.insert(nil.to_f,nil) %>
+	  	</div>
+	  	<div class="field">
+	    	<%= f.label :modelo %><br>
+	    	<%= f.select :modelo_id, @modelos.map{|t| [t.nombre, t.id]}.insert(nil.to_f,nil) %>
+	    	
+	  	</div>
+	  	<div class="field">
+	    	<%= f.label :accion %><br>
+	    	<%= f.select :accion_id, @acciones.map{|t| [t.nombre, t.id]}.insert(nil.to_f,nil) %>
+	  	</div>
+	</div>
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save", id:"cmd_aceptar" %> |
+				<%= link_to 'Consultar', @accion, class: "cmd star", id:"cmd_consultar" %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_control').submit()" %> |
+			<% end %>
+			<%= link_to 'Regresar', controls_url, class: "cmd previous", id:"cmd_regresar" %>
+  		</div>
+  	</div>
+	
+<% end %>

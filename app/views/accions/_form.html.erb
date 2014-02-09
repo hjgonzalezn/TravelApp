@@ -1,0 +1,39 @@
+<%= form_for(@accion) do |f| %>
+  <% if @accion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@accion.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+
+      <ul>
+      <% @accion.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="form_fields">
+  		<div class="field">
+    		<%= f.label :Codigo, "Código" %><br>
+    		<%= f.text_field :acc_codigo, size:10, maxlength:5 %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :Nombre %><br>
+    		<%= f.text_field :acc_nombre, size:50, maxlength:50 %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :Estado_registro %><br>
+    		<%= f.text_field :acc_estado_registro, size:10, maxlength:5 %>
+  		</div>
+  	</div>
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save" %> |
+				<%= link_to 'Consultar', @accion, class: "cmd star" %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<%= link_to "Aceptar", nil, class: "cmd save", onclick: "$('.new_accion').submit()" %> |
+				
+			<% end %>
+			<%= link_to 'Regresar', accions_url, class: "cmd previous" %>
+  		</div>
+  	</div>
+<% end %>

@@ -1,0 +1,42 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Acciones</h3>
+			<center>
+				<br/>
+				<table id="table_index">
+  					<thead>
+    					<tr>
+      						<th>C&oacute;digo</th>
+					      	<th>Nombre</th>
+					      	<th></th>
+					      	<th></th>
+    					</tr>
+  					</thead>
+  					<tbody>
+    					<% @accions.each do |accion| %>
+      						<tr>
+						        <td><%= accion.acc_codigo %></td>
+						        <td><%= link_to accion.acc_nombre, accion %></td>
+						        <td><%= link_to 'Editar', edit_accion_path(accion), class:"cmd edit" %></td>
+						        <td><%= link_to 'Borrar', accion, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
+      						</tr>
+    					<% end %>
+  					</tbody>
+				</table>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear accion', new_accion_path, class: "cmd add" %>
+			</div>
+		</div>
+	</div>
+</div>

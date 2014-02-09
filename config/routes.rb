@@ -1,6 +1,9 @@
 TravelApp::Application.routes.draw do  # The priority is based upon order of creation: first created -> highest priority.
   
+  resources :accions
+  resources :modelos
   resources :perfils
+  resources :controls
   
   get 'catalogos/actualizar_subcategorias' => 'catalogos#actualizar_subcategorias', as: :actualizar_subcategorias
   resources :catalogos

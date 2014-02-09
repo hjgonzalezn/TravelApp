@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  acc_codigo: MyString
+  acc_nombre: MyString
+  acc_estado_registro: MyString
+
+two:
+  acc_codigo: MyString
+  acc_nombre: MyString
+  acc_estado_registro: MyString

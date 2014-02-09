@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ctrl descripcion:</strong>
+  <%= @control.ctrl_descripcion %>
+</p>
+
+<p>
+  <strong>Ctrl html:</strong>
+  <%= @control.ctrl_html_id %>
+</p>
+
+<p>
+  <strong>Ctrl tipo:</strong>
+  <%= @control.ctrl_tipo %>
+</p>
+
+<p>
+  <strong>Modelo:</strong>
+  <%= @control.modelo %>
+</p>
+
+<p>
+  <strong>Accion:</strong>
+  <%= @control.accion %>
+</p>
+
+<%= link_to 'Edit', edit_control_path(@control) %> |
+<%= link_to 'Back', controls_path %>

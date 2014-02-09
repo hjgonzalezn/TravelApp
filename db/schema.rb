@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140201161207) do
+ActiveRecord::Schema.define(version: 20140208233708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accions", force: true do |t|
+    t.string   "acc_codigo"
+    t.string   "acc_nombre"
+    t.string   "acc_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "catalogos", force: true do |t|
     t.string   "ctlg_categoria"
@@ -23,6 +31,27 @@ ActiveRecord::Schema.define(version: 20140201161207) do
     t.string   "ctlg_valor_desc"
     t.string   "ctlg_observacion"
     t.string   "ctlg_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "controls", force: true do |t|
+    t.string   "ctrl_descripcion"
+    t.string   "ctrl_html_id"
+    t.string   "ctrl_tipo"
+    t.integer  "modelo_id"
+    t.integer  "accion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "controls", ["accion_id"], name: "index_controls_on_accion_id", using: :btree
+  add_index "controls", ["modelo_id"], name: "index_controls_on_modelo_id", using: :btree
+
+  create_table "modelos", force: true do |t|
+    t.string   "mdl_codigo"
+    t.string   "mdl_nombre"
+    t.string   "mdl_estado_registro"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

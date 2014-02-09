@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ctrl_descripcion: MyString
+  ctrl_html_id: MyString
+  ctrl_tipo: MyString
+  modelo_id: 
+  accion_id: 
+
+two:
+  ctrl_descripcion: MyString
+  ctrl_html_id: MyString
+  ctrl_tipo: MyString
+  modelo_id: 
+  accion_id: 
