@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140208233708) do
+ActiveRecord::Schema.define(version: 20140216123841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,14 +39,31 @@ ActiveRecord::Schema.define(version: 20140208233708) do
     t.string   "ctrl_descripcion"
     t.string   "ctrl_html_id"
     t.string   "ctrl_tipo"
-    t.integer  "modelo_id"
-    t.integer  "accion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "controls", ["accion_id"], name: "index_controls_on_accion_id", using: :btree
-  add_index "controls", ["modelo_id"], name: "index_controls_on_modelo_id", using: :btree
+  create_table "funcion_controls", force: true do |t|
+    t.integer  "funcionalidad_id"
+    t.integer  "modelo_id"
+    t.integer  "accion_id"
+    t.integer  "control_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "funcion_controls", ["accion_id"], name: "index_funcion_controls_on_accion_id", using: :btree
+  add_index "funcion_controls", ["control_id"], name: "index_funcion_controls_on_control_id", using: :btree
+  add_index "funcion_controls", ["funcionalidad_id"], name: "index_funcion_controls_on_funcionalidad_id", using: :btree
+  add_index "funcion_controls", ["modelo_id"], name: "index_funcion_controls_on_modelo_id", using: :btree
+
+  create_table "funcionalidads", force: true do |t|
+    t.string   "func_descripcion"
+    t.string   "func_publica"
+    t.integer  "func_padre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "modelos", force: true do |t|
     t.string   "mdl_codigo"

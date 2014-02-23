@@ -1,0 +1,33 @@
+<h1>Listing funcion_controls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Funcionalidad</th>
+      <th>Modelo</th>
+      <th>Accion</th>
+      <th>Control</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @funcion_controls.each do |funcion_control| %>
+      <tr>
+        <td><%= funcion_control.funcionalidad %></td>
+        <td><%= funcion_control.modelo %></td>
+        <td><%= funcion_control.accion %></td>
+        <td><%= funcion_control.control %></td>
+        <td><%= link_to 'Show', funcion_control %></td>
+        <td><%= link_to 'Edit', edit_funcion_control_path(funcion_control) %></td>
+        <td><%= link_to 'Destroy', funcion_control, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Funcion control', new_funcion_control_path %>

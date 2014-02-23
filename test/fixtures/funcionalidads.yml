@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  func_descripcion: MyString
+  func_publica: MyString
+  func_padre: 1
+
+two:
+  func_descripcion: MyString
+  func_publica: MyString
+  func_padre: 1

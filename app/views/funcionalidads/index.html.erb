@@ -1,0 +1,44 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Funcionalidades</h3>
+			<center>
+				<br/>
+				<table id="table_index">
+  					<thead>
+    					<tr>
+      						<th>Descripci&oacute;n</th>
+      						<th>P&uacute;blica</th>
+      						<th></th>
+      						<th></th>
+   						</tr>
+  					</thead>
+  					<tbody>
+    					<% @funcionalidads.each do |funcionalidad| %>
+      						<tr>
+        						<td><%= link_to funcionalidad.func_descripcion, funcionalidad %></td>
+        						<td><%= funcionalidad.func_publica %></td>
+        						<td><%= link_to 'Editar', edit_funcionalidad_path(funcionalidad), class: "cmd edit" %></td>
+        						<td><%= link_to 'Borrar', funcionalidad, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
+      						</tr>
+    					<% end %>
+  					</tbody>
+				</table>
+
+				<br>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear funcionalidad', new_funcionalidad_path, class: "cmd add" %>
+			</div>
+		</div>
+	</div>
+</div>

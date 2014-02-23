@@ -1,29 +1,23 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
 
 <p>
-  <strong>Ctrl descripcion:</strong>
+  <strong>Descripción:</strong>
   <%= @control.ctrl_descripcion %>
 </p>
 
 <p>
-  <strong>Ctrl html:</strong>
+  <strong>HTML_ID:</strong>
   <%= @control.ctrl_html_id %>
 </p>
 
 <p>
-  <strong>Ctrl tipo:</strong>
+  <strong>Tipo de Control:</strong>
   <%= @control.ctrl_tipo %>
 </p>
 
-<p>
-  <strong>Modelo:</strong>
-  <%= @control.modelo %>
-</p>
-
-<p>
-  <strong>Accion:</strong>
-  <%= @control.accion %>
-</p>
-
-<%= link_to 'Edit', edit_control_path(@control) %> |
-<%= link_to 'Back', controls_path %>
+<%= link_to 'Editar', edit_control_path(@control), class: "cmd edit" %> |
+<%= link_to 'Regresar', controls_path, class:"cmd previous" %>

@@ -1,0 +1,90 @@
+<style>
+	td{
+		color:#000000;
+	}
+</style>
+<%= form_for(@funcionalidad) do |f| %>
+  	<% if @funcionalidad.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@funcionalidad.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+      		<ul>
+      			<% @funcionalidad.errors.full_messages.each do |msg| %>
+        			<li><%= msg %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+  	
+	<div class="form_fields">
+  		<div class="field">
+    		<%= f.label :Descripción %><br>
+    		<%= f.text_field :func_descripcion, maxlength: 100, size: 100 %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :Pública %><br>
+    		<%= f.select :func_publica, [['NO', 'N'], ['SI','S']] %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :Padre %><br>
+    		<%= f.number_field :func_padre %>
+  		</div>
+  		<% if action_name == "edit" %>
+			<script>
+				$(document).ready(function() {
+					$('#table_index').dataTable( {
+						"bJQueryUI": true,
+	    				"sPaginationType": "full_numbers"
+					} );
+				} );
+			</script>
+			<center>
+					<table id="table_index">
+					<thead>
+						<tr>
+	  						<th>Modelo</th>
+	  						<th>Acci&oacute;n</th>
+	  						<th>Control</th>
+	  						<th></th>
+	  						<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @funcionControls.each do |fctrl| %>
+	  						<tr>
+	    						<% modelo = Modelo.find(fctrl.modelo_id) %>
+	    						<td><%= modelo.mdl_nombre %></td>
+	    						<% accion = Accion.find(fctrl.accion_id)%>
+	    						<td><%= accion.acc_nombre %></td>
+	    						<% control = Control.find(fctrl.control_id)%>
+	    						<%catalogo = Catalogo.find_by ctlg_valor_cdg: control.ctrl_tipo %>
+	  							<%tipoControl = catalogo.ctlg_valor_desc %>
+	    						<td><%= tipoControl + " " + control.ctrl_descripcion %></td>
+	    						<td><%= link_to 'Editar', edit_control_path(control), class: "cmd edit" %></td>
+	    						<td><%= link_to 'Borrar', control, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
+	  						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear objeto', new_funcionalidad_funcion_control_path(@funcionalidad), class: "cmd add" %>
+			</div>
+	<% end %>
+  		
+	</div>
+  	
+
+  	
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save", id:"cmd_aceptar" %> |
+				<%= link_to 'Consultar', @funcionalidad, class: "cmd star", id:"cmd_consultar" %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_funcionalidad').submit()" %> |
+			<% end %>
+			<%= link_to 'Regresar', funcionalidads_url, class: "cmd previous", id:"cmd_regresar" %>
+  		</div>
+  	</div>
+ 
+<% end %>

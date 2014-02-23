@@ -1,0 +1,28 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+
+<p>
+  <strong>Funcionalidad:</strong>
+  <%= @funcion_control.funcionalidad_id %>
+</p>
+
+<p>
+  <strong>Modelo:</strong>
+  <%= @funcion_control.modelo_id %>
+</p>
+
+<p>
+  <strong>Accion:</strong>
+  <%= @funcion_control.accion_id %>
+</p>
+
+<p>
+  <strong>Control:</strong>
+  <%= @funcion_control.control_id %>
+</p>
+
+<%= link_to 'Editar', edit_funcionalidad_funcion_control_path(@funcionalidad, @funcion_control) %> |
+<%= link_to 'Regresar', edit_funcionalidad_path(@funcionalidad) %>

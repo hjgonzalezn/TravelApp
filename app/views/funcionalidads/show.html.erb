@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Func descripcion:</strong>
+  <%= @funcionalidad.func_descripcion %>
+</p>
+
+<p>
+  <strong>Func publica:</strong>
+  <%= @funcionalidad.func_publica %>
+</p>
+
+<p>
+  <strong>Func padre:</strong>
+  <%= @funcionalidad.func_padre %>
+</p>
+
+<%= link_to 'Editar', edit_funcionalidad_path(@funcionalidad), class: "cmd edit" %> |
+<%= link_to 'Regresar', funcionalidads_path, class: "cmd previous" %>

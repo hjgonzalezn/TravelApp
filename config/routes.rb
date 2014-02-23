@@ -5,6 +5,14 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   resources :perfils
   resources :controls
   
+  get 'funcion_controls/actualizar_controles_por_tipo' => 'funcion_controls#actualizar_controles_por_tipo', as: :actualizar_controles_por_tipo
+  
+  resources :funcion_controls
+  
+  resources :funcionalidads do
+    resources :funcion_controls
+  end
+  
   get 'catalogos/actualizar_subcategorias' => 'catalogos#actualizar_subcategorias', as: :actualizar_subcategorias
   resources :catalogos
   

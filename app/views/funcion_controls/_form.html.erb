@@ -18,8 +18,8 @@
     padding: 0.3em;
   }
   </style>
-  <script>
-  (function( $ ) {
+<script>
+ (function( $ ) {
     $.widget( "custom.combobox", {
       _create: function() {
         this.wrapper = $( "<span>" )
@@ -108,9 +108,18 @@
       },
  
       _removeIfInvalid: function( event, ui ) {
- 
+ 		
         // Selected an item, nothing to do
         if ( ui.item ) {
+        	if (this.element.attr("id") == "catalogo_ctlg_valor_cdg"){
+			     $.ajax({
+							url: "<%= actualizar_controles_por_tipo_path %>",
+							data: {
+		  							tipo_control : $('#catalogo_ctlg_valor_cdg').val()
+								  },
+							dataType: "script"
+				 });
+        	}
           return;
         }
  
@@ -127,6 +136,15 @@
  
         // Found a match, nothing to do
         if ( valid ) {
+        	if (this.element.attr("id") == "catalogo_ctlg_valor_cdg"){
+			     $.ajax({
+							url: "<%= actualizar_controles_por_tipo_path %>",
+							data: {
+		  							tipo_control : $('#catalogo_ctlg_valor_cdg').val()
+								  },
+							dataType: "script"
+				 });
+        	}
           return;
         }
  
@@ -151,61 +169,65 @@
   </script>
 <script>
    $(function() {
-    $( "#control_accion_id" ).combobox();
-    $( "#toggle" ).click(function() {
-      $( "#control_modelo_id" ).toggle();
-    });
+    $( "#funcion_control_modelo_id" ).combobox();
   });
   $(function() {
-    $( "#control_modelo_id" ).combobox();
-    $( "#toggle" ).click(function() {
-      $( "#control_modelo_id" ).toggle();
-    });
+    $( "#funcion_control_accion_id" ).combobox();
   });
   $(function() {
-    $( "#control_ctrl_tipo" ).combobox();
-    $( "#toggle" ).click(function() {
-      $( "#control_ctrl_tipo" ).toggle();
-    });
-  });	  
+    $( "#catalogo_ctlg_valor_cdg" ).combobox();
+    
+  });
+  $(function() {
+    $( "#funcion_control_control_id" ).combobox();
+    
+  });
   </script>
-  <%= form_for(@control) do |f| %>
-  	<% if @control.errors.any? %>
-    	<div id="error_explanation">
-      		<h2><%= pluralize(@control.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
-      		<ul>
-      			<% @control.errors.full_messages.each do |msg| %>
-        			<li><%= msg %></li>
-      			<% end %>
-      		</ul>
-    	</div>
-  	<% end %>
-	
+
+<%= form_for(@funcionalidad_funcion_control) do |f| %>
+  <% if @funcionalidad_funcion_control.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@funcionalidad_funcion_control.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+
+      <ul>
+      <% @funcionalidad_funcion_control.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 	<div class="form_fields">
-	  	<div class="field">
-	    	<%= f.label :Descripción %><br>
-	    	<%= f.text_field :ctrl_descripcion, size:50, maxlength:50 %>
-	  	</div>
-	  	<div class="field">
-	    	<%= f.label :ID_HTML, "ID HTML" %><br>
-	    	<%= f.text_field :ctrl_html_id, size:30, maxlength:30 %>
-	  	</div>
-	  	<div class="field">
-	   		<%= f.label :ctrl_tipo, "Tipo de control" %><br>
-			<%= f.select :ctrl_tipo, @tipos_control.map{|t| [t.descripcion, t.codigo]}.insert(nil.to_f,nil) %>
-	  	</div>
-	</div>
-	
+  		<div class="field">
+    		<%= f.label :funcionalidad %><br>
+    		<%= f.hidden_field :funcionalidad_id, value:@funcionalidad.id %>
+    		<%= text_field_tag :descripcion, @funcionalidad.func_descripcion, size:100, disabled:true%>
+  		</div>
+  		<div class="field">
+    		<%= f.label :modelo %><br>
+    		<%= f.select :modelo_id, @modelos.map{|u| [u.mdl_nombre, u.id]}.insert(nil.to_f, nil) %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :accion %><br>
+    		<%= f.select :accion_id, @acciones.map{|u| [u.acc_nombre, u.id]}.insert(nil.to_f, nil) %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :tipo_control, "Tipo de control" %><br>
+    		<%= collection_select(:catalogo, :ctlg_valor_cdg, @tipos_control, :codigo, :descripcion, :prompt => '') %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :control %><br>
+    		<%= f.select(:control_id, []) %>
+  		</div>
+  </div>
 	<div class="bottom">
   		<div class="actions">
     		<% if action_name == "edit"%>
 				<%= f.submit "Aceptar", class: "cmd save", id:"cmd_aceptar" %> |
-				<%= link_to 'Consultar', @control, class: "cmd star", id:"cmd_consultar" %> |
+				<%= link_to 'Consultar', @funcionalidad, class: "cmd star", id:"cmd_consultar" %> |
 			<% elsif action_name == "new" or action_name =="create" %>
-				<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_control').submit()" %> |
+				<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_funcion_control').submit()" %> |
 			<% end %>
-			<%= link_to 'Regresar', controls_url, class: "cmd previous", id:"cmd_regresar" %>
+			<%= link_to 'Regresar', funcionalidads_url, class: "cmd previous", id:"cmd_regresar" %>
   		</div>
   	</div>
-	
 <% end %>

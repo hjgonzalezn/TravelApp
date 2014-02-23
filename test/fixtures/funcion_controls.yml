@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  funcionalidad_id: 
+  modelo_id: 
+  accion_id: 
+  control_id: 
+
+two:
+  funcionalidad_id: 
+  modelo_id: 
+  accion_id: 
+  control_id: 

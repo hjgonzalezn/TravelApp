@@ -19,8 +19,6 @@ $(document).ready(function() {
 					      <th>Descripci&oacute;n</th>
 					      <th>HTML ID</th>
 					      <th>Tipo</th>
-					      <th>Modelo</th>
-					      <th>Accion</th>
 					      <th></th>
 					      <th></th>
 					    </tr>
@@ -33,10 +31,6 @@ $(document).ready(function() {
 				        		<td><%= control.ctrl_html_id %></td>
 				        		<% tipo_control = Catalogo.find_by ctlg_categoria: 'APLICACION', ctlg_subcategoria: 'TIPO DE CONTROL', ctlg_valor_cdg: control.ctrl_tipo %>
 				        		<td><%= tipo_control.ctlg_valor_desc %></td>
-				        		<% modelo = Modelo.find(control.modelo) %>
-				        		<td><%= modelo.mdl_nombre %></td>
-				        		<% accion = Accion.find(control.accion) %>
-				        		<td><%= accion.acc_nombre %></td>
 				        		<td><%= link_to 'Editar', edit_control_path(control), class: "cmd edit" %></td>
 				        		<td><%= link_to 'Borrar', control, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
 				      		</tr>
