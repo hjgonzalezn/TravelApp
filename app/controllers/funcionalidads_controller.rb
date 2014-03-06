@@ -10,6 +10,7 @@ class FuncionalidadsController < ApplicationController
   # GET /funcionalidads/1
   # GET /funcionalidads/1.json
   def show
+    @funcionControls = FuncionControl.where("funcionalidad_id = #{@funcionalidad.id}")
   end
 
   # GET /funcionalidads/new

@@ -24,10 +24,10 @@
     		<%= f.label :Pública %><br>
     		<%= f.select :func_publica, [['NO', 'N'], ['SI','S']] %>
   		</div>
-  		<div class="field">
+  		<!-- <div class="field">
     		<%= f.label :Padre %><br>
     		<%= f.number_field :func_padre %>
-  		</div>
+  		</div> -->
   		<% if action_name == "edit" %>
 			<script>
 				$(document).ready(function() {
@@ -59,8 +59,8 @@
 	    						<%catalogo = Catalogo.find_by ctlg_valor_cdg: control.ctrl_tipo %>
 	  							<%tipoControl = catalogo.ctlg_valor_desc %>
 	    						<td><%= tipoControl + " " + control.ctrl_descripcion %></td>
-	    						<td><%= link_to 'Editar', edit_control_path(control), class: "cmd edit" %></td>
-	    						<td><%= link_to 'Borrar', control, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
+	    						<td><%= link_to 'Editar', edit_funcionalidad_funcion_control_path(@funcionalidad, fctrl), class: "cmd edit" %></td>
+	    						<td><%= link_to 'Borrar', fctrl, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
 	  						</tr>
 						<% end %>
 					</tbody>

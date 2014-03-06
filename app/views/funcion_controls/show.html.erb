@@ -3,26 +3,41 @@
 		<p id="notice"><%= notice %></p>
 	</div>
 <% end %>
-
-<p>
-  <strong>Funcionalidad:</strong>
-  <%= @funcion_control.funcionalidad_id %>
-</p>
-
-<p>
-  <strong>Modelo:</strong>
-  <%= @funcion_control.modelo_id %>
-</p>
-
-<p>
-  <strong>Accion:</strong>
-  <%= @funcion_control.accion_id %>
-</p>
-
-<p>
-  <strong>Control:</strong>
-  <%= @funcion_control.control_id %>
-</p>
-
-<%= link_to 'Editar', edit_funcionalidad_funcion_control_path(@funcionalidad, @funcion_control) %> |
-<%= link_to 'Regresar', edit_funcionalidad_path(@funcionalidad) %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Funcionalidad - Control</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+						<tbody>
+							<tr>
+								<td><strong>Funcionalidad</strong></td>
+								<% funcionalidad = Funcionalidad.find(@funcion_control.funcionalidad_id) %>
+							  	<td><%=funcionalidad.func_descripcion  %></td>
+							</tr>
+							<tr>
+							  	<td><strong>Modelo</strong></td>
+							  	<% modelo = Modelo.find(@funcion_control.modelo_id) %>
+							  	<td><%= modelo.mdl_nombre %></td>
+							</tr>
+							<tr>
+							  	<td><strong>Accion</strong></td>
+							  	<% accion = Accion.find(@funcion_control.accion_id) %>
+							  	<td><%= accion.acc_nombre %></td>
+							</tr>
+							<tr>
+							  	<td><strong>Control</strong></td>
+							  	<% control = Control.find(@funcion_control.control_id) %>
+							  	<td><%= control.ctrl_descripcion %></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="bottom">
+					<%= link_to 'Editar', edit_funcionalidad_funcion_control_path(@funcionalidad, @funcion_control), class: "cmd edit" %> |
+					<%= link_to 'Regresar', edit_funcionalidad_path(@funcionalidad), class: "cmd previous" %>
+				</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-

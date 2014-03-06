@@ -24,6 +24,15 @@ class FuncionControlsController < ApplicationController
 
   # GET /funcion_controls/1/edit
   def edit
+    @funcionalidad_funcion_control = @funcion_control
+    @funcionalidad = Funcionalidad.find(@funcion_control.funcionalidad_id)
+    @modelos = Modelo.all
+    @acciones = Accion.all
+    @tipos_control = Catalogo.select("ctlg_valor_desc descripcion, ctlg_valor_cdg codigo").where("ctlg_categoria='APLICACION' AND ctlg_subcategoria = 'TIPO DE CONTROL'").order(ctlg_valor_desc: :asc)
+    control = Control.find(@funcion_control.control_id)
+    
+    #El combo de controles se llena con los controles del mismo tipo del actual
+    @controles = Control.where("ctrl_tipo = '#{control.ctrl_tipo}'")
   end
 
   # POST /funcion_controls
@@ -47,9 +56,13 @@ class FuncionControlsController < ApplicationController
   # PATCH/PUT /funcion_controls/1
   # PATCH/PUT /funcion_controls/1.json
   def update
+    
+    @fc = FuncionControl.new(funcion_control_params)
+    @funcionalidad = Funcionalidad.find(@fc.funcionalidad_id)
+    
     respond_to do |format|
       if @funcion_control.update(funcion_control_params)
-        format.html { redirect_to @funcion_control, notice: 'Registro actualizado exitosamente.' }
+        format.html { redirect_to funcionalidad_funcion_control_path(@funcionalidad, @funcion_control), notice: 'Registro actualizado exitosamente.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -61,9 +74,11 @@ class FuncionControlsController < ApplicationController
   # DELETE /funcion_controls/1
   # DELETE /funcion_controls/1.json
   def destroy
+    @funcionalidad = Funcionalidad.find(@funcion_control.funcionalidad_id)
     @funcion_control.destroy
     respond_to do |format|
-      format.html { redirect_to funcion_controls_url }
+      #format.html { redirect_to funcion_controls_url }
+      format.html { redirect_to edit_funcionalidad_path(@funcionalidad) }
       format.json { head :no_content }
     end
   end

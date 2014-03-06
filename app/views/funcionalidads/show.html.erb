@@ -1,19 +1,64 @@
-<p id="notice"><%= notice %></p>
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
 
-<p>
-  <strong>Func descripcion:</strong>
-  <%= @funcionalidad.func_descripcion %>
-</p>
-
-<p>
-  <strong>Func publica:</strong>
-  <%= @funcionalidad.func_publica %>
-</p>
-
-<p>
-  <strong>Func padre:</strong>
-  <%= @funcionalidad.func_padre %>
-</p>
-
-<%= link_to 'Editar', edit_funcionalidad_path(@funcionalidad), class: "cmd edit" %> |
-<%= link_to 'Regresar', funcionalidads_path, class: "cmd previous" %>
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Funcionalidad</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+						<tbody>
+							<tr>
+						  		<td><strong>Descripci&oacute;n:</strong></td>
+						  		<td><%= @funcionalidad.func_descripcion %></td>
+							</tr>
+							<tr>
+						  		<td><strong>P&uacute;blica?</strong></td>
+						  		<td><%= @funcionalidad.func_publica %></td>
+							</tr>
+						</tbody>
+					</table>
+					<br/>
+					<table id="table_index">
+						<thead>
+							<tr>
+	  							<th>Modelo</th>
+	  							<th>Acci&oacute;n</th>
+	  							<th>Control</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @funcionControls.each do |fctrl| %>
+		  						<tr>
+		    						<% modelo = Modelo.find(fctrl.modelo_id) %>
+		    						<td><%= modelo.mdl_nombre %></td>
+		    						<% accion = Accion.find(fctrl.accion_id)%>
+		    						<td><%= accion.acc_nombre %></td>
+		    						<% control = Control.find(fctrl.control_id)%>
+		    						<%catalogo = Catalogo.find_by ctlg_valor_cdg: control.ctrl_tipo %>
+		  							<%tipoControl = catalogo.ctlg_valor_desc %>
+		    						<td><%= tipoControl + " " + control.ctrl_descripcion %></td>
+		  						</tr>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+				<div class="bottom">
+					<%= link_to 'Editar', edit_funcionalidad_path(@funcionalidad), class: "cmd edit" %> |
+					<%= link_to 'Regresar', funcionalidads_path, class: "cmd previous" %>
+				</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

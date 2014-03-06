@@ -3,21 +3,34 @@
 		<p id="notice"><%= notice %></p>
 	</div>
 <% end %>
-
-<p>
-  <strong>Descripción:</strong>
-  <%= @control.ctrl_descripcion %>
-</p>
-
-<p>
-  <strong>HTML_ID:</strong>
-  <%= @control.ctrl_html_id %>
-</p>
-
-<p>
-  <strong>Tipo de Control:</strong>
-  <%= @control.ctrl_tipo %>
-</p>
-
-<%= link_to 'Editar', edit_control_path(@control), class: "cmd edit" %> |
-<%= link_to 'Regresar', controls_path, class:"cmd previous" %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Control</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+						<tbody>
+							<tr>
+  								<td><strong>Descripción:</strong></td>
+  								<td><%= @control.ctrl_descripcion %></td>
+							</tr>
+							<tr>
+  								<td><strong>HTML_ID:</strong></td>
+  								<td><%= @control.ctrl_html_id %></td>
+							</tr>
+							<tr>
+  								<td><strong>Tipo de Control:</strong></td>
+  								<td><%= @control.ctrl_tipo %></td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+					
+					<div class="bottom">
+						<%= link_to 'Editar', edit_control_path(@control), class: "cmd edit" %> |
+						<%= link_to 'Regresar', controls_path, class:"cmd previous" %>
+					</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	
