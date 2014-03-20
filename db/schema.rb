@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216123841) do
+ActiveRecord::Schema.define(version: 20140307222713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 20140216123841) do
     t.datetime "updated_at"
     t.string   "prf_tipo_perfil"
   end
+
+  create_table "permisos", force: true do |t|
+    t.integer  "perfil_id"
+    t.integer  "funcionalidad_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permisos", ["funcionalidad_id"], name: "index_permisos_on_funcionalidad_id", using: :btree
+  add_index "permisos", ["perfil_id"], name: "index_permisos_on_perfil_id", using: :btree
 
   create_table "usuarios", force: true do |t|
     t.string   "usr_tipo_docum_ident"

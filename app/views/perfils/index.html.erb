@@ -44,8 +44,8 @@ $(document).ready(function() {
         <td><%= link_to perfil.prf_nombre, perfil %></td>
         <td><%= perfil.prf_descripcion %></td>
         <td><%= perfil.ctlg_valor_desc.capitalize %></td>
-        <td><%= link_to 'Modificar', edit_perfil_path(perfil), class: "cmd edit" %></td>
-        <td><%= link_to 'Eliminar', perfil, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class: "cmd delete" %></td>
+        <td><%= link_to 'Editar', edit_perfil_path(perfil), class: "cmd edit" %></td>
+        <td><%= link_to 'Borrar', perfil, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class: "cmd delete" %></td>
       </tr>
     <% end %>
   </tbody>

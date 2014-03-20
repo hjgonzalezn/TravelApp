@@ -1,0 +1,44 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Modelos</h3>
+			<center>
+				<br/>			
+				<table id="table_index">
+				  <thead>
+				    <tr>
+				      <th>Perfil</th>
+				      <th>Funcionalidad</th>
+				      <th></th>
+				      <th></th>
+				      <th></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <% @permisos.each do |permiso| %>
+				      <tr>
+				        <td><%= permiso.perfil %></td>
+				        <td><%= permiso.funcionalidad %></td>
+				        <td><%= link_to 'Show', permiso %></td>
+				        <td><%= link_to 'Edit', edit_permiso_path(permiso) %></td>
+				        <td><%= link_to 'Destroy', permiso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+				</center>
+			<div class="bottom">
+				<%= link_to 'Actualizar permisos',nil, class: "cmd add" %>
+			</div>
+		</div>
+	</div>
+</div>

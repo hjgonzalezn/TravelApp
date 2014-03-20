@@ -2,8 +2,15 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   
   resources :accions
   resources :modelos
-  resources :perfils
+  
+  resources :perfils do
+    get '/perfils/:perlfil_id/permisos/new' => 'permisos#new'
+    resources :permisos   
+  end
+  
+  resources :permisos 
   resources :controls
+  
   
   get 'funcion_controls/actualizar_controles_por_tipo' => 'funcion_controls#actualizar_controles_por_tipo', as: :actualizar_controles_por_tipo
   

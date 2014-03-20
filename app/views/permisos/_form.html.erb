@@ -151,67 +151,78 @@
   </script>
 <script>
    $(function() {
-    $( "#perfil_prf_estado_registro" ).combobox();
+    $( "#mdl_codigo" ).combobox();
     $( "#toggle" ).click(function() {
-      $( "#perfil_prf_estado_registro" ).toggle();
-    });
-  });
-  
-   $(function() {
-    $( "#perfil_prf_tipo_perfil" ).combobox();
-    $( "#toggle" ).click(function() {
-      $( "#perfil_prf_tipo_perfil" ).toggle();
+      $( "#mdl_codigo" ).toggle();
     });
   });
   </script>
+  <script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+	<div class="form buscar">
+		<%= form_tag nil, method: 'get' do %>
+  			&nbsp;
+  			<%= label_tag(:prf_descripcion, "Perfil") %>&nbsp;&nbsp;
+  			<%= text_field(:perfil, :prf_descripcion, size:40) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  			<%= hidden_field(:perfil, :id) %>
+  			<%= label_tag(:modulo, "Módulo") %>&nbsp;&nbsp;
+  			<%codigo = nil %>
+  			<% unless @modelo.nil? then %>
+  				<%codigo = @modelo.mdl_codigo%>
+  			<% end %>
+  			<%= select_tag(:mdl_codigo, options_for_select( @modulos.map{|m| [m.mdl_nombre, m.mdl_codigo]}, codigo )) %>
+  			<%= submit_tag "Buscar" %>
+		<% end %>
+	</div>
+	
+<%= form_for(@perfil_permiso) do |f| %>
 
-<%= form_for(@perfil) do |f| %>
-  <% if @perfil.errors.any? %>
-  	<!-- <div class="error"> -->
-    	<div id="error_explanation">
-      		<h2><%= pluralize(@perfil.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado:</h2>
+    <!-- <%# if @perfil_permiso.errors.any? %>
+    <div id="error_explanation">
+      <h2><%#= pluralize(@perfil_permiso.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado:</h2>
 
-      		<ul>
-      			<% @perfil.errors.full_messages.each do |msg| %>
-        		<li><%= msg %></li>
-      			<% end %>
-      		</ul>
-    	</div>
-    <!-- </div> -->
-  <% end %>
+      <ul>
+      <%# @perfil_permiso.errors.full_messages.each do |msg| %>
+        <li><%#= msg %></li>
+      <%# end %>
+      </ul>
+    </div>
+  <%# end %>-->
+  
 	<div class = "form_fields">
-  		<div class="field">
-    		<%= f.label :prf_nombre, "Nombre" %><br>
-    		<%= f.text_field :prf_nombre, size: 50 %>
-  		</div>
-  		<div class="field">
-    		<%= f.label :prf_descripcion, "Descripción" %><br> 
-    		<%= f.text_field :prf_descripcion, size: 50 %>
-  		</div>
-  		<div class="ui-widget">
-  			<div class="field">
-    			<%= f.label :prf_tipo_perfil, "Tipo de Perfil" %><br/>
-    			<%= f.select :prf_tipo_perfil, @tiposPerfil.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}, prompt: '---- SELECCIONE ----' %>
-  			</div>
-  		</div>
-  		<div class="ui-widget">
-  			<div class="field">
-    			<%= f.label :prf_estado_registro, "Estado Registro" %><br/>
-    			<%= f.select :prf_estado_registro, @estados.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}, prompt: '---- SELECCIONE ----', selected: @estado_registro %>
-  			</div>
-  		</div>
+		<% unless @funcionalidades.nil? then %>
+			<center>
+			<table id="table_index">
+				<thead>
+					<td>Codigo</td>
+					<td>Descripcion</td>
+				</thead>
+				<tbody>
+					
+				<% @funcionalidades.each do |func| %>
+					<tr>
+						<td><%= check_box_tag(func.id) %></td>
+						<td> <%= func.func_descripcion %> </td>
+					</tr>
+				<% end %>
+				
+				</tbody>
+		  	</table>
+		  	</center>
+		<% end %>
+	</div>
+
+<div class="bottom">
+	<div class="actions">
+    	<%= f.submit %>
   	</div>
-	<div class="bottom">
-		<div class="actions">
-			<% if action_name == "edit"%>
-				<%= f.submit "Aceptar", class: "cmd save" %> |
-				<%= link_to 'Consultar', @perfil, class: "cmd star" %> |
-				<%= link_to 'Actualizar permisos', new_perfil_permiso_path(@perfil)  , class: "cmd edit" %> |
-			<% elsif action_name == "new" or action_name == "create" %>
-				<%= link_to "Aceptar", nil, class: "cmd save", onclick: "$('.new_perfil').submit()" %> |
-			<% end %>
-			<%= link_to 'Regresar', perfils_path, class: "cmd previous" %>
-		</div>
-	</div><!--bottom-->
+</div>
 
 <% end %>
+
