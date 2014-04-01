@@ -17,8 +17,8 @@ class FuncionControlsController < ApplicationController
   def new
     @funcionalidad_funcion_control = FuncionControl.new
     @funcionalidad = Funcionalidad.find(params[:funcionalidad_id])
-    @modelos = Modelo.all
-    @acciones = Accion.all
+    @modelos = Modelo.where("mdl_estado_registro = 'A'").order(mdl_nombre: :asc)
+    @acciones = Accion.all.order(acc_nombre: :asc)
     @tipos_control = Catalogo.select("ctlg_valor_desc descripcion, ctlg_valor_cdg codigo").where("ctlg_categoria='APLICACION' AND ctlg_subcategoria = 'TIPO DE CONTROL'").order(ctlg_valor_desc: :asc)
   end
 
@@ -26,7 +26,7 @@ class FuncionControlsController < ApplicationController
   def edit
     @funcionalidad_funcion_control = @funcion_control
     @funcionalidad = Funcionalidad.find(@funcion_control.funcionalidad_id)
-    @modelos = Modelo.all
+    @modelos = Modelo.all.order(mdl_nombre: :asc)
     @acciones = Accion.all
     @tipos_control = Catalogo.select("ctlg_valor_desc descripcion, ctlg_valor_cdg codigo").where("ctlg_categoria='APLICACION' AND ctlg_subcategoria = 'TIPO DE CONTROL'").order(ctlg_valor_desc: :asc)
     control = Control.find(@funcion_control.control_id)

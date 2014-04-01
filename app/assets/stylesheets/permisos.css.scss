@@ -1,3 +1,51 @@
 // Place all the styles related to the permisos controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+td{
+    color:#303030;
+  }
+  
+  table.dataTable tbody td:nth-child(1){
+  width:15%;
+  }
+    table.dataTable tbody td:nth-child(2){
+  width:85%;
+  }
+
+table.dataTable tr.odd td.gradeA { background-color: #ccffcc; }
+table.dataTable tr.even td.gradeA { background-color: #a0ffa0; }
+table.dataTable tr.odd td.gradeC { background-color: #ddddff; }
+table.dataTable tr.even td.gradeC { background-color: #eeeeff; }
+table.dataTable tr.odd td.gradeU { background-color: #dddddd; }
+table.dataTable tr.even td.gradeU { background-color: #eeeeee; }
+table.dataTable tr.odd td.gradeX { background-color: #ffdddd; }
+table.dataTable tr.even td.gradeX { background-color: #ffeeee; }
+
+table.dataTable tr.odd td.sorting_1.gradeA { background-color: #ccffcc; }
+table.dataTable tr.odd td.sorting_2.gradeA { background-color: #ccffcc; }
+table.dataTable tr.odd td.sorting_3.gradeA { background-color: #ccffcc; }
+table.dataTable tr.even td.sorting_1.gradeA { background-color: #a0ffa0; }
+table.dataTable tr.even td.sorting_2.gradeA { background-color: #a0ffa0; }
+table.dataTable tr.even td.sorting_3.gradeA { background-color: #a0ffa0; }
+
+table.dataTable tr.odd td.sorting_1.gradeC { background-color: #ddddff; }
+table.dataTable tr.odd td.sorting_2.gradeC { background-color: #ddddff; }
+table.dataTable tr.odd td.sorting_3.gradeC { background-color: #ddddff; }
+table.dataTable tr.even td.sorting_1.gradeC { background-color: #eeeeff; }
+table.dataTable tr.even td.sorting_2.gradeC { background-color: #eeeeff; }
+table.dataTable tr.even td.sorting_3.gradeC { background-color: #eeeeff; }
+
+table.dataTable tr.odd td.sorting_1.gradeU { background-color: #dddddd; }
+table.dataTable tr.odd td.sorting_2.gradeU { background-color: #dddddd; }
+table.dataTable tr.odd td.sorting_3.gradeU { background-color: #dddddd; }
+table.dataTable tr.even td.sorting_1.gradeU { background-color: #eeeeee; }
+table.dataTable tr.even td.sorting_2.gradeU { background-color: #eeeeee; }
+table.dataTable tr.even td.sorting_3.gradeU { background-color: #eeeeee; }
+
+table.dataTable tr.odd td.sorting_1.gradeX { background-color: #ffdddd; }
+table.dataTable tr.odd td.sorting_2.gradeX { background-color: #ffdddd; }
+table.dataTable tr.odd td.sorting_3.gradeX { background-color: #ffdddd; }
+table.dataTable tr.even td.sorting_1.gradeX { background-color: #ffeeee; }
+table.dataTable tr.even td.sorting_2.gradeX { background-color: #ffeeee; }
+table.dataTable tr.even td.sorting_3.gradeX { background-color: #ffeeee; }

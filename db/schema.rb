@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307222713) do
+ActiveRecord::Schema.define(version: 20140327001010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,23 @@ ActiveRecord::Schema.define(version: 20140307222713) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "menus", force: true do |t|
+    t.string   "mnu_tipo_elemento"
+    t.string   "mnu_etiqueta_html"
+    t.string   "mnu_clase_css"
+    t.string   "mnu_props_html"
+    t.text     "mnu_texto"
+    t.integer  "mnu_padre"
+    t.integer  "mnu_orden"
+    t.integer  "modelo_id"
+    t.integer  "accion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "menus", ["accion_id"], name: "index_menus_on_accion_id", using: :btree
+  add_index "menus", ["modelo_id"], name: "index_menus_on_modelo_id", using: :btree
 
   create_table "modelos", force: true do |t|
     t.string   "mdl_codigo"

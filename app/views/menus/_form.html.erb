@@ -17,6 +17,7 @@
     margin: 0;
     padding: 0.3em;
   }
+
   </style>
   <script>
   (function( $ ) {
@@ -151,93 +152,99 @@
   </script>
 <script>
    $(function() {
-    $( "#mdl_codigo" ).combobox();
-    $( "#toggle" ).click(function() {
-      $( "#mdl_codigo" ).toggle();
-    });
+    $( "#menu_modelo_id" ).combobox();
+  });
+  $(function() {
+    $( "#menu_accion_id" ).combobox();
+  });
+  $(function() {
+    $( "#catalogo_ctlg_valor_cdg" ).combobox();
+    
+  });
+  $(function() {
+    $( "#menu_mnu_tipo_elemento" ).combobox();
+    
   });
   </script>
-
-	<div class="form buscar">
-		<%= form_tag nil, method: 'get' do %>
-  			&nbsp;
-  			<%= label_tag(:prf_descripcion, "Perfil") %>&nbsp;&nbsp;
-  			<%= text_field(:perfil, :prf_descripcion, size:40) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  			<%= hidden_field(:perfil, :id) %>
-  			<%= label_tag(:modulo, "Módulo") %>&nbsp;&nbsp;
-  			<%codigo = nil %>
-  			<% unless @modelo.nil? then %>
-  				<%codigo = @modelo.mdl_codigo%>
-  			<% end %>
-  			<%= select_tag(:mdl_codigo, options_for_select( @modulos.map{|m| [m.mdl_nombre, m.mdl_codigo]}, codigo )) %>
-  			<%= submit_tag "Buscar" %>
-		<% end %>
-	</div>
-	
-<%= form_for(@perfil_permiso) do |f| %>
-
-    <!-- <%# if @perfil_permiso.errors.any? %>
-    <div id="error_explanation">
-      <h2><%#= pluralize(@perfil_permiso.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado:</h2>
-
-      <ul>
-      <%# @perfil_permiso.errors.full_messages.each do |msg| %>
-        <li><%#= msg %></li>
-      <%# end %>
-      </ul>
-    </div>
-  <%# end %>-->
   
-	<div class = "form_fields">
-		<% unless @funcionalidades.nil? then %>
-		  	<script>
-				$(document).ready(function() {
-			    	$('#table_index').dataTable( {
-			    		"bJQueryUI": true,
-			        	"sPaginationType": "full_numbers"
-			    	} );
-				} );
-			</script>
-			<center>
-			
-			<%= hidden_field(:perfil, :id) %>
-			
-			<% unless @modelo.nil? then %>
-				<%= hidden_field_tag :modelo_id, @modelo.id %>
-			<% end %>
-			<table id="table_index">
-				<thead>
-					<th>Seleccion</th>
-					<th>Descripcion</th>
-				</thead>
-				<tbody>
-					
-				<% @funcionalidades.each do |func| %>
-					<tr>
-						<%@perm = Permiso.where("funcionalidad_id = #{func.id.to_s} AND perfil_id = #{params[:perfil_id].to_s}") %>
-						<% if @perm.any? then%>
-							<td class="gradeA"><%= check_box_tag('funcionalidad_id[]', func.id.to_s, true) %></td>
-							<td class="gradeA"> <%= func.func_descripcion %> </td>						
-						<% else %>
-							<td class="gradeX"><%= check_box_tag('funcionalidad_id[]', func.id.to_s, false) %></td>
-							<td class="gradeX"> <%= func.func_descripcion %> </td>
-						<% end %>
-					</tr>
+<%= form_for(@menu) do |f| %>
+	<% if @menu.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@menu.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+      		<ul>
+      			<% @menu.errors.full_messages.each do |msg| %>
+        			<li><%= msg %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  	<% end %>
+	
+	<div class="form_fields">
+		<div class="form_column">
+			<div class="field">
+				<%= f.label :Tipo_Elemento %><br>
+			    <%= f.select :mnu_tipo_elemento, [['COMPONENTE', 'C'], ['OPCION','O'], ['TITULO','T'], ['PARRAFO','P'], ['IMAGEN','I']] , prompt: ''%>
+			</div>
+			<div class="field">
+		    	<%= f.label :Etiqueta_HTML, "Etiqueta HTML" %><br>
+		    	<%= f.text_field :mnu_etiqueta_html %>
+			</div>
+			<div class="field">
+	    		<%= f.label :Clase_CSS, "Clase CSS" %><br>
+	    		<%= f.text_field :mnu_clase_css, size: 35, maxlength: 35 %>
+  			</div>
+		  	<div class="field">
+	    		<%= f.label :Propiedades_HTML, "Propiedades HTML" %><br>
+	    		<%= f.text_field :mnu_props_html, size:35, maxlength: 35 %>
+	  		</div>
+  			<div class="field">
+				<%= f.label :Texto %><br>
+				<%= f.text_field :mnu_texto, size:60, maxlength: 60 %>
+  			</div>
+  		</div>
+  		<div class="form_column">
+			<div class="field">
+    			<%= f.label :Elemento_padre %><br>
+    			
+    			<% if action_name == "new" then %>
+    				<% padre_id = params[:menu_id] %>
+    				<%= f.text_field :mnu_padre, value: padre_id, onfocus: "blur();" %>
+    				
+    				<% orden = Menu.where("mnu_padre = " + padre_id.to_s).maximum("mnu_orden") %>
+    				<% orden ||= 0 %>
+    				<% orden = orden + 1 %>
+    			<% elsif action_name == "edit" then %>
+					<%= f.number_field :mnu_padre %>
 				<% end %>
-				
-				</tbody>
-		  	</table>
-		  	</center>
-		<% end %>
-	</div>
-
-<div class="bottom">
-	<div class="actions">
-    	<%#= f.submit %>
-    	<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_permiso').submit()" %> |
-    	<%= link_to 'Regresar', edit_perfil_path(params[:perfil_id]), class: "cmd previous", id:"cmd_regresar" %>
+			</div>
+			<div class="field">
+	    		<%= f.label :Orden %><br>
+	    		<% if action_name == "new" then %>
+	    			<%= f.text_field :mnu_orden, value: orden, onfocus: "blur();" %>
+	    		<% else %>
+	    			<%= f.number_field :mnu_orden %>
+	    		<% end %>
+			</div>
+			<div class="field">
+	    		<%= f.label :Modelo_Destino %><br>
+				<%= f.select :modelo_id, @modelos.map{|u| [u.mdl_nombre, u.id]}.insert(nil.to_f, nil) %>
+			</div>
+			<div class="field">
+	    		<%= f.label :Accion_Destino %><br>
+				<%= f.select :accion_id, @acciones.map{|u| [u.acc_nombre, u.id]}.insert(nil.to_f, nil) %>
+			</div>
+		</div>
   	</div>
-</div>
-
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save" %> |
+				<%= link_to 'Consultar', @menu, class: "cmd star" %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<%= link_to "Aceptar", nil, class: "cmd save", onclick: "$('.new_menu').submit()" %> |
+				
+			<% end %>
+			<%= link_to 'Regresar', menus_url, class: "cmd previous" %>
+  		</div>
+  	</div>
 <% end %>
-

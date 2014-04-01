@@ -1,3 +1,16 @@
 // Place all the styles related to the funcionalidads controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+  
+  table.dataTable tbody td:nth-child(1){
+  width:60%;
+  }
+    table.dataTable tbody td:nth-child(2){
+  width:10%;
+  }
+    table.dataTable tbody td:nth-child(3){
+  width:15%;
+  }
+    table.dataTable tbody td:nth-child(4){
+  width:15%;
+  }

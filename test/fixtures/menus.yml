@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mnu_tipo_elemento: MyString
+  mnu_etiqueta_html: MyString
+  mnu_clase_css: MyString
+  mnu_props_html: MyString
+  mnu_texto: MyText
+  mnu_padre: 1
+  mnu_orden: 1
+  modelo_id: 
+  accion_id: 
+
+two:
+  mnu_tipo_elemento: MyString
+  mnu_etiqueta_html: MyString
+  mnu_clase_css: MyString
+  mnu_props_html: MyString
+  mnu_texto: MyText
+  mnu_padre: 1
+  mnu_orden: 1
+  modelo_id: 
+  accion_id: 

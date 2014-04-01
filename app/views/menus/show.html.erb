@@ -1,0 +1,48 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Elemento de menú</h3>
+			<div class="form">
+				<div class="form_fields">
+				<div class = "field_name_column">
+					<p><strong>Tipo Elemento:</strong></p>
+					<p><strong>Etiqueta HTML:</strong></p>
+					<p><strong>Clase CSS:</strong></p>
+					<p><strong>Propiedades HTML:</strong></p>
+					<p><strong>Texto:</strong></p>
+					<p><strong>Padre:</strong></p>
+					<p><strong>Orden:</strong></p>
+					<p><strong>Destino:</strong></p>
+  				</div>
+  				<div class="field_desc_column">
+					<p><%= @menu.mnu_tipo_elemento %>&nbsp;</p>
+  					<p><%= @menu.mnu_etiqueta_html %>&nbsp;</p>
+  					<p><%= @menu.mnu_clase_css %>&nbsp;</p>
+  					<p><%= @menu.mnu_props_html %>&nbsp;</p>
+  					<p><%= @menu.mnu_texto %>&nbsp;</p>
+  					<p><%= @menu.mnu_padre %>&nbsp;</p>
+  					<p><%= @menu.mnu_orden %>&nbsp;</p>
+  					
+  					<p>
+  						<% unless @menu.modelo.nil? then%>
+  							<%= @menu.modelo.mdl_nombre + "/" + @menu.accion.acc_nombre %>
+  						<% else %>
+  							<%= "" %>
+  						<% end %>
+  					</p>
+				</div>
+			</div>
+  		</div>
+			<div class="bottom">
+				<%= link_to 'Editar', edit_menu_path(@modelo), class: "cmd edit" %> |
+				<%= link_to 'Regresar', menus_path, class:"cmd previous" %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

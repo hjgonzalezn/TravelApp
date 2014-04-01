@@ -1,3 +1,17 @@
+<style>
+	  table.dataTable tbody td:nth-child(1){
+  width:60%;
+  }
+    table.dataTable tbody td:nth-child(2){
+  width:10%;
+  }
+    table.dataTable tbody td:nth-child(3){
+  width:15%;
+  }
+    table.dataTable tbody td:nth-child(4){
+  width:15%;
+  }
+</style>
 <script>
 $(document).ready(function() {
     $('#table_index').dataTable( {
@@ -26,10 +40,10 @@ $(document).ready(function() {
     					<% @funcionalidads.each do |funcionalidad| %>
       						<tr>
         						<td><%= link_to funcionalidad.func_descripcion, funcionalidad %></td>
-        						<% if funcionalidad.func_publica == "S" then %>
-        							<td>SI</td>
+        						<%if funcionalidad.func_publica == "S" then %>
+        							<td>SI</td-->
         						<% else %>
-        							<td>NO</td>
+        							<td>NO</td-->
         						<% end %>
         						
         						<td><%= link_to 'Editar', edit_funcionalidad_path(funcionalidad), class: "cmd edit" %></td>

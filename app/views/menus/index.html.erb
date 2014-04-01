@@ -1,0 +1,65 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+<script>
+	$( "#new_menu" ).click(function() {
+  		if( $("input[name='menu_id']:checked").val() == undefined){
+  			alert("Por favor seleccione un elemento antes de continuar");
+  		}
+  		else{
+  			$(location).attr("href", "<%= new_menu_path %>" + "?menu_id=" + $("input[name='menu_id']:checked").val());
+  		}
+	});
+</script>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Administraci&oacute;n del men&uacute; de la aplicaci&oacute;n</h3>
+			<center>
+				<table id="table_index">
+				  <thead>
+				    <tr>
+				      <th>Seleccion</th>
+				      <th>Tipo elemento</th>
+				      <th>Etiqueta HTML</th>
+				      <th>Clase CSS</th>
+				      <th>Texto</th>
+				      <th>Destino</th>
+				      <th></th>
+				      <th></th>
+				      <th></th>
+				    </tr>
+				  </thead>
+				
+				  <tbody>
+				    <% @menus.each do |menu| %>
+				      <tr>
+				      	<td><%= radio_button_tag(:menu_id, menu.id.to_s, false) %></td>
+				        <td><%= menu.mnu_tipo_elemento %></td>
+				        <td><%= menu.mnu_etiqueta_html %></td>
+				        <td><%= menu.mnu_clase_css %></td>
+				        <td><%= menu.mnu_texto %></td>
+				        <% unless menu.modelo.nil? then %>
+				        	<td><%= menu.modelo.mdl_nombre + "/" + menu.accion.acc_nombre %></td>
+				        <% else %>
+				        	<td>&nbsp;</td>
+				        <% end %>
+				        <td><%= link_to 'Consultar', menu %></td>
+				        <td><%= link_to 'Editar', edit_menu_path(menu) %></td>
+				        <td><%= link_to 'Borrar', menu, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } %></td>
+				      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear elemento del menú', nil , class: "cmd add", id:"new_menu" %>
+			</div>
+		</div>
+	</div>
+</div>

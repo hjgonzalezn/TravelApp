@@ -1,70 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>TravelApp</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-<!--[if IE 6]>
-<style>
-body {behavior: url("csshover3.htc");}
-#menu li .drop {background:url("img/drop.gif") no-repeat right 8px; 
-</style>
-<![endif]-->
-<script>
-   $(function() {
-    $( "#usuario_usr_fecha_nacimiento" ).datepicker({
-      changeMonth:true,
-      changeYear:true
-    });
-  });
-  </script>
-</head>
-<body>
-	<div class="contenido">
-	<ul id="menu"><!-- List starts here -->
-		<li><a href="#" class="drop">Home</a></li>
-		<li><a href="#" class="drop">Administraci&oacute;n</a><!-- Begin 3 columns Item -->
-			<div class="dropdown_3columns"><!-- Begin 3 columns container -->
-				<div class="col_3">
-                	<h2>Administraci&oacute;n del sistema</h2>
-                 	<div class="col_1">
-    					<h3>Seguridad</h3>
-                		<ul class="greybox">
-		                    <li><a href="<%= usuarios_path %>">Usuarios</a></li>
-		                    <li><a href="<%=perfils_path%>">Perfiles de Usuario</a></li>
-		                    <!--li><a href="<%#=permisos_path%>">Permisos</a></li-->
-		                    <li><a href="<%=funcionalidads_path%>">Funcionalidades</a></li>
-		                    <li><a href="#">Opciones</a></li>
-                		</ul>   
-    
-            		</div>
-            
-            		<div class="col_1">
-    					<h3>Cat&aacute;logos</h3>
-                		<ul class="greybox">
-                    		<li><a href="<%=catalogos_path%>">General</a></li>
-                    		<li><a href="#">Pa&iacute;ses/Ciudades/etc.</a></li>
-                		</ul>   
-            		</div>
-            
-            		<div class="col_1">
-    					<h3>Aplicaci&oacute;n</h3>
-                		<ul class="greybox">
-                    		<li><a href="#">Par&aacute;metros del sistema</a></li>
-                    		<li><a href="<%=modelos_path%>">Modelos</a></li>
-                    		<li><a href="<%=accions_path%>">Acciones</a></li>
-                    		<li><a href="<%=controls_path%>">Controles</a></li>
-                		</ul>   
-            		</div>
-				</div>
-			</div>
-		</li>
-		<li><a href="#" class="drop">Servicios</a></li><!-- Begin 3 columns Item -->
-	</ul><!-- List ends here -->
-<br/>
-<%= yield %>
-
-</div>
-</body>
+	<head>
+  		<title>TravelApp</title>
+  			<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  			<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  			<%= csrf_meta_tags %>
+			<!--[if IE 6]>
+				<style>
+					body {behavior: url("csshover3.htc");}
+					#menu li .drop {background:url("img/drop.gif") no-repeat right 8px; 
+				</style>
+			<![endif]-->
+		<script>
+   			$(function() {
+    			$( "#usuario_usr_fecha_nacimiento" ).datepicker({
+      				changeMonth:true,
+      				changeYear:true
+    			});
+  			});
+  		</script>
+	</head>
+	<body>
+		<div class="contenido">
+			<% @menu.each do |m| %>
+				<%=raw m %>
+			<% end %>
+			<br/>
+			<%= yield %>
+		</div>
+	</body>
 </html>

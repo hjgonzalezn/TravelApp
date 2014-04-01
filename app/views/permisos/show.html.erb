@@ -1,14 +1,59 @@
-<p id="notice"><%= notice %></p>
+  <script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+<style>
+	.verde{
+		background-color: #008000;
+	}
+</style>
+<% unless notice.nil? then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
 
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Permisos a perfil: <%= @permiso.perfil.prf_descripcion %></h3>
+			<div class="form">
+				<div class="form_fields">
 <p>
-  <strong>Perfil:</strong>
-  <%= @permiso.perfil %>
+  <strong>Funcionalidades módulo: <%= @modelo.mdl_nombre %></strong>
+  <% @funcionalidades = Funcionalidad.select("Funcionalidads.func_descripcion, Funcionalidads.id").distinct.joins("LEFT OUTER JOIN Funcion_Controls " + 
+  										    "ON funcionalidads.id = Funcion_Controls.funcionalidad_id").where("Funcion_Controls.modelo_id = (SELECT modelo_id FROM Funcion_Controls WHERE funcionalidad_id =#{@permiso.funcionalidad.id}  LIMIT 1)") %>
+  <table id="table_index">
+  	<thead>
+  		<th>Descripcion</th>
+  	</thead>
+  	<tbody>
+		<% @funcionalidades.each do |f| %>
+			<%@perm = Permiso.where("funcionalidad_id = #{f.id.to_s} AND perfil_id = #{@permiso.perfil.id.to_s}") %>
+				<% if @perm.any? then%>
+				<tr>
+  					<td class="gradeA"><%= f.func_descripcion %></td>
+  				</tr>
+  				<% else %>
+  					<tr>
+  						<td class="gradeX"><%= f.func_descripcion %></td>
+  					</tr>
+  				<% end %>
+  			
+  		<% end %>
+  	</tbody>	  										    
+  </table>
 </p>
-
-<p>
-  <strong>Funcionalidad:</strong>
-  <%= @permiso.funcionalidad %>
-</p>
-
-<%= link_to 'Edit', edit_permiso_path(@permiso) %> |
-<%= link_to 'Back', permisos_path %>
+</div>
+</div>
+<div class="bottom">
+	<%#= link_to 'Editar', edit_perfil_path(@permiso.perfil), class: "cmd edit" %> 
+	<%= link_to 'Regresar', edit_perfil_path(@permiso.perfil), class: "cmd previous" %>
+</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

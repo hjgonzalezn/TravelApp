@@ -231,3 +231,17 @@ form.forgot_password{
 	box-shadow: 0px 0px 2px #eaeaea inset;
 	color: #222;
 }
+
+.form_column{
+	float:left;
+	width:50%;
+}
+
+.field_name_column{
+	float:left;
+	width:20%;
+}
+.field_desc_column{
+	float:left;
+	width:80%;
+}
