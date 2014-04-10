@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-  		<title>TravelApp</title>
+  		<title><%=@razon_social + " " + @actividad_economica %></title>
   			<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   			<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   			<%= csrf_meta_tags %>
@@ -18,15 +18,91 @@
       				changeYear:true
     			});
   			});
+  			
   		</script>
+
 	</head>
 	<body>
-		<div class="contenido">
-			<% @menu.each do |m| %>
-				<%=raw m %>
-			<% end %>
+ <script>
+  $(function() {
+
+    $( "#iniciar-sesion" )
+      .click(function() {
+           $.ajax({
+					url: "<%= iniciar_sesion_path %>",
+					data: {
+  							usr_correo_electronico: $('#usr_correo_electronico_').val(),
+  							usr_contrasena: $('#usr_contrasena_').val()
+						  },
+					dataType: "script"
+				 })
+      });
+
+    $( "#cerrar-sesion" )
+      .click(function() {
+           $.ajax({
+					url: "<%= cerrar_sesion_path %>",
+					dataType: "script"
+				 })
+			.done(function() {
+    			location.reload();
+  		});
+      });
+      
+    $( "#recordar-clave" )
+      .click(function() {
+        $( "#dialog-form" ).dialog( "open" );
+        $( "#login-msg" ).html("<span>&nbsp;</span>");
+        $( "#login-msg" ).removeClass();
+      });
+      
+  });
+  </script>
+			
+		<header class="header">
+			
+			<div>
+				<div class="logo">
+					<a href="<%= home_path %>"><img src="<%= @logo_header %>" width="300" height="80" /></a>
+				</div>
+				<div id="form-sesion" class="sesion">
+					<div id="login-msg"></div>
+					<% if session[:usr_correo_electronico].nil? %>
+						<%= form_tag nil, id:'frmAuthentication' do %>
+							<table>
+								<tbody>
+									<tr>
+										<td><%= text_field :usr_correo_electronico, nil, size:30, maxlength:40, placeholder: :Usuario %></td>
+										<td><%= password_field :usr_contrasena, nil, size:30, maxlength:40, placeholder: :Contraseña %></td>
+									</tr>
+									<tr>
+										<td><a id="iniciar-sesion" class="cmd add">Iniciar sesión</a></td> 
+										<td><a id="recordar-clave" class="cmd add">Olvidé mi contraseña</a></td>
+									</tr>
+								</tbody>
+							</table>
+						<% end %>
+					<% else %>
+						<p>Bienvenid@ <%=session[:usuario]%></p>
+						<a id='cerrar-sesion' class='cmd add'>Cerrar sesión</a>
+					<% end %>
+				</div>
+			</div>
+			<nav>
+				<!-- Generacion del Menu de la Aplicacion -->
+				<% @menu_opc.each do |m| %>
+					<%=raw m %>
+				<% end %>
+			</nav>
 			<br/>
-			<%= yield %>
-		</div>
+		</header>
+		<section>
+			<article>
+				<div class="contenido">
+					<%= yield %>
+				</div>
+			</article>
+		</section>
+		<footer class="contenido"><p><%= @razon_social%></p></footer>
 	</body>
 </html>

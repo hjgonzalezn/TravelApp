@@ -1,0 +1,60 @@
+<%= form_for(@dato_entidad) do |f| %>
+  <% if @dato_entidad.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dato_entidad.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+
+      <ul>
+      <% @dato_entidad.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="form_fields">
+	<div class="form_column">
+		<div class="field">
+	    	<%= f.label :Categoria %><br>
+	    	<%= f.text_field :ent_dato_categoria, size: 30, maxlength: 30 %>
+	  	</div>
+		<div class="field">
+	    	<%= f.label :Subcategoria %><br>
+	    	<%= f.text_field :ent_dato_subcategoria, size: 30, maxlength: 30 %>
+	  	</div>
+	  	<div class="field">
+	    	<%= f.label :Codigo %><br>
+	    	<%= f.text_field :ent_dato_codigo, size: 20, maxlength: 15 %>
+	  	</div>
+	  	<div class="field">
+	    	<%= f.label :Descripcion %><br>	
+	    	<%= f.text_field :ent_dato_descripcion, size: 50, maxlength: 50 %>
+	  	</div>
+	</div>
+	<div class="form_column">
+  		<div class="field">
+    		<%= f.label :Valor %><br>
+    		<%= f.text_area :ent_dato_valor, cols: 55, rows: 4 %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :Observacion %><br>
+    		<%= f.text_area :ent_dato_observacion, cols: 55, rows: 3 %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :Estado_registro %><br>
+    		<%= f.text_field :ent_dato_estado_registro %>
+  		</div>
+  	</div>
+</div>
+
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save", id:"cmd_aceptar" %> |
+				<%= link_to 'Consultar', @dato_entidad, class: "cmd star", id:"cmd_consultar" %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_dato_entidad').submit()" %> |
+			<% end %>
+			<%= link_to 'Regresar', dato_entidads_url, class: "cmd previous", id:"cmd_regresar" %>
+  		</div>
+  	</div>
+<% end %>

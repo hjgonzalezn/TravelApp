@@ -29,7 +29,7 @@ class UsuariosController < ApplicationController
   # POST /usuarios.json
   def create
     @usuario = Usuario.new(usuario_params)
-    @usuario.usr_contrasena = SecureRandom.urlsafe_base64
+    @usuario.usr_contrasena = "12345"#SecureRandom.urlsafe_base64
     contrasena_bkp = @usuario.usr_contrasena
     @usuario.usr_tipo_contrasena = "TMP" # contraseña provisional, un solo ingreso
     
@@ -72,7 +72,7 @@ class UsuariosController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
   def login
     
   end
@@ -96,38 +96,38 @@ class UsuariosController < ApplicationController
     end
   end
   
-  def login_attempt
-    usr_passwd = params[:usr_contrasena].pop 
-    usr_email = params[:usr_correo_electronico].pop
-    
-    authorized_user = Usuario.authenticate(usr_email, usr_passwd)
-    
-    if authorized_user then
-        
-        session[:usr_correo_electronico] = usr_email
-        session[:perfil_id] = authorized_user.perfil_id
-        
-        respond_to do |format|
-          if authorized_user.usr_tipo_contrasena == "TMP" then #Es una contraseña temporal
-            format.html {redirect_to new_password_url, notice: 'Apreciado(a) usuario(a): su contrasena ya caduco por favor confirme el cambio de la misma.'}
-          else
-            @usuario = authorized_user
-            @usuario.usr_fch_ultimo_ingreso = Time.now
-            @usuario.save # se actualiza la última fecha de ingreso al sistema
-            @usuario = nil
-            format.html {redirect_to usuarios_url }
-          end
-        end
-     else
-       @usuario = Usuario.new
-       @usuario.errors.add(:Sesion, "=> Usuario y/o contrasena incorrectos.")
-       
-       respond_to do |format|
-          format.html { render action: 'login' }
-          format.json { render json: @usuario.errors, status: :unprocessable_entity }
-       end
-    end
-  end
+  # def login_attempt
+    # usr_passwd = params[:usr_contrasena].pop 
+    # usr_email = params[:usr_correo_electronico].pop
+#     
+    # authorized_user = Usuario.authenticate(usr_email, usr_passwd)
+#     
+    # if authorized_user then
+#         
+        # session[:usr_correo_electronico] = usr_email
+        # session[:perfil_id] = authorized_user.perfil_id
+#         
+        # respond_to do |format|
+          # if authorized_user.usr_tipo_contrasena == "TMP" then #Es una contraseña temporal
+            # format.html {redirect_to new_password_url, notice: 'Apreciado(a) usuario(a): su contrasena ya caduco por favor confirme el cambio de la misma.'}
+          # else
+            # @usuario = authorized_user
+            # @usuario.usr_fch_ultimo_ingreso = Time.now
+            # @usuario.save # se actualiza la última fecha de ingreso al sistema
+            # @usuario = nil
+            # format.html {redirect_to usuarios_url }
+          # end
+        # end
+     # else
+       # @usuario = Usuario.new
+       # @usuario.errors.add(:Sesion, "=> Usuario y/o contrasena incorrectos.")
+#        
+       # respond_to do |format|
+          # format.html { render action: 'login' }
+          # format.json { render json: @usuario.errors, status: :unprocessable_entity }
+       # end
+    # end
+  # end
   
   private
     def set_perfiles

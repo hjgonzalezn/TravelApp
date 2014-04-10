@@ -18,9 +18,9 @@ body, ul, li {
 	box-sizing: border-box; 
 	/* Rounded Corners */
 	
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
 
 	/* Background color and gradients */
 	
@@ -81,10 +81,10 @@ body, ul, li {
 }
 #menu li .drop {
 	padding-right:21px;
-	background:url("drop.png") no-repeat right 8px;
+	background:url("/assets/images/drop.png") no-repeat right 8px;
 }
 #menu li:hover .drop {
-	background:url("drop.png") no-repeat right 7px;
+	background:url("/assets/images/drop.png") no-repeat right 7px;
 }
 
 .dropdown_1column, 

@@ -1,8 +1,16 @@
 TravelApp::Application.routes.draw do  # The priority is based upon order of creation: first created -> highest priority.
   
+  root 'dato_entidads#home'
+  
   resources :menus
   resources :accions
   resources :modelos
+  
+  get 'dato_entidads/home' => 'dato_entidads#home', as: :home
+  get 'dato_entidads/contactenos' => 'dato_entidads#contactenos'
+  get 'dato_entidads/somos' => 'dato_entidads#somos'
+  resources :dato_entidads
+  
   
   resources :perfils do
     get '/perfils/:perlfil_id/permisos/new' => 'permisos#new'
@@ -24,12 +32,15 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   get 'catalogos/actualizar_subcategorias' => 'catalogos#actualizar_subcategorias', as: :actualizar_subcategorias
   resources :catalogos
   
+  
+  get 'usuarios/cerrar_sesion' => 'usuarios#cerrar_sesion' , as: :cerrar_sesion
+  get 'usuarios/iniciar_sesion' => 'usuarios#iniciar_sesion' , as: :iniciar_sesion
   post 'usuarios/change_password' => 'usuarios#change_password', as: :change_password
   get 'usuarios/new_password' => 'usuarios#new_password', as: :new_password
   get 'usuarios/login' => 'usuarios#login', as: :login
   post 'usuarios/login_attempt' => 'usuarios#login_attempt', as: :login_attempt
   resources :usuarios
-  root 'usuarios#login'
+  
     
   # See how all your routes lay out with "rake routes".
 

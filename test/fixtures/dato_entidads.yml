@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  ent_dato_categoria: MyString
+  ent_dato_codigo: MyString
+  ent_dato_descripcion: MyString
+  ent_dato_valor: MyText
+  ent_dato_estado_registro: MyString
+
+two:
+  ent_dato_categoria: MyString
+  ent_dato_codigo: MyString
+  ent_dato_descripcion: MyString
+  ent_dato_valor: MyText
+  ent_dato_estado_registro: MyString

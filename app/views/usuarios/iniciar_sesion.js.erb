@@ -1,0 +1,11 @@
+<% datos_sesion = params[:usr_correo_electronico] + "|" + params[:usr_contrasena] %>
+<% resultado_login = login_attempt (datos_sesion) %>
+
+<% if resultado_login  == "OK"  then %>
+	$( "#iniciar-sesion" ).hide();
+	$( "#recordar-clave" ).hide();
+	$( "#form-sesion" ).empty();
+	location.reload();
+<% else %>
+	alert("Usuario y/o contraseña incorrectos.")
+<% end %>

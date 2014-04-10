@@ -17,6 +17,8 @@ class Usuario < ActiveRecord::Base
   validates :usr_estado, presence: {message: "=> Es un dato requerido"}
   validates :perfil_id, presence: {message: "=> Es un dato requerido"}, numericality: true
   
+    
+  
   def valida_fecha_nacimiento
     if usr_fecha_nacimiento.present? && usr_fecha_nacimiento > Date.today then
       errors.add(:usr_fecha_nacimiento, "La fecha de nacimiento no puede ser posterior a la fecha actual")
@@ -27,7 +29,7 @@ class Usuario < ActiveRecord::Base
   def encrypt_password
     if usr_contrasena.present?
       self.usr_salt = BCrypt::Engine.generate_salt
-      self.usr_contrasena= BCrypt::Engine.hash_secret(usr_contrasena, self.usr_salt)
+      #self.usr_contrasena= BCrypt::Engine.hash_secret(usr_contrasena, self.usr_salt)
     end
   end
   
@@ -36,15 +38,21 @@ class Usuario < ActiveRecord::Base
       usuario = Usuario.find_by usr_correo_electronico: usr_correo_electronico_in 
     end
     
-    if usuario.match_password(usr_contrasena_in)
-       return usuario
+    unless usuario.nil? then
+    if usuario.match_password(usr_contrasena_in) then
+         return usuario
+    else
+      return false
+    end
     else
       return false
     end
   end
   
   def match_password(usr_contrasena_in)
-    self.usr_contrasena == BCrypt::Engine.hash_secret(usr_contrasena_in, self.usr_salt)
+    self.usr_contrasena == usr_contrasena_in #BCrypt::Engine.hash_secret(usr_contrasena_in, self.usr_salt)
+    #puts "CLAVE 1" + self.usr_contrasena
+    #puts "CLAVE 2" + BCrypt::Engine.hash_secret(usr_contrasena_in, self.usr_salt)
   end
   
 end

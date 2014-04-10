@@ -2,13 +2,26 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_filter :menu_options
+  before_filter :menu_options, :datos_aplicacion
   
   @accesos = []
   
   def permisos_perfil
-    func_permitidas = FuncionControl.select("modelo_id, accion_id").joins("INNER JOIN Funcionalidads ON Funcionalidads.id = Funcion_Controls.funcionalidad_id " + 
+    func_permitidas = FuncionControl.select("modelo_id, accion_id").distinct.joins("INNER JOIN Funcionalidads ON Funcionalidads.id = Funcion_Controls.funcionalidad_id " + 
                                                                           "INNER JOIN Permisos ON Permisos.funcionalidad_id = Funcion_Controls.funcionalidad_id").where(" permisos.perfil_id = 5 ")
+  end
+  
+  def datos_aplicacion
+    dato_entidad = DatoEntidad.find_by ent_dato_codigo: :LOGOHDR
+    @logo_header = dato_entidad.ent_dato_valor
+    dato_entidad = DatoEntidad.find_by ent_dato_codigo: :RAZON_SOCIAL
+    @razon_social = dato_entidad.ent_dato_valor
+    dato_entidad = DatoEntidad.find_by ent_dato_codigo: :ACTIVID_ECONOM
+    @actividad_economica = dato_entidad.ent_dato_valor
+    @redes_sociales = DatoEntidad.where("ent_dato_categoria= 'CONTACTO' AND ent_dato_subcategoria = 'REDES SOCIALES'")
+    dato_entidad = DatoEntidad.find_by ent_dato_codigo: :EMAIL
+    @correo_electronico = dato_entidad.ent_dato_valor
+    @telefonos = DatoEntidad.where("ent_dato_categoria= 'CONTACTO' AND ent_dato_subcategoria = 'TELEFONO'")
   end
   
   def walktree(db)
@@ -47,27 +60,31 @@ class ApplicationController < ActionController::Base
           end 
         end
         
-        # if t.mnu_etiqueta_html == "li" then
-          # if t.modelo_id != nil and t.accion_id != nil then
-            # if @accesos.include?(t.modelo_id.to_s + "-" + t.accion_id.to_s) then
-               @menu << line
-            # end
-          # end
-        # end
+        if t.mnu_etiqueta_html == "li" then
+          if t.modelo_id != nil and t.accion_id != nil then
+            if @accesos.include?(t.modelo_id.to_s + "-" + t.accion_id.to_s) then # tiene permiso a esa opcion de menu
+               @menu_opc << line
+            end
+          else
+            @menu_opc << line
+          end
+        else
+          @menu_opc << line
+        end
         
         walktree(t)
       end
-      @menu << "</" + db.mnu_etiqueta_html + ">"
+      @menu_opc << "</" + db.mnu_etiqueta_html + ">"
     else
       
-      @menu << "</" + db.mnu_etiqueta_html + ">" 
+      @menu_opc << "</" + db.mnu_etiqueta_html + ">" 
 
     end
   end
   
   # recursive method for generating the dynamic menu
   def menu_options
-    @menu = []
+    @menu_opc = []
     @accesos = []
     
     func_permitidas = permisos_perfil
@@ -91,9 +108,12 @@ class ApplicationController < ActionController::Base
       end
     
       line = line + ">"
-      @menu << line
+      @menu_opc << line
       walktree(t)
-      @menu << "</" + t.mnu_etiqueta_html + ">"
+      @menu_opc << "</" + t.mnu_etiqueta_html + ">"
     end
   end
+  
+
+  
 end

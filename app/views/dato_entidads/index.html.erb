@@ -1,0 +1,71 @@
+<style>
+	  table.dataTable tbody td:nth-child(1){
+  width:10%;
+  }
+    table.dataTable tbody td:nth-child(2){
+  width:10%;
+  }
+    table.dataTable tbody td:nth-child(3){
+  width:20%;
+  }	
+    table.dataTable tbody td:nth-child(4){
+  width:50%;
+  }
+  table.dataTable tbody td:nth-child(5){
+  width:5%;
+  }
+  table.dataTable tbody td:nth-child(6){
+  width:5%;
+  }
+</style>
+
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Datos Entidad</h3>
+			<center>
+				<br/>
+				<table id="table_index">
+				  <thead>
+				    <tr>
+				      <th>Categor&iacute;a</th>
+				      <th>C&oacute;digo</th>
+				      <th>Descripci&oacute;n</th>
+				      <th>Valor</th>
+				      <th>Estado Registro</th>
+				      <th></th>
+				      <th></th>
+				    </tr>
+				  </thead>
+				
+				  <tbody>
+				    <% @dato_entidads.each do |dato_entidad| %>
+				      <tr>
+				        <td><%= dato_entidad.ent_dato_categoria %></td>
+				        <td><%= dato_entidad.ent_dato_codigo %></td>
+				        <td><%= link_to dato_entidad.ent_dato_descripcion, dato_entidad %></td>
+				        <td><%= dato_entidad.ent_dato_valor %></td>
+				        <td><%= dato_entidad.ent_dato_estado_registro %></td>
+			        	<td><%= link_to 'Editar', edit_dato_entidad_path(dato_entidad), class: "cmd edit" %></td>
+				        <td><%= link_to 'Borrar', dato_entidad, method: :delete, data: { confirm: 'Are you sure?' }, class: "cmd delete" %></td>
+				      </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear dato de la entidad', new_dato_entidad_path, class: "cmd add", id:"cmd_crear" %>
+			</div>
+		</div>
+	</div>
+</div>
