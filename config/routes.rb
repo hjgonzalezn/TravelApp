@@ -5,6 +5,7 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   resources :menus
   resources :accions
   resources :modelos
+  resources :parametro_sistemas
   
   get 'dato_entidads/home' => 'dato_entidads#home', as: :home
   get 'dato_entidads/contactenos' => 'dato_entidads#contactenos'
@@ -18,8 +19,8 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   end
   
   resources :permisos 
-  resources :controls
   
+  resources :controls
   
   get 'funcion_controls/actualizar_controles_por_tipo' => 'funcion_controls#actualizar_controles_por_tipo', as: :actualizar_controles_por_tipo
   

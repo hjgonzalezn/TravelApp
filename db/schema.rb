@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404230312) do
+ActiveRecord::Schema.define(version: 20140410152155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,16 @@ ActiveRecord::Schema.define(version: 20140404230312) do
     t.string   "mdl_codigo"
     t.string   "mdl_nombre"
     t.string   "mdl_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "parametro_sistemas", force: true do |t|
+    t.string   "psis_categoria"
+    t.string   "psis_codigo"
+    t.string   "psis_valor"
+    t.string   "psis_descripcion"
+    t.string   "psis_estado_registro"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

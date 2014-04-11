@@ -17,6 +17,7 @@
       				changeMonth:true,
       				changeYear:true
     			});
+
   			});
   			
   		</script>
@@ -25,7 +26,29 @@
 	<body>
  <script>
   $(function() {
-
+  	/* se ocultan todos los botones de la pantalla */
+	$(".cmd").hide();
+	
+	/* se muestran todos los botones publicos */
+	$("#iniciar-sesion").show();
+	$("#cerrar-sesion").show();
+	$("#recordar-clave").show();
+	
+	/* se muestran los botones autorizados */
+	<% unless @objetos_permitidos.nil? then %>
+		<% @objetos_permitidos.each do |o| %>
+			<% if  o.ctrl_html_id == "cmd_borrar" then %>
+				$(".delete").show();
+			<% elsif  o.ctrl_html_id == "cmd_editar" then %>
+				$(".edit").show();
+			<% elsif  o.ctrl_html_id == "cmd_consultar" then %>
+				$(".star").show();
+			<% else %>
+				$("#<%= o.ctrl_html_id %>").show();
+			<% end %>
+		<% end %>
+	<% end %>
+	
     $( "#iniciar-sesion" )
       .click(function() {
            $.ajax({
@@ -57,8 +80,9 @@
       });
       
   });
+
   </script>
-			
+
 		<header class="header">
 			
 			<div>

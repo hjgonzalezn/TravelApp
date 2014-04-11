@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Psis categoria:</strong>
+  <%= @parametro_sistema.psis_categoria %>
+</p>
+
+<p>
+  <strong>Psis codigo:</strong>
+  <%= @parametro_sistema.psis_codigo %>
+</p>
+
+<p>
+  <strong>Psis valor:</strong>
+  <%= @parametro_sistema.psis_valor %>
+</p>
+
+<p>
+  <strong>Psis descripcion:</strong>
+  <%= @parametro_sistema.psis_descripcion %>
+</p>
+
+<p>
+  <strong>Psis estado registro:</strong>
+  <%= @parametro_sistema.psis_estado_registro %>
+</p>
+
+<%= link_to 'Edit', edit_parametro_sistema_path(@parametro_sistema) %> |
+<%= link_to 'Back', parametro_sistemas_path %>

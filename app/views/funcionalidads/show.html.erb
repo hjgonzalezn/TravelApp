@@ -56,8 +56,8 @@ $(document).ready(function() {
 					</table>
 				</div>
 				<div class="bottom">
-					<%= link_to 'Editar', edit_funcionalidad_path(@funcionalidad), class: "cmd edit" %> |
-					<%= link_to 'Regresar', funcionalidads_path, class: "cmd previous" %>
+					<%= link_to 'Editar', edit_funcionalidad_path(@funcionalidad), class: "cmd edit", id: :cmd_editar %>  |
+					<%= link_to 'Regresar', funcionalidads_path, class: "cmd previous", id: :cmd_regresar %>
 				</div>
 		</div><!--form_wrapper-->
 	</div><!--content-->

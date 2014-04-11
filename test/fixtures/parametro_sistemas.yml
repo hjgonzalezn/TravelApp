@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  psis_categoria: MyString
+  psis_codigo: MyString
+  psis_valor: MyString
+  psis_descripcion: MyString
+  psis_estado_registro: MyString
+
+two:
+  psis_categoria: MyString
+  psis_codigo: MyString
+  psis_valor: MyString
+  psis_descripcion: MyString
+  psis_estado_registro: MyString

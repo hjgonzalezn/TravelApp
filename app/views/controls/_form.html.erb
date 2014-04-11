@@ -199,12 +199,20 @@
 	<div class="bottom">
   		<div class="actions">
     		<% if action_name == "edit"%>
-				<%= f.submit "Aceptar", class: "cmd save", id:"cmd_aceptar" %> |
-				<%= link_to 'Consultar', @control, class: "cmd star", id:"cmd_consultar" %> |
+				<%= f.submit "Aceptar", class: "cmd save", id: :cmd_aceptar %> |
+				<%= link_to 'Consultar', @control, class: "cmd star", id: :cmd_consultar %> |
 			<% elsif action_name == "new" or action_name =="create" %>
-				<%= link_to "Aceptar", nil, class: "cmd save", id: "cmd_aceptar", onclick: "$('.new_control').submit()" %> |
+				<script>
+					$(function(){
+						$("#cmd_aceptar")
+						.click(function(){
+							$('#new_control').submit();
+						});
+					});
+				</script>	
+				<%= link_to "Aceptar", nil, class: "cmd save", id: :cmd_aceptar %> |
 			<% end %>
-			<%= link_to 'Regresar', controls_url, class: "cmd previous", id:"cmd_regresar" %>
+			<%= link_to 'Regresar', controls_url, class: "cmd previous", id: :cmd_regresar %>
   		</div>
   	</div>
 	

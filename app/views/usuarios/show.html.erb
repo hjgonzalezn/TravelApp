@@ -52,8 +52,8 @@
 					</table>
 				</div>
 			<div class="bottom">
-				<%= link_to 'Editar', edit_usuario_path(@usuario), class: "cmd edit" %> |
-				<%= link_to 'Regresar', usuarios_path, class: "cmd previous" %>
+				<%= link_to 'Editar', edit_usuario_path(@usuario), class: "cmd edit", id: :cmd_editar %> |
+				<%= link_to 'Regresar', usuarios_path, class: "cmd previous", id: :cmd_regresar %>
 			</div>
 		</div><!--form_wrapper-->
 	</div><!--content-->

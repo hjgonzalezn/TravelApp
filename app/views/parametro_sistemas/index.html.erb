@@ -1,0 +1,46 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Par&aacute;metros del sistema</h3>
+			<center>
+
+			<table id="table_index">
+			  <thead>
+			    <tr>
+			      <th>Categor&iacute;a</th>
+			      <th>Descripci&oacute;n</th>
+			      <th>Valor</th>
+			      <th>Estado registro</th>
+			      <th></th>
+			      <th></th>
+			    </tr>
+			  </thead>
+
+			  <tbody>
+			    <% @parametro_sistemas.each do |parametro_sistema| %>
+			      <tr>
+			        <td><%= parametro_sistema.psis_categoria %></td>
+			        <td><%= link_to parametro_sistema.psis_descripcion, parametro_sistema %></td>
+			        <td><%= parametro_sistema.psis_valor %></td>
+			        <td><%= parametro_sistema.psis_estado_registro %></td>
+			        <td><%= link_to 'Editar', edit_parametro_sistema_path(parametro_sistema), class: "cmd edit", id: :cmd_editar %></td>
+			        <td><%= link_to 'Borrar', parametro_sistema, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class: "cmd delete", id: :cmd_borrar %></td>
+			      </tr>
+			    <% end %>
+			  </tbody>
+			</table>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear parámetro', new_parametro_sistema_path, class: "cmd add", id: :cmd_crear  %>
+			</div>
+		</div>
+	</div>
+</div>

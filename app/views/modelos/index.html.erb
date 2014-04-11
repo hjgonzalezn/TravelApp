@@ -28,15 +28,15 @@ $(document).ready(function() {
 				      		<tr>
 				        		<td><%= modelo.mdl_codigo %></td>
 				        		<td><%= link_to modelo.mdl_nombre, modelo %></td>
-				        		<td><%= link_to 'Editar', edit_modelo_path(modelo), class: "cmd edit" %></td>
-				        		<td><%= link_to 'Borrar', modelo, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } , class: "cmd delete" %></td>
+				        		<td><%= link_to 'Editar', edit_modelo_path(modelo), class: "cmd edit", id: :cmd_editar %></td>
+				        		<td><%= link_to 'Borrar', modelo, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } , class: "cmd delete", id: :cmd_borrar %></td>
 				      		</tr>
 				    	<% end %>
 				  	</tbody>
 				</table>
 			</center>
 			<div class="bottom">
-				<%= link_to 'Crear modelo', new_modelo_path, class: "cmd add" %>
+				<%= link_to 'Crear modelo', new_modelo_path, class: "cmd add", id: :cmd_crear %>
 			</div>
 		</div>
 	</div>

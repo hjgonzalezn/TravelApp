@@ -245,8 +245,8 @@ $(document).ready(function() {
         <td><%= link_to catalogo.ctlg_valor_desc, catalogo %></td>
         <!--td><%= catalogo.ctlg_observacion %></td-->
         <td><%= catalogo.ctlg_estado_registro %></td>
-        <td><%= link_to 'Editar', edit_catalogo_path(catalogo), class: "cmd edit" %></td>
-        <td><%= link_to 'Borrar', catalogo, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } , class: "cmd delete" %></td>
+        <td><%= link_to 'Editar', edit_catalogo_path(catalogo), class: "cmd edit", id: :cmd_editar %></td>
+        <td><%= link_to 'Borrar', catalogo, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' } , class: "cmd delete", id: :cmd_borrar %></td>
       </tr>
     <% end %>
   </tbody>
@@ -255,7 +255,7 @@ $(document).ready(function() {
 <!--/div-->
 
 <div class="bottom">
-<%= link_to 'Crear catálogo', new_catalogo_path, class: "cmd add"	 %>
+<%= link_to 'Crear catálogo', new_catalogo_path, class: "cmd add", id: :cmd_crear %>
 </div>
 
 </div>

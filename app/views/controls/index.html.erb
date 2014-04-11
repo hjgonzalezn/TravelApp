@@ -31,15 +31,15 @@ $(document).ready(function() {
 				        		<td><%= control.ctrl_html_id %></td>
 				        		<% tipo_control = Catalogo.find_by ctlg_categoria: 'APLICACION', ctlg_subcategoria: 'TIPO DE CONTROL', ctlg_valor_cdg: control.ctrl_tipo %>
 				        		<td><%= tipo_control.ctlg_valor_desc %></td>
-				        		<td><%= link_to 'Editar', edit_control_path(control), class: "cmd edit" %></td>
-				        		<td><%= link_to 'Borrar', control, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
+				        		<td><%= link_to 'Editar', edit_control_path(control), class: "cmd edit", id: :cmd_editar %></td>
+				        		<td><%= link_to 'Borrar', control, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete", id: :cmd_borrar %></td>
 				      		</tr>
 				    	<% end %>
   					</tbody>
 				</table>
 			</center>
 			<div class="bottom">
-				<%= link_to 'Crear control', new_control_path, class: "cmd add", id:"cmd_crear" %>
+				<%= link_to 'Crear control', new_control_path, class: "cmd add", id: :cmd_crear %>
 			</div>
 		</div>
 	</div>

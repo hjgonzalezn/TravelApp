@@ -1,6 +1,8 @@
 class MenusController < ApplicationController
+  include ApplicationHelper
   before_action :set_menu, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_datos_basicos, only: [:new, :edit]
+  
   # GET /menus
   # GET /menus.json
   def index
@@ -14,8 +16,6 @@ class MenusController < ApplicationController
 
   # GET /menus/new
   def new
-    @modelos = Modelo.where("mdl_estado_registro = 'A'").order(mdl_nombre: :asc)
-    @acciones = Accion.where("acc_estado_registro = 'A'").order(acc_nombre: :asc)
     @menu = Menu.new
   end
 
@@ -68,7 +68,12 @@ class MenusController < ApplicationController
     def set_menu
       @menu = Menu.find(params[:id])
     end
-
+    
+    def set_datos_basicos
+      @modelos = set_modelos
+      @acciones = set_acciones
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def menu_params
       params.require(:menu).permit(:mnu_tipo_elemento, :mnu_etiqueta_html, :mnu_clase_css, :mnu_props_html, :mnu_texto, :mnu_padre, :mnu_orden, :modelo_id, :accion_id)

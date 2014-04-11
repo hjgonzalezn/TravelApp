@@ -27,15 +27,15 @@ $(document).ready(function() {
       						<tr>
 						        <td><%= accion.acc_codigo %></td>
 						        <td><%= link_to accion.acc_nombre, accion %></td>
-						        <td><%= link_to 'Editar', edit_accion_path(accion), class:"cmd edit" %></td>
-						        <td><%= link_to 'Borrar', accion, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete" %></td>
+						        <td><%= link_to 'Editar', edit_accion_path(accion), class:"cmd edit", id: :cmd_editar %></td>
+						        <td><%= link_to 'Borrar', accion, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class:"cmd delete", id: :cmd_borrar %></td>
       						</tr>
     					<% end %>
   					</tbody>
 				</table>
 			</center>
 			<div class="bottom">
-				<%= link_to 'Crear accion', new_accion_path, class: "cmd add" %>
+				<%= link_to 'Crear accion', new_accion_path, class: "cmd add", id: :cmd_crear %>
 			</div>
 		</div>
 	</div>

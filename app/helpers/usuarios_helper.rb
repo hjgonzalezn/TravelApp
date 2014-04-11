@@ -1,4 +1,6 @@
 module UsuariosHelper
+  include ApplicationHelper
+  
   def login_attempt(usr_datos_sesion)
     
     array_datos = usr_datos_sesion.split("|")
@@ -24,4 +26,9 @@ module UsuariosHelper
         return "LOGIN FAILED"       
     end
   end
+  
+  def perfil_default
+    perfil = set_perfil_default
+  end
+  
 end

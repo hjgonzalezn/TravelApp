@@ -55,8 +55,8 @@ $(document).ready(function() {
 				        <td><%= link_to dato_entidad.ent_dato_descripcion, dato_entidad %></td>
 				        <td><%= dato_entidad.ent_dato_valor %></td>
 				        <td><%= dato_entidad.ent_dato_estado_registro %></td>
-			        	<td><%= link_to 'Editar', edit_dato_entidad_path(dato_entidad), class: "cmd edit" %></td>
-				        <td><%= link_to 'Borrar', dato_entidad, method: :delete, data: { confirm: 'Are you sure?' }, class: "cmd delete" %></td>
+			        	<td><%= link_to 'Editar', edit_dato_entidad_path(dato_entidad), class: "cmd edit", id: :cmd_editar %></td>
+				        <td><%= link_to 'Borrar', dato_entidad, method: :delete, data: { confirm: 'Are you sure?' }, class: "cmd delete", id: :cmd_borrar %></td>
 				      </tr>
 				    <% end %>
 				  </tbody>
@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 			</center>
 			<div class="bottom">
-				<%= link_to 'Crear dato de la entidad', new_dato_entidad_path, class: "cmd add", id:"cmd_crear" %>
+				<%= link_to 'Crear dato de la entidad', new_dato_entidad_path, class: "cmd add", id: :cmd_crear %>
 			</div>
 		</div>
 	</div>
