@@ -17,11 +17,11 @@
   	
 	<div class="form_fields">
   		<div class="field">
-    		<%= f.label :Descripción %><br>
-    		<%= f.text_field :func_descripcion, maxlength: 100, size: 100 %>
+    		<%= f.label :Descripción, "Descripción *" %><br>
+    		<%= f.text_field :func_descripcion, options= {size: 100, maxlength: 100, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min5"} %>
   		</div>
   		<div class="field">
-    		<%= f.label :Pública %><br>
+    		<%= f.label :Pública, "Pública *" %><br>
     		<%= f.select :func_publica, [['NO', 'N'], ['SI','S']] %>
   		</div>
   		<!-- <div class="field">
@@ -94,5 +94,5 @@
 			<%= link_to 'Regresar', funcionalidads_url, class: "cmd previous", id: :cmd_regresar %>
   		</div>
   	</div>
- 
 <% end %>
+<script>$.validate();</script>

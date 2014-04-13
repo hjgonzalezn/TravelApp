@@ -12,16 +12,16 @@
   <% end %>
 	<div class="form_fields">
   		<div class="field">
-    		<%= f.label :mdl_codigo, "Código" %><br>
-    		<%= f.text_field :mdl_codigo, size:10, maxlength:5 %>
+    		<%= f.label :mdl_codigo, "Código *" %><br>
+    		<%= f.text_field :mdl_codigo, options={size: 10, maxlength:5, required: :required, autofocus: :autofocus, "data-validation" => "length alphanumeric", "data-validation-length" => "min3"} %>
   		</div>
   		<div class="field">
-    		<%= f.label :mdl_nombre, "Nombre" %><br>
-    		<%= f.text_field :mdl_nombre, size:50, maxlength:50 %>
+    		<%= f.label :mdl_nombre, "Nombre *" %><br>
+    		<%= f.text_field :mdl_nombre, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min4" } %>
   		</div>
   		<div class="field">
-    		<%= f.label :mdl_estado_registro, "Estado registro" %><br>
-    		<%= f.text_field :mdl_estado_registro %>
+    		<%= f.label :mdl_estado_registro, "Estado registro *" %><br>
+    		<%= f.text_field :mdl_estado_registro , options= {maxlength:1, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min1"} %>
   		</div>
   	</div>
 	<div class="bottom">
@@ -45,3 +45,4 @@
   		</div>
   	</div>
 <% end %>
+<script> $.validate(); </script>

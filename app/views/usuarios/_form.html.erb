@@ -208,23 +208,23 @@
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Nro_documento_identidad, "Número documento de identidad *" %><br>
-		    	<%= f.text_field :usr_nro_docum_ident %>
+		    	<%= f.text_field :usr_nro_docum_ident , options={size:20, maxlength:15, required: :required, "data-validation" => "length number", "data-validation-length" => "min5" } %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Nombres, "Nombres *" %><br>
-		    	<%= f.text_field :usr_nombres, size:40 %>
+		    	<%= f.text_field :usr_nombres, options={size:50, maxlength:40, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min5", "data-validation-allowing" => " " } %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Apellidos, "Apellidos *" %><br>
-		    	<%= f.text_field :usr_apellidos, size:40 %>
+		    	<%= f.text_field :usr_apellidos, options={size:50, maxlength:40, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min5", "data-validation-allowing" => " " } %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Correo_electronico, "Correo electrónico *" %><br>
-		    	<%= f.text_field :usr_correo_electronico, size:40 %>
+		    	<%= f.email_field :usr_correo_electronico, options={size:50, maxlength:40, required: :required, "data-validation" => "email" } %>
 		  	</div>
 		  	<div class="field">
 		    	<%= f.label :Fecha_de_nacimiento %><br>
-		    	<%= f.date_field :usr_fecha_nacimiento %>
+		    	<%= f.date_field :usr_fecha_nacimiento, options={required: :required, "data-validation" => "date"} %>
 		  	</div>
 		  	</td>
 		  	<td width="50%" valign="top">
@@ -272,3 +272,4 @@
   		</div>
   	</div>
 <% end %>
+<script>$.validate();</script>

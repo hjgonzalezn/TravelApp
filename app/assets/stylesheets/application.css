@@ -192,6 +192,7 @@ a:hover{
 
 .form_wrapper div.form_fields{
 	padding: 0 0 0 35px;
+	color: #000000;
 	
 }
 .form_wrapper .column{
@@ -225,7 +226,8 @@ form.forgot_password{
 	color:#ffa800;
 }*/
 .form_wrapper form input[type="text"],
-.form_wrapper form input[type="password"]{
+.form_wrapper form input[type="password"],
+.form_wrapper form input[type="email"]{
 	border: solid 1px #E5E5E5;
 	background: #FFFFFF;
 	margin: 5px 0px 0px 0px;

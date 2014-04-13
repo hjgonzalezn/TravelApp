@@ -14,34 +14,36 @@
 <div class="form_fields">
 	<div class="form_column">
 		<div class="field">
-	    	<%= f.label :Categoria %><br>
-	    	<%= f.text_field :ent_dato_categoria, size: 30, maxlength: 30 %>
+	    	<%= f.label :Categoria, "Categoría *" %><br>
+	    	<%= f.text_field :ent_dato_categoria, options= {size:40, maxlength:40, required: :required, autofocus: :autofocus, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min5"} %>
 	  	</div>
 		<div class="field">
-	    	<%= f.label :Subcategoria %><br>
-	    	<%= f.text_field :ent_dato_subcategoria, size: 30, maxlength: 30 %>
+	    	<%= f.label :Subcategoria, "Subcategoría" %><br>
+	    	<%= f.text_field :ent_dato_subcategoria, options={size:40, maxlength:40, "data-validation" => "alphanumeric length", "data-validation-length" => "min5", "data-validation-optional" => "true"} %>
 	  	</div>
 	  	<div class="field">
-	    	<%= f.label :Codigo %><br>
-	    	<%= f.text_field :ent_dato_codigo, size: 20, maxlength: 15 %>
+	    	<%= f.label :Codigo, "Código *" %><br>
+	    	<%= f.text_field :ent_dato_codigo, options={size:5, maxlength:5, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min3"} %>
 	  	</div>
 	  	<div class="field">
-	    	<%= f.label :Descripcion %><br>	
-	    	<%= f.text_field :ent_dato_descripcion, size: 50, maxlength: 50 %>
+	    	<%= f.label :Descripcion, "Descripción *" %><br>	
+	    	<%= f.text_field :ent_dato_descripcion, options= {size:50, maxlength:40, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min5"} %>
 	  	</div>
 	</div>
 	<div class="form_column">
   		<div class="field">
-    		<%= f.label :Valor %><br>
-    		<%= f.text_area :ent_dato_valor, cols: 55, rows: 4 %>
+    		<%= f.label :Valor, "Valor *" %>
+    		<span id="max-length-valor">200</span> caracteres restantes
+    		<%= f.text_area :ent_dato_valor, options={cols: 55, rows: 4, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " _-.,", "data-validation-length" => "min5"} %>
   		</div>
   		<div class="field">
-    		<%= f.label :Observacion %><br>
-    		<%= f.text_area :ent_dato_observacion, cols: 55, rows: 3 %>
+    		<%= f.label :Observacion %>
+    		<span id="max-length-observacion">200</span> caracteres restantes
+    		<%= f.text_area :ent_dato_observacion, cols: 55, rows: 3, "data-validation" => "length alphanumeric", "data-validation-allowing" => " _-.,", "data-validation-length" => "min5" %>
   		</div>
   		<div class="field">
-    		<%= f.label :Estado_registro %><br>
-    		<%= f.text_field :ent_dato_estado_registro %>
+    		<%= f.label :Estado_registro, "Estado registro*" %><br>
+    		<%= f.text_field :ent_dato_estado_registro, options= {size:5, maxlength:1, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min1", "data-validation-optional" => "true" } %>
   		</div>
   	</div>
 </div>
@@ -67,3 +69,8 @@
   		</div>
   	</div>
 <% end %>
+<script>
+ 	$.validate();
+	$('#dato_entidad_ent_dato_valor').restrictLength( $('#max-length-valor'));
+	$('#dato_entidad_ent_dato_observacion').restrictLength( $('#max-length-observacion'));
+</script>

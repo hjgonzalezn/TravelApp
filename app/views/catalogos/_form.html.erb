@@ -228,30 +228,28 @@
   	<% end %>
 	<div class = "form_fields">
   		<div class="field">
-    		<%= f.label :Categoría %><br>
-    		<%= f.text_field :ctlg_categoria, size: 50 %>
+    		<%= f.label :Categoria, "Categoría *" %><br>
+    		<%= f.text_field :ctlg_categoria, options= {size:50, maxlength:40, required: :required, autofocus: :autofocus, "data-validation" => "length alphanumeric", "data-validation-allowing" =>" ", "data-validation-length" => "min5"} %>
   		</div>
 	  	<div class="field">
 	    	<%= f.label :Subcategoría %><br>
-	    	<%= f.text_field :ctlg_subcategoria, size: 50 %>
+	    	<%= f.text_field :ctlg_subcategoria, options= {size:50, maxlength:40, "data-validation" => "alphanumeric length", "data-validation-length" => "min5", "data-validation-optional" => "true" } %>
 	  	</div>
 	  	<div class="field">
-	    	<%= f.label :Código %><br>
-	    	<%= f.text_field :ctlg_valor_cdg %>
+	    	<%= f.label :Código, "Código *" %><br>
+	    	<%= f.text_field :ctlg_valor_cdg , options= {size:50, maxlength:40, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min3"}%>
 	  	</div>
 	  	<div class="field">
-	    	<%= f.label :Descripción %><br>
-	    	<%= f.text_field :ctlg_valor_desc, size: 50 %>
+	    	<%= f.label :Descripción, "Descripción *" %><br>
+	    	<%= f.text_field :ctlg_valor_desc, options= {size:50, maxlength:40, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min5"} %>
 	  	</div>
 	  	<div class="field">
 	    	<%= f.label :Observación %><br>
-	    	<%= f.text_field :ctlg_observacion, size: 50 %>
+	    	<%= f.text_field :ctlg_observacion, options= {size:50, maxlength:40, "data-validation" => "length alphanumeric", "data-validation-length" => "min5", "data-validation-optional" => "true" } %>
 	  	</div>
 	  	<div class="field">
-	    	<%= f.label :Estado_registro %><br>
+	    	<%= f.label :Estado_registro, "Estado registro *" %><br>
 	    	<%= f.select :ctlg_estado_registro, @estados_registro.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}.insert(nil.to_f, nil), selected: @estado_registro %>
-	    	
-	    	<%#= f.text_field :ctlg_estado_registro %>
 	  	</div>
   	</div>
   	<div class="bottom">
@@ -275,3 +273,4 @@
   		</div>
   	</div>
 <% end %>
+<script> $.validate(); </script>

@@ -182,24 +182,24 @@
 	<div class="form_fields">
 		<div class="form_column">
 			<div class="field">
-				<%= f.label :Tipo_Elemento %><br>
+				<%= f.label :Tipo_Elemento, "Tipo Elemento *" %><br>
 			    <%= f.select :mnu_tipo_elemento, [['COMPONENTE', 'C'], ['OPCION','O'], ['TITULO','T'], ['PARRAFO','P'], ['IMAGEN','I']] , prompt: ''%>
 			</div>
 			<div class="field">
-		    	<%= f.label :Etiqueta_HTML, "Etiqueta HTML" %><br>
-		    	<%= f.text_field :mnu_etiqueta_html %>
+		    	<%= f.label :Etiqueta_HTML, "Etiqueta HTML *" %><br>
+		    	<%= f.text_field :mnu_etiqueta_html, options= {size: 20, maxlength: 20, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min1"} %>
 			</div>
 			<div class="field">
 	    		<%= f.label :Clase_CSS, "Clase CSS" %><br>
-	    		<%= f.text_field :mnu_clase_css, size: 35, maxlength: 35 %>
+	    		<%= f.text_field :mnu_clase_css, options= {size: 35, maxlength: 35, "data-validation" => "alphanumeric", "data-validation-optional" => "true"} %>
   			</div>
 		  	<div class="field">
 	    		<%= f.label :Propiedades_HTML, "Propiedades HTML" %><br>
-	    		<%= f.text_field :mnu_props_html, size:35, maxlength: 35 %>
+	    		<%= f.text_field :mnu_props_html, options= {size:35, maxlength: 35} %>
 	  		</div>
   			<div class="field">
 				<%= f.label :Texto %><br>
-				<%= f.text_field :mnu_texto, size:60, maxlength: 60 %>
+				<%= f.text_field :mnu_texto, options= {size:60, maxlength: 60, , "data-validation" => "alphanumeric", "data-validation-allowing" => " ", "data-validation-optional" => "true"} %>
   			</div>
   		</div>
   		<div class="form_column">

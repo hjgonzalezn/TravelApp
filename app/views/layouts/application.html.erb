@@ -2,86 +2,84 @@
 <html>
 	<head>
   		<title><%=@razon_social + " " + @actividad_economica %></title>
-  			<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  			<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  			<%= csrf_meta_tags %>
-			<!--[if IE 6]>
-				<style>
-					body {behavior: url("csshover3.htc");}
-					#menu li .drop {background:url("img/drop.gif") no-repeat right 8px; 
-				</style>
-			<![endif]-->
-		<script>
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+		<!--[if IE 6]>
+			<style>
+				body {behavior: url("csshover3.htc");}
+				#menu li .drop {background:url("img/drop.gif") no-repeat right 8px; 
+			</style>
+		<![endif]-->
+		<!--script>
    			$(function() {
     			$( "#usuario_usr_fecha_nacimiento" ).datepicker({
       				changeMonth:true,
       				changeYear:true
     			});
-
   			});
-  			
-  		</script>
+  		</script-->
 
 	</head>
 	<body>
- <script>
-  $(function() {
-  	/* se ocultan todos los botones de la pantalla */
-	$(".cmd").hide();
-	
-	/* se muestran todos los botones publicos */
-	$("#iniciar-sesion").show();
-	$("#cerrar-sesion").show();
-	$("#recordar-clave").show();
-	
-	/* se muestran los botones autorizados */
-	<% unless @objetos_permitidos.nil? then %>
-		<% @objetos_permitidos.each do |o| %>
-			<% if  o.ctrl_html_id == "cmd_borrar" then %>
-				$(".delete").show();
-			<% elsif  o.ctrl_html_id == "cmd_editar" then %>
-				$(".edit").show();
-			<% elsif  o.ctrl_html_id == "cmd_consultar" then %>
-				$(".star").show();
-			<% else %>
-				$("#<%= o.ctrl_html_id %>").show();
-			<% end %>
-		<% end %>
-	<% end %>
-	
-    $( "#iniciar-sesion" )
-      .click(function() {
-           $.ajax({
-					url: "<%= iniciar_sesion_path %>",
-					data: {
-  							usr_correo_electronico: $('#usr_correo_electronico_').val(),
-  							usr_contrasena: $('#usr_contrasena_').val()
-						  },
-					dataType: "script"
-				 })
-      });
+ 		<script>
+			  $(function() {
+			  	/* se ocultan todos los botones de la pantalla */
+				$(".cmd").hide();
+				
+				/* se muestran todos los botones publicos */
+				$("#iniciar-sesion").show();
+				$("#cerrar-sesion").show();
+				$("#recordar-clave").show();
+				
+				/* se muestran los botones autorizados */
+				<% unless @objetos_permitidos.nil? then %>
+					<% @objetos_permitidos.each do |o| %>
+						<% if  o.ctrl_html_id == "cmd_borrar" then %>
+							$(".delete").show();
+						<% elsif  o.ctrl_html_id == "cmd_editar" then %>
+							$(".edit").show();
+						<% elsif  o.ctrl_html_id == "cmd_consultar" then %>
+							$(".star").show();
+						<% else %>
+							$("#<%= o.ctrl_html_id %>").show();
+						<% end %>
+					<% end %>
+				<% end %>
+				
+			    $( "#iniciar-sesion" )
+			      .click(function() {
+			           $.ajax({
+								url: "<%= iniciar_sesion_path %>",
+								data: {
+			  							usr_correo_electronico: $('#usr_correo_electronico_').val(),
+			  							usr_contrasena: $('#usr_contrasena_').val()
+									  },
+								dataType: "script"
+							 })
+			      });
+			
+			    $( "#cerrar-sesion" )
+			      .click(function() {
+			           $.ajax({
+								url: "<%= cerrar_sesion_path %>",
+								dataType: "script"
+							 })
+						.done(function() {
+			    			$(location).attr('href', '<%= home_path %>');
+			  		});
+			      });
+			      
+			    $( "#recordar-clave" )
+			      .click(function() {
+			        $( "#dialog-form" ).dialog( "open" );
+			        $( "#login-msg" ).html("<span>&nbsp;</span>");
+			        $( "#login-msg" ).removeClass();
+			      });
+			      
+			  });
 
-    $( "#cerrar-sesion" )
-      .click(function() {
-           $.ajax({
-					url: "<%= cerrar_sesion_path %>",
-					dataType: "script"
-				 })
-			.done(function() {
-    			location.reload();
-  		});
-      });
-      
-    $( "#recordar-clave" )
-      .click(function() {
-        $( "#dialog-form" ).dialog( "open" );
-        $( "#login-msg" ).html("<span>&nbsp;</span>");
-        $( "#login-msg" ).removeClass();
-      });
-      
-  });
-
-  </script>
+ 		</script>
 
 		<header class="header">
 			
@@ -96,8 +94,8 @@
 							<table>
 								<tbody>
 									<tr>
-										<td><%= text_field :usr_correo_electronico, nil, size:30, maxlength:40, placeholder: :Usuario %></td>
-										<td><%= password_field :usr_contrasena, nil, size:30, maxlength:40, placeholder: :Contraseña %></td>
+										<td><%= text_field :usr_correo_electronico, nil, options={size:30, maxlength:40, placeholder: :Usuario} %></td>
+										<td><%= password_field :usr_contrasena, nil, options={size:30, maxlength:40, placeholder: :Contraseña} %></td>
 									</tr>
 									<tr>
 										<td><a id="iniciar-sesion" class="cmd add">Iniciar sesión</a></td> 

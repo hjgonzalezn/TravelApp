@@ -181,22 +181,22 @@
   <% end %>
 	<div class = "form_fields">
   		<div class="field">
-    		<%= f.label :prf_nombre, "Nombre" %><br>
-    		<%= f.text_field :prf_nombre, size: 50 %>
+    		<%= f.label :prf_nombre, "Nombre *" %><br>
+    		<%= f.text_field :prf_nombre, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min5", "data-validation-allowing" => " " } %>
   		</div>
   		<div class="field">
-    		<%= f.label :prf_descripcion, "Descripción" %><br> 
-    		<%= f.text_field :prf_descripcion, size: 50 %>
+    		<%= f.label :prf_descripcion, "Descripción *" %><br> 
+    		<%= f.text_field :prf_descripcion, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min5", "data-validation-allowing" => " " } %>
   		</div>
   		<div class="ui-widget">
   			<div class="field">
-    			<%= f.label :prf_tipo_perfil, "Tipo de Perfil" %><br/>
+    			<%= f.label :prf_tipo_perfil, "Tipo de Perfil *" %><br/>
     			<%= f.select :prf_tipo_perfil, @tiposPerfil.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}, prompt: '---- SELECCIONE ----' %>
   			</div>
   		</div>
   		<div class="ui-widget">
   			<div class="field">
-    			<%= f.label :prf_estado_registro, "Estado Registro" %><br/>
+    			<%= f.label :prf_estado_registro, "Estado Registro *" %><br/>
     			<%= f.select :prf_estado_registro, @estados.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}, prompt: '---- SELECCIONE ----', selected: @estado_registro %>
   			</div>
   		</div>
@@ -221,5 +221,5 @@
 			<%= link_to 'Regresar', perfils_path, class: "cmd previous", id: :cmd_regresar %>
 		</div>
 	</div><!--bottom-->
-
 <% end %>
+<script>$.validate();</script>

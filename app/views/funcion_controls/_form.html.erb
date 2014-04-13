@@ -203,15 +203,15 @@
     		<%= text_field_tag :descripcion, @funcionalidad.func_descripcion, size:100, disabled:true%>
   		</div>
   		<div class="field">
-    		<%= f.label :modelo %><br>
+    		<%= f.label :modelo, "Modelo *" %><br>
     		<%= f.select :modelo_id, @modelos.map{|u| [u.mdl_nombre, u.id]}.insert(nil.to_f, nil) %>
   		</div>
   		<div class="field">
-    		<%= f.label :accion %><br>
+    		<%= f.label :accion, "Acción *" %><br>
     		<%= f.select :accion_id, @acciones.map{|u| [u.acc_nombre, u.id]}.insert(nil.to_f, nil) %>
   		</div>
   		<div class="field">
-    		<%= f.label :tipo_control, "Tipo de control" %><br>
+    		<%= f.label :tipo_control, "Tipo de control *" %><br>
     		<% if action_name == "new" then %>
     			<%= collection_select(:catalogo, :ctlg_valor_cdg, @tipos_control, :codigo, :descripcion, :prompt => '') %>
     		<% elsif action_name == "edit" %>
@@ -219,7 +219,7 @@
     		<% end %>
   		</div>
   		<div class="field">
-    		<%= f.label :control %><br>
+    		<%= f.label :control, "Control *" %><br>
     		<% if action_name == "new" then %>
     			<%= f.select(:control_id, []) %>
     		<% elsif action_name == "edit" %>
