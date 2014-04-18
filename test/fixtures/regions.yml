@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  reg_nombre: MyString
+  reg_descripcion: MyText
+  reg_estado_registro: MyString
+
+two:
+  reg_nombre: MyString
+  reg_descripcion: MyText
+  reg_estado_registro: MyString

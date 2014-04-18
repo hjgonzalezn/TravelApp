@@ -44,7 +44,7 @@ div.sesion{
 }
 
 .sesion form input[type="text"],
-.sesion form input[type="password"]{
+.sesion form input[type="password"]	{
 	border: solid 1px #E5E5E5;
 	background: #FFFFFF;
 	margin: 5px 0px 0px 0px;
@@ -227,7 +227,8 @@ form.forgot_password{
 }*/
 .form_wrapper form input[type="text"],
 .form_wrapper form input[type="password"],
-.form_wrapper form input[type="email"]{
+.form_wrapper form input[type="email"],
+.form_wrapper form input[type="number"]{
 	border: solid 1px #E5E5E5;
 	background: #FFFFFF;
 	margin: 5px 0px 0px 0px;

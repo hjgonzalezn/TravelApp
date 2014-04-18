@@ -95,14 +95,7 @@ class CatalogosController < ApplicationController
     end
   end
 
-  private
-    def set_datos_basicos
-      set_estados_registro
-      @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
-      @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
-    end
-      
-    def set_estado_registro
+    def set_estado_registro_actual
       if action_name == "new" then
         @estado_registro = "A"
       elsif action_name == "show" then
@@ -112,6 +105,14 @@ class CatalogosController < ApplicationController
         catalogo = Catalogo.find_by ctlg_categoria: 'ESTADO REGISTRO', ctlg_valor_cdg: @catalogo.ctlg_estado_registro
         @estado_registro = catalogo.ctlg_valor_cdg
       end
+    end
+
+  private
+    def set_datos_basicos
+      set_estados_registro # todos los estados de registro
+      set_estado_registro_actual
+      @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
+      @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
     end
     
     # Use callbacks to share common setup or constraints between actions.

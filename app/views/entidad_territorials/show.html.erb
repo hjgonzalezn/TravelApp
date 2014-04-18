@@ -1,0 +1,56 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Entidad territorial</h3>
+			<div class="form">
+				<div class = "form_fields">
+<table>
+	<tbody>
+		<tr>
+		  <td><strong>Nombre oficial:</strong></td>
+		  <td><%= @entidad_territorial.enter_nombre_oficial %></td>
+		</tr>
+		
+		<tr>
+		  <td><strong>Presentacion:</strong></td>
+		  <td><%= @entidad_territorial.enter_presentacion %></td>
+		</tr>
+		
+		<tr>
+		  <td><strong>Padre:</strong></td>
+		  <td><%= @entidad_territorial.enter_padre %></td>
+		</tr>
+		
+		<tr>
+		  <td><strong>Nivel:</strong></td>
+		  <td><%= @entidad_territorial.enter_nivel %></td>
+		</tr>
+		
+		<tr>
+		  <td><strong>Estado registro:</strong></td>
+		  <td><%= @entidad_territorial.enter_estado_registro %></td>
+		</tr>
+		
+		<tr>
+		  <td><strong>Region:</strong></td>
+		  <%unless @entidad_territorial.region.nil? %>
+		  	<td><%= @entidad_territorial.region.reg_nombre %></td>
+		  <% else %>
+		  	<td>&nbsp;</td>
+		  <% end %>
+		</tr>
+	</tbody>
+</table>				</div>
+					
+			<div class="bottom">
+				<%= link_to 'Editar', edit_entidad_territorial_path(@entidad_territorial), class: "cmd edit", id: :cmd_editar %> |
+				<%= link_to 'Regresar', entidad_territorials_path, class:"cmd previous", id: :cmd_regresar %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

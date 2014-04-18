@@ -1,0 +1,35 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Region</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+						<tr>
+					  		<td><strong>Nombre:</strong></td>
+					  		<td><%= @region.reg_nombre %></td>
+						</tr>
+						<tr>
+					  		<td><strong>Descripci&oacute;n:</strong></td>
+					  		<td><%= @region.reg_descripcion %></td>
+						</tr>
+						<tr>
+					  		<td><strong>Estado registro:</strong></td>
+					  		<td><%= @region.reg_estado_registro %></td>
+						</tr>
+					</table>
+				</div>
+					
+				<div class="bottom">
+					<%= link_to 'Editar', edit_region_path(@region), class: "cmd edit", id: :cmd_editar %> |
+					<%= link_to 'Regresar', regions_path, class:"cmd previous", id: :cmd_regresar %>
+				</div>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

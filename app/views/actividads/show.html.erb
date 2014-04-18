@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Actv nombre:</strong>
+  <%= @actividad.actv_nombre %>
+</p>
+
+<p>
+  <strong>Actv estado registro:</strong>
+  <%= @actividad.actv_estado_registro %>
+</p>
+
+<%= link_to 'Edit', edit_actividad_path(@actividad) %> |
+<%= link_to 'Back', actividads_path %>

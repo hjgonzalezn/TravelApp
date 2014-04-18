@@ -1,29 +1,45 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Psis categoria:</strong>
-  <%= @parametro_sistema.psis_categoria %>
-</p>
-
-<p>
-  <strong>Psis codigo:</strong>
-  <%= @parametro_sistema.psis_codigo %>
-</p>
-
-<p>
-  <strong>Psis valor:</strong>
-  <%= @parametro_sistema.psis_valor %>
-</p>
-
-<p>
-  <strong>Psis descripcion:</strong>
-  <%= @parametro_sistema.psis_descripcion %>
-</p>
-
-<p>
-  <strong>Psis estado registro:</strong>
-  <%= @parametro_sistema.psis_estado_registro %>
-</p>
-
-<%= link_to 'Edit', edit_parametro_sistema_path(@parametro_sistema) %> |
-<%= link_to 'Back', parametro_sistemas_path %>
+<% if notice != nil then %>
+	<div class="notibox success">
+		<tr id="notice"><%= notice %></tr>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Par&aacute;metro del sistema</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<table>
+					<tr>
+					  <td><strong>Categoria:</strong></td>
+					  <td><%= @parametro_sistema.psis_categoria %></td>
+					</tr>
+					
+					<tr>
+					  <td><strong>C&oacute;digo:</strong></td>
+					  <td><%= @parametro_sistema.psis_codigo %></td>
+					</tr>
+					
+					<tr>
+					  <td><strong>Valor:</strong></td>
+					  <td><%= @parametro_sistema.psis_valor %></td>
+					</tr>
+					
+					<tr>
+					  <td><strong>Descripcion:</strong></td>
+					  <td><%= @parametro_sistema.psis_descripcion %></td>
+					</tr>
+					
+					<tr>
+					  <td><strong>Estado registro:</strong></td>
+					  <td><%= @parametro_sistema.psis_estado_registro %></td>
+					</tr>
+					</table>
+			</div>
+			<div class="bottom">
+				<%= link_to 'Editar', edit_parametro_sistema_path(@parametro_sistema), class: "cmd edit", id: :cmd_editar %> |
+				<%= link_to 'Regresar', parametro_sistemas_path, class:"cmd previous", id: :cmd_regresar %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-->	

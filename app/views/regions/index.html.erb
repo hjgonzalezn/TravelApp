@@ -1,0 +1,41 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Regiones</h3>
+			<center>
+				<table id="table_index">					
+  					<thead>
+    					<tr>
+					      	<th>Nombre</th>
+					      	<th>Descripcion</th>
+					      	<th>Estado registro</th>
+					      	<th></th>
+					      	<th></th>
+    					</tr>
+  					</thead>
+  					<tbody>
+    					<% @regions.each do |region| %>
+      						<tr>
+						        <td><%= link_to region.reg_nombre, region %></td>
+						        <td><%= region.reg_descripcion %></td>
+						        <td><%= region.reg_estado_registro %></td>
+						        <td><%= link_to 'Editar', edit_region_path(region), class: "cmd edit" %></td>
+						        <td><%= link_to 'Borrar', region, method: :delete, data: { confirm: '¿Está seguro de eliminar este registro?' }, class: "cmd delete" %></td>
+      						</tr>
+    					<% end %>
+  					</tbody>
+				</table>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear region', new_region_path, class: "cmd add", id: :cmd_crear %>
+			</div>
+		</div>
+	</div>

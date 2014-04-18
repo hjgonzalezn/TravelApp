@@ -17,7 +17,7 @@
   		</div>
   		<div class="field">
     		<%= f.label :mdl_nombre, "Nombre *" %><br>
-    		<%= f.text_field :mdl_nombre, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min4" } %>
+    		<%= f.text_field :mdl_nombre, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " _-", "data-validation-length" => "min4" } %>
   		</div>
   		<div class="field">
     		<%= f.label :mdl_estado_registro, "Estado registro *" %><br>

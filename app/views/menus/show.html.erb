@@ -10,7 +10,7 @@
 			<h3>Elemento de menú</h3>
 			<div class="form">
 				<div class="form_fields">
-				<div class = "field_name_column">
+				<div class = "form_column">
 					<p><strong>Tipo Elemento:</strong></p>
 					<p><strong>Etiqueta HTML:</strong></p>
 					<p><strong>Clase CSS:</strong></p>
@@ -20,7 +20,7 @@
 					<p><strong>Orden:</strong></p>
 					<p><strong>Destino:</strong></p>
   				</div>
-  				<div class="field_desc_column">
+  				<div class="form_column">
 					<p><%= @menu.mnu_tipo_elemento %>&nbsp;</p>
   					<p><%= @menu.mnu_etiqueta_html %>&nbsp;</p>
   					<p><%= @menu.mnu_clase_css %>&nbsp;</p>
@@ -40,7 +40,7 @@
 			</div>
   		</div>
 			<div class="bottom">
-				<%= link_to 'Editar', edit_menu_path(@modelo), class: "cmd edit", id: :cmd_editar %> |
+				<%= link_to 'Editar', edit_menu_path(@menu), class: "cmd edit", id: :cmd_editar %> |
 				<%= link_to 'Regresar', menus_path, class:"cmd previous", id: :cmd_regresar %>
 			</div>
 		</div><!--form_wrapper-->

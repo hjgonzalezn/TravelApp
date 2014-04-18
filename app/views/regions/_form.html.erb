@@ -1,0 +1,241 @@
+<style>
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+    /* support: IE7 */
+    *height: 1.7em;
+    *top: 0.1em;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+  }
+  </style>
+  <script>
+  (function( $ ) {
+    $.widget( "custom.combobox", {
+      _create: function() {
+        this.wrapper = $( "<span>" )
+          .addClass( "custom-combobox" )
+          .insertAfter( this.element );
+ 
+        this.element.hide();
+        this._createAutocomplete();
+        this._createShowAllButton();
+      },
+ 
+      _createAutocomplete: function() {
+        var selected = this.element.children( ":selected" ),
+          value = selected.val() ? selected.text() : "";
+ 
+        this.input = $( "<input>" )
+          .appendTo( this.wrapper )
+          .val( value )
+          .attr( "title", "" )
+          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .autocomplete({
+            delay: 0,
+            minLength: 0,
+            source: $.proxy( this, "_source" )
+          })
+          .tooltip({
+            tooltipClass: "ui-state-highlight"
+          });
+ 
+        this._on( this.input, {
+          autocompleteselect: function( event, ui ) {
+            ui.item.option.selected = true;
+            this._trigger( "select", event, {
+              item: ui.item.option
+            });
+          },
+ 
+          autocompletechange: "_removeIfInvalid"
+        });
+      },
+ 
+      _createShowAllButton: function() {
+        var input = this.input,
+          wasOpen = false;
+ 
+        $( "<a>" )
+          .attr( "tabIndex", -1 )
+          //.attr( "title", "Mostrar todas las opciones" )
+          .tooltip()
+          .appendTo( this.wrapper )
+          .button({
+            icons: {
+              primary: "ui-icon-triangle-1-s"
+            },
+            text: false
+          })
+          .removeClass( "ui-corner-all" )
+          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .mousedown(function() {
+            wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+          })
+          .click(function() {
+            input.focus();
+ 
+            // Close if already visible
+            if ( wasOpen ) {
+              return;
+            }
+ 
+            // Pass empty string as value to search for, displaying all results
+            input.autocomplete( "search", "" );
+          });
+      },
+ 
+      _source: function( request, response ) {
+        var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+        response( this.element.children( "option" ).map(function() {
+          var text = $( this ).text();
+          if ( this.value && ( !request.term || matcher.test(text) ) )
+            return {
+              label: text,
+              value: text,
+              option: this
+            };
+        }) );
+      },
+ 
+      _removeIfInvalid: function( event, ui ) {
+ 
+        // Selected an item, nothing to do
+        if ( ui.item ) {
+			$.ajax({
+				url: "<%= actualizar_controles_dependientes_path %>",
+				data: {
+						enter_padre_id: this.element.val(),
+						control_id: (eval(this.element.attr('id')) + 1), //es el id del control que se va a actualizar
+				  	},
+				dataType: "script"
+ 			});
+			
+			$('#region_entidad_territorial_id').val(this.element.val());
+			 			
+          	return;
+        }
+ 
+        // Search for a match (case-insensitive)
+        var value = this.input.val(),
+          valueLowerCase = value.toLowerCase(),
+          valid = false;
+        this.element.children( "option" ).each(function() {
+          if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+            this.selected = valid = true;
+            return false;
+          }
+        });
+ 
+        // Found a match, nothing to do
+        if ( valid ) {
+        	alert($(this).val());
+			$.ajax({
+				url: "<%= actualizar_controles_por_tipo_path %>",
+				data: {
+  						id_padre : $(this).val()
+				 },
+				dataType: "script"
+		 	});
+          return;
+        }
+ 
+        // Remove invalid value
+        this.input
+          .val( "" )
+          .attr( "title", value + " no es una opción válida" )
+          .tooltip( "open" );
+        this.element.val( "" );
+        this._delay(function() {
+          this.input.tooltip( "close" ).attr( "title", "" );
+        }, 2500 );
+        this.input.data( "ui-autocomplete" ).term = "";
+      },
+ 
+      _destroy: function() {
+        this.wrapper.remove();
+        this.element.show();
+      }
+    });
+  })( jQuery );
+  </script>
+<script>
+   $(function() {
+    $( "#1" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#1" ).toggle();
+    });
+  });
+  $(function() {
+    $( "#2" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#2" ).toggle();
+    });
+  });
+  </script>
+  
+<%= form_for(@region) do |f| %>
+  <% if @region.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@region.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+
+      <ul>
+      <% @region.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<div class="form_fields">
+  		<div class="field">
+    		<%= f.label :reg_nombre, "Nombre *" %><br>
+    		<%= f.text_field :reg_nombre , options= {size:50, maxlength:40, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min5"} %>
+  		</div>
+		<div class="field">
+		    <%= f.label :reg_descripcion, "Descripción *" %><br>
+		    <%= f.text_area :reg_descripcion , options={cols: 55, rows: 4, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " _-.,", "data-validation-length" => "min5"} %>
+		</div>
+		<div class="field">
+		    <%= f.label :entidad_territorial, "Entidad Territorial" %>
+		    <%= f.hidden_field :entidad_territorial_id %>
+		    <br>
+		    <%= select_tag "1", options_from_collection_for_select(@continentes, "id", "enter_nombre_oficial"), prompt: ""  %>
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <%= select_tag "2", options_from_collection_for_select(@paises, "id", "enter_nombre_oficial"), prompt: ""  %>
+		</div>
+		<div class="field">
+		    <%= f.label :reg_estado_registro, "Estado registro *" %><br>
+		    <%= f.text_field :reg_estado_registro , options= {size:5, maxlength:1, required: :required, "data-validation" => "length alphanumeric", "data-validation-length" => "min1" } %>
+		</div>
+	</div>
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save", id: :cmd_aceptar %> |
+				<%= link_to 'Consultar', @region, class: "cmd star", id: :cmd_consultar %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<script>
+					$(function(){
+						$("#cmd_aceptar")
+						.click(function(){
+							$('#new_region').submit();
+						});
+					});
+				</script>	
+				<%= link_to "Aceptar", nil, class: "cmd save", id: :cmd_aceptar %> |
+			<% end %>
+			<%= link_to 'Regresar', regions_url, class: "cmd previous", id: :cmd_regresar %>
+  		</div>
+  	</div>
+	
+<% end %>
+<script>$.validate();</script>

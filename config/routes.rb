@@ -2,9 +2,17 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   
   root 'dato_entidads#home'
   
+  resources :regions
   resources :menus
   resources :accions
   resources :modelos
+  
+  
+  resources :division_territorials
+  resources :division_territorial_pais
+  get 'entidad_territorials/actualizar_controles_dependientes' => 'entidad_territorials#actualizar_controles_dependientes', as: :actualizar_controles_dependientes
+  resources :entidad_territorials
+  
   resources :parametro_sistemas
   
   get 'dato_entidads/home' => 'dato_entidads#home', as: :home

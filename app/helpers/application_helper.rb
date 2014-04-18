@@ -2,13 +2,17 @@ module ApplicationHelper
   def set_estados_registro
     @estados_registro = Catalogo.where("ctlg_categoria = 'ESTADO REGISTRO' AND ctlg_estado_registro = 'A'")
   end
-  
+
   def set_modelos
     modelos = Modelo.where(mdl_estado_registro: :A).order(mdl_nombre: :asc)
   end
   
   def set_acciones
     acciones = Accion.where(acc_estado_registro: :A).order(acc_nombre: :asc)
+  end
+  
+  def set_paises
+    @paises = EntidadTerritorial.where("enter_padre BETWEEN 2 AND 6")
   end
   
   def set_perfil_default

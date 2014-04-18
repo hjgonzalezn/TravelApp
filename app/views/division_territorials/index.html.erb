@@ -1,0 +1,42 @@
+<script>
+$(document).ready(function() {
+    $('#table_index').dataTable( {
+    	"bJQueryUI": true,
+        "sPaginationType": "full_numbers"
+    } );
+} );
+</script>
+
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Unidades pol&iacute;tico-administrativas</h3>
+			<center>
+				<br/>
+				<table id="table_index">
+  					<thead>
+    					<tr>
+				      		<th>Nombre</th>
+				      		<th>Estado registro</th>
+				      		<th></th>
+				      		<th></th>
+    					</tr>
+  					</thead>
+					<tbody>
+						<% @division_territorials.each do |division_territorial| %>
+					    	<tr>
+					        	<td><%= link_to division_territorial.dvt_nombre, division_territorial %></td>
+					        	<td><%= division_territorial.dvt_estado_registro %></td>
+					        	<td><%= link_to 'Editar', edit_division_territorial_path(division_territorial), class: "cmd edit" %></td>
+					        	<td><%= link_to 'Borrar', division_territorial, method: :delete, data: { confirm: '¿Está seguro de elinar este registro?' }, class: "cmd delete" %></td>
+					      	</tr>
+					    <% end %>
+					</tbody>
+				</table>
+			</center>
+			<div class="bottom">
+				<%= link_to 'Crear unidad político-administrativa', new_division_territorial_path, class: "cmd add", id: :cmd_crear %>
+			</div>
+		</div>
+	</div>
+</div>

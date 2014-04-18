@@ -115,7 +115,7 @@
 			     $.ajax({
 							url: "<%= actualizar_controles_por_tipo_path %>",
 							data: {
-		  							tipo_control : $('#catalogo_ctlg_valor_cdg').val()
+		  							tipo_control : this.element.val()
 								  },
 							dataType: "script"
 				 });
@@ -140,7 +140,7 @@
 			     $.ajax({
 							url: "<%= actualizar_controles_por_tipo_path %>",
 							data: {
-		  							tipo_control : $('#catalogo_ctlg_valor_cdg').val()
+		  							tipo_control : this.element.val()
 								  },
 							dataType: "script"
 				 });

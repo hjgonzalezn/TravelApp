@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  actv_nombre: MyString
+  actv_estado_registro: MyString
+
+two:
+  actv_nombre: MyString
+  actv_estado_registro: MyString

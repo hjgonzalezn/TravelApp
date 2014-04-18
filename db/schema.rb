@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140410152155) do
+ActiveRecord::Schema.define(version: 20140417011951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(version: 20140410152155) do
     t.string   "acc_codigo"
     t.string   "acc_nombre"
     t.string   "acc_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "actividads", force: true do |t|
+    t.string   "actv_nombre"
+    t.string   "actv_estado_registro"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -54,6 +61,40 @@ ActiveRecord::Schema.define(version: 20140410152155) do
     t.string   "ent_dato_subcategoria"
     t.string   "ent_dato_observacion"
   end
+
+  create_table "division_territorial_pais", force: true do |t|
+    t.integer  "entidad_territorial_id"
+    t.integer  "division_territorial_id"
+    t.integer  "dte_nivel"
+    t.string   "dte_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "division_territorial_pais", ["division_territorial_id"], name: "index_division_territorial_pais_on_division_territorial_id", using: :btree
+  add_index "division_territorial_pais", ["entidad_territorial_id"], name: "index_division_territorial_pais_on_entidad_territorial_id", using: :btree
+
+  create_table "division_territorials", force: true do |t|
+    t.string   "dvt_nombre"
+    t.string   "dvt_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "entidad_territorials", force: true do |t|
+    t.string   "enter_nombre_oficial"
+    t.text     "enter_presentacion"
+    t.integer  "enter_padre"
+    t.integer  "enter_nivel"
+    t.string   "enter_estado_registro"
+    t.integer  "region_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "division_territorial_id"
+  end
+
+  add_index "entidad_territorials", ["division_territorial_id"], name: "index_entidad_territorials_on_division_territorial_id", using: :btree
+  add_index "entidad_territorials", ["region_id"], name: "index_entidad_territorials_on_region_id", using: :btree
 
   create_table "funcion_controls", force: true do |t|
     t.integer  "funcionalidad_id"
@@ -130,6 +171,17 @@ ActiveRecord::Schema.define(version: 20140410152155) do
 
   add_index "permisos", ["funcionalidad_id"], name: "index_permisos_on_funcionalidad_id", using: :btree
   add_index "permisos", ["perfil_id"], name: "index_permisos_on_perfil_id", using: :btree
+
+  create_table "regions", force: true do |t|
+    t.string   "reg_nombre"
+    t.text     "reg_descripcion"
+    t.string   "reg_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "entidad_territorial_id"
+  end
+
+  add_index "regions", ["entidad_territorial_id"], name: "index_regions_on_entidad_territorial_id", using: :btree
 
   create_table "usuarios", force: true do |t|
     t.string   "usr_tipo_docum_ident"

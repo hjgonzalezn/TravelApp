@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  entidad_territorial_id: 
+  division_territorial_id: 
+  dte_nivel: 1
+  dte_estado_registro: MyString
+
+two:
+  entidad_territorial_id: 
+  division_territorial_id: 
+  dte_nivel: 1
+  dte_estado_registro: MyString

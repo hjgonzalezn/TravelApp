@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  enter_nombre_oficial: MyString
+  enter_presentacion: MyText
+  enter_padre: 1
+  enter_nivel: 1
+  enter_estado_registro: MyString
+  region_id: 
+
+two:
+  enter_nombre_oficial: MyString
+  enter_presentacion: MyText
+  enter_padre: 1
+  enter_nivel: 1
+  enter_estado_registro: MyString
+  region_id: 

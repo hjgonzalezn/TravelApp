@@ -1,0 +1,28 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Divisi&oacute;n territorial</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<p>
+					  <strong>Nombre:</strong>
+					  <%= @division_territorial.dvt_nombre %>
+					</p>
+					
+					<p>
+					  <strong>Estado registro:</strong>
+					  <%= @division_territorial.dvt_estado_registro %>
+					</p>
+			</div>
+			<div class="bottom">
+				<%= link_to 'Editar', edit_division_territorial_path(@division_territorial), class: "cmd edit", id: :cmd_editar %> |
+				<%= link_to 'Regresar', division_territorials_path, class:"cmd previous", id: :cmd_regresar %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-->

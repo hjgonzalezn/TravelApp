@@ -23,11 +23,11 @@
 	  </div>
 	  <div class="field">
 	    <%= f.label :Valor %><br>
-	    <%= f.text_field :psis_valor, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min1"} %>
+	    <%= f.text_field :psis_valor, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " :/.-_", "data-validation-length" => "min1"} %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :Descripción %><br>
-	    <%= f.text_field :psis_descripcion, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min1"} %>
+	    <%= f.text_field :psis_descripcion, options={size:50, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ", "data-validation-length" => "min5"} %>
 	  </div>
 	  <div class="field">
 	    <%= f.label :Estado_registro %><br>
@@ -51,7 +51,7 @@
 				</script>
 				<%= link_to "Aceptar", nil, class: "cmd save", id: :cmd_aceptar %> |
 			<% end %>
-			<%= link_to 'Regresar', parametro_sistemas_url, class: "cmd previous", id: :cmd_regresar %>
+			<%= link_to 'Regresar', parametro_sistemas_path, class: "cmd previous", id: :cmd_regresar %>
   		</div>
   	</div>
 <% end %>
