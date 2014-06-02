@@ -44,7 +44,7 @@ div.sesion{
 }
 
 .sesion form input[type="text"],
-.sesion form input[type="password"]	{
+.sesion form input[type="password"]{
 	border: solid 1px #E5E5E5;
 	background: #FFFFFF;
 	margin: 5px 0px 0px 0px;
@@ -166,7 +166,7 @@ a:hover{
 .form_wrapper div.buscar{
 	width:99%;
 	margin: 0px auto 15px;
-	
+
 	padding: 5px 0px 5px 0px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -187,13 +187,13 @@ a:hover{
 
 .form_wrapper div.buscar label{
 	color: #fff;
-	
+
 }
 
 .form_wrapper div.form_fields{
 	padding: 0 0 0 35px;
 	color: #000000;
-	
+
 }
 .form_wrapper .column{
 	width:47%;
@@ -227,8 +227,7 @@ form.forgot_password{
 }*/
 .form_wrapper form input[type="text"],
 .form_wrapper form input[type="password"],
-.form_wrapper form input[type="email"],
-.form_wrapper form input[type="number"]{
+.form_wrapper form input[type="email"]{
 	border: solid 1px #E5E5E5;
 	background: #FFFFFF;
 	margin: 5px 0px 0px 0px;
@@ -260,6 +259,25 @@ form.forgot_password{
 .form_wrapper input[type="password"]:focus{
 	background:#feffef;
 }
+
+.photo_gallery{
+	
+	padding: 1px 0 1px 0;
+	background: #FFFFFF;
+	border:#14a1ff 10px solid;
+	border-radius: 20px;
+	-webkit-border-radius:20px;
+	-moz-border-radius: 20px;
+	-webkit-box-shadow: 
+		-2px -2px 0 #fff, 
+		2px 2px 0 #0082d8, 
+		2px 4px 15px rgba(0, 0, 0, .3);
+	width:80%;
+	height:125px;
+	margin: 0 auto;
+	clear:both;
+}
+
 .form_wrapper .bottom{
 	background-color:#14a1ff;
 	border-top:3px solid #FFA800;
@@ -330,5 +348,3 @@ div.login.msg_success{
 	background-color: #efffef;
 	color: #007a00;
 }
-
-

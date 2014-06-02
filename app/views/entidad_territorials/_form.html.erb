@@ -18,6 +18,7 @@
     padding: 0.3em;
   }
   </style>
+  
   <script>
   (function( $ ) {
     $.widget( "custom.combobox", {
@@ -112,11 +113,13 @@
         // Selected an item, nothing to do
         if ( ui.item ) {
         	if ($.isNumeric(this.element.attr('id'))){
+        		idCtrlDepend = eval(this.element.attr('id')) + 1;
+        		$( "#" + idCtrlDepend ).prop("disabled", true);
 				$.ajax({
 					url: "<%= actualizar_controles_dependientes_path %>",
 					data: {
 							enter_padre_id: this.element.val(),
-							control_id: (eval(this.element.attr('id')) + 1),
+							control_id: (idCtrlDepend),
 					  	},
 					dataType: "script"
 	 			});
@@ -221,14 +224,23 @@
       $( "#entidad_territorial_division_territorial_id" ).toggle();
     });
   });
-    $(function() {
+  $(function() {
+    $( "#entidad_territorial_enter_estado_registro" ).combobox();
+    $( "#toggle" ).click(function() {
+      $( "#entidad_territorial_enter_estado_registro" ).toggle();
+    });
+  });
+ $(function() {
     $( "#entidad_territorial_region_id" ).combobox();
     $( "#toggle" ).click(function() {
       $( "#entidad_territorial_region_id" ).toggle();
     });
   });
   </script>
-<%= form_for(@entidad_territorial) do |f| %>
+  		<!--script type="text/javascript">
+			document.write('<style>.noscript { display: none; }</style>');
+		</script-->
+	<%= form_for(@entidad_territorial) do |f| %>
 	<% if @entidad_territorial.errors.any? %>
     	<div id="error_explanation">
       		<h2><%= pluralize(@entidad_territorial.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
@@ -243,34 +255,129 @@
 		<div class="field">
 			<table width="90%" border="0">
 				<tbody>
-					<tr>
-						<td><span id="s1"><strong>Continente</strong></span></td>
-						<td><%= select_tag "1", options_from_collection_for_select(@continentes, "id", "enter_nombre_oficial"), prompt: ""  %></td>
-						<td><span id="s2"><strong>País</strong></span></td>
-						<td><%= select_tag "2", options_from_collection_for_select(@paises, "id", "enter_nombre_oficial"), prompt: ""  %></td>			
-					</tr>
-					<tr>
-						<td><span id="s3"></span></td>
-						<td><%= select_tag "3", nil  %></td>
-						<td><span id="s4"></span></td>
-						<td><%= select_tag "4", nil  %></td>
-					</tr>
-					<tr>
-						<td><span id="s5"></span></td>
-						<td><%= select_tag "5", nil  %></td>
-						<td><span id="s6"></span></td>
-						<td><%= select_tag "6", nil  %></td>
-					</tr>
+
+						<% if action_name == "new" then %>
+							<tr>
+								<td><span id="s1"><strong>Continente</strong></span></td>
+								<td><%= select_tag "1", options_from_collection_for_select(@continentes, "id", "enter_nombre_oficial"), prompt: ""  %></td>
+								<td><span id="s2"><strong>País</strong></span></td>
+								<td><%= select_tag "2", nil  %></td>
+							</tr>
+							<tr>
+								<td><span id="s3"></span></td>
+								<td><%= select_tag "3", nil  %></td>
+								<td><span id="s4"></span></td>
+								<td><%= select_tag "4", nil  %></td>
+							</tr>
+							<tr>
+								<td><span id="s5"></span></td>
+								<td><%= select_tag "5", nil  %></td>
+								<td><span id="s6"></span></td>
+								<td><%= select_tag "6", nil  %></td>
+							</tr>
+						<% elsif action_name == "edit" then %>
+							<tr>
+								<td><span id="s1"><strong>Continente</strong></span></td>
+								<td><%= select_tag "1", options_from_collection_for_select(@continentes, "id", "enter_nombre_oficial", @territorios_padres[1])  %></td>
+								<% 	padre_id = 0
+									@terr_nivel2 = []
+								 	unless @territorios_padres[1].nil? then
+								 		padre_id = @territorios_padres[1]
+								 	end
+								 	
+								 	if padre_id != 0 && @territorios_padres[2] != nil then
+								 		@terr_nivel2 = EntidadTerritorial.where("enter_padre = #{ padre_id }")
+								 	end
+								 %>
+								
+								<td><span id="s2"><strong>País</strong></span></td>
+								<td><%= select_tag "2", options_from_collection_for_select(@terr_nivel2, "id", "enter_nombre_oficial", @territorios_padres[2]) %></td>
+							</tr>
+							<tr>
+								<% 	padre_id = 0  
+									@terr_nivel3 = []
+								 	unless @territorios_padres[2].nil? then 
+								 		padre_id = @territorios_padres[2]
+								 	end
+								 	
+								 	if padre_id != 0 && @territorios_padres[3] != nil then
+								 		@terr_nivel3 = EntidadTerritorial.where("enter_padre = #{ padre_id }")
+								 	end
+								 %>
+								<td><span id="s3"><strong></strong></span></td>
+								<td><%= select_tag "3", options_from_collection_for_select(@terr_nivel3, "id", "enter_nombre_oficial", @territorios_padres[3]) %></td>
+								
+								<% 	padre_id = 0  
+									@terr_nivel4 = []
+								 	unless @territorios_padres[3].nil? then 
+								 		padre_id = @territorios_padres[3]
+								 	end
+								 	
+								 	if padre_id != 0 && @territorios_padres[4] != nil then
+								 		@terr_nivel4 = EntidadTerritorial.where("enter_padre = #{ padre_id }")
+								 	end
+								 %>
+								<td><span id="s4"><strong></strong></span></td>
+								<td><%= select_tag "4", options_from_collection_for_select(@terr_nivel4, "id", "enter_nombre_oficial", @territorios_padres[4]) %></td>
+							</tr>
+							<tr>
+								<% 	padre_id = 0  
+									@terr_nivel5 = []
+								 	unless @territorios_padres[4].nil? then 
+								 		padre_id = @territorios_padres[4]
+								 	end
+								 	
+								 	if padre_id != 0 && @territorios_padres[5] != nil then
+								 		@terr_nivel5 = EntidadTerritorial.where("enter_padre = #{ padre_id }")
+								 	end
+								 %>
+								<td><span id="s5"><strong></strong></span></td>
+								<td><%= select_tag "5", options_from_collection_for_select(@terr_nivel5, "id", "enter_nombre_oficial", @territorios_padres[5]) %></td>
+								<% 	padre_id = 0  
+									@terr_nivel6 = []
+								 	unless @territorios_padres[5].nil? then 
+								 		padre_id = @territorios_padres[5]
+								 	end
+								 	
+								 	if padre_id != 0 && @territorios_padres[6] != nil then
+								 		@terr_nivel6 = EntidadTerritorial.where("enter_padre = #{ padre_id }")
+								 	end
+								 %>
+								<td><span id="s6"><strong></strong></span></td>
+								<td><%= select_tag "6", options_from_collection_for_select(@terr_nivel6, "id", "enter_nombre_oficial", @territorios_padres[6]) %></td>
+							</tr>
+						<% end %>
 				</tbody>
 			</table>
 		</div>
+		<br>
+		<div class="form_column">
   		<div class="field">
     		<%= f.label :enter_nombre_oficial, "Nombre Oficial *" %><br>
-    		<%= f.text_field :enter_nombre_oficial, options= {size:90, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ,.-Ñ", "data-validation-length" => "min4"} %>
+    		<%= f.text_field :enter_nombre_oficial, options= {size:60, maxlength:50, required: :required, "data-validation" => "length alphanumeric", "data-validation-allowing" => " ,.-Ñ", "data-validation-length" => "min4"} %>
   		</div>
 		<div class="field">
+		    <%= f.label :division_territorial, "Tipo entidad territorial" %><br>
+		    <% if action_name == "new" then %>
+		    	<%= f.select :division_territorial_id, [] %>
+		   	<% elsif action_name == "edit" %>
+		   		<%= f.select :division_territorial_id, options_for_select(@divisiones_territoriales, selected: @entidad_territorial.division_territorial_id) %>
+		   	<% end %>
+		</div>
+		<div class="field">
+		    <%= f.label :region, "Región" %><br>
+		    <% if action_name == "new" then %>
+		    	<%= f.select :region_id, [] %>
+		    <% elsif action_name == "edit" %>
+		    	<%= f.select :region_id, options_for_select(@regiones, selected: @entidad_territorial.region_id) %>
+		    <% end %>
+		</div>
+		</div>
+		
+		<div class="form_column">
+		<div class="field">
 		    <%= f.label :enter_presentacion, "Presentación " %><span id="max-length-presentacion">300</span> caracteres restantes<br>
-			<%= f.text_area :enter_presentacion , options={cols: 70, rows: 4, "data-validation" => "length alphanumeric", "data-validation-allowing" => " _-.,", "data-validation-length" => "min5", "data-validation-optional" => "true"} %>
+			<%= f.text_area :enter_presentacion , options={cols: 55, rows: 4, "data-validation" => "length alphanumeric", "data-validation-allowing" => " _-.,", "data-validation-length" => "min5", "data-validation-optional" => "true"} %>
 		</div>
 		<div class="field">
 		    <%= f.hidden_field :enter_padre %>
@@ -279,24 +386,64 @@
 		    <%= f.label :enter_nivel, "Nivel *" %><br>
 		    <%= f.number_field :enter_nivel %>
 		</div-->
-		<div class="field">
-		    <%= f.label :division_territorial, "Tipo entidad territorial" %><br>
-		    <%= f.select :division_territorial_id, [] %>
-		</div>
-		<div class="field">
-		    <%= f.label :region, "Región" %><br>
-		    <%= f.select :region_id, [] %>
-		</div>
  	 	<div class="field">
 		    <%= f.label :enter_estado_registro, "Estado registro *" %><br>
-		    <%= f.text_field :enter_estado_registro %>
+		    <%= f.select :enter_estado_registro, @estados_registro.map{|u| [u.ctlg_valor_desc, u.ctlg_valor_cdg]}.insert(nil.to_f, nil), selected: @estado_registro %>
 		</div>
-	</div>  
+		</div>
+		<br><br>
+	</div>
+	
+	<% if action_name == "edit" then %>
+			<script type="text/javascript">
+				hs.graphicsDir = '/assets/';
+				hs.align = 'center';
+				hs.transitions = ['expand', 'crossfade'];
+				hs.outlineType = 'rounded-white';
+				hs.fadeInOut = true;
+				//hs.dimmingOpacity = 0.75;
+				
+				// Add the controlbar
+				hs.addSlideshow({
+					//slideshowGroup: 'group1',
+					interval: 5000,
+					repeat: false,
+					useControls: true,
+					fixedControls: 'fit',
+					overlayOptions: {
+						opacity: 0.75,
+						position: 'bottom center',
+						hideOnMouseOut: true
+					}
+				});
+			</script>
+			
+			<div class="photo_gallery">
+				<div class="highslide-gallery">
+					<ul class="hoverbox">
+					<% @imagenes.each do |f| %>
+						<% path = f.foto_nombre.to_s %>
+						<% array = path.split("/") %>
+						<% nombre_archivo = array.pop %>
+						<li>
+							<a href="<%= @rutaImagenes + nombre_archivo %>" class="highslide" onclick="return hs.expand(this)">
+								<img src="<%= @rutaImagenes + nombre_archivo.gsub(".", "_mini.")  %>" alt="<%= f.foto_titulo %>" title="Clic para ampliar la imagen" />
+							</a>
+							<div class="highslide-caption"><%= f.foto_titulo + " - " + f.foto_descripcion %></div>
+						</li>
+					<% end %>
+					</ul>		
+				</div>
+			</div>
+	<% end %>
+	  
 	<div class="bottom">
+					
   		<div class="actions">
     		<% if action_name == "edit"%>
 				<%= f.submit "Aceptar", class: "cmd save", id: :cmd_aceptar %> |
 				<%= link_to 'Consultar', @entidad_territorial, class: "cmd star", id: :cmd_consultar %> |
+				<%= link_to 'Cargar fotografías', new_entidad_territorial_foto_path(@entidad_territorial), class: "cmd cam", id: :cmd_cargar_fotos %> |
 			<% elsif action_name == "new" or action_name =="create" %>
 				<script>
 					$(function(){
@@ -312,6 +459,8 @@
   		</div>
   	</div>
 <% end %>
+
+
 <script>
  	$.validate();
 	$('#entidad_territorial_enter_presentacion').restrictLength( $('#max-length-presentacion'));

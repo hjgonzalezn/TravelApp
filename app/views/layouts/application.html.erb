@@ -5,27 +5,13 @@
 		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
 		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 		<%= csrf_meta_tags %>
-		<!--[if IE 6]>
-			<style>
-				body {behavior: url("csshover3.htc");}
-				#menu li .drop {background:url("img/drop.gif") no-repeat right 8px; 
-			</style>
-		<![endif]-->
-		<!--script>
-   			$(function() {
-    			$( "#usuario_usr_fecha_nacimiento" ).datepicker({
-      				changeMonth:true,
-      				changeYear:true
-    			});
-  			});
-  		</script-->
 
 	</head>
 	<body>
  		<script>
 			  $(function() {
 			  	/* se ocultan todos los botones de la pantalla */
-				$(".cmd").hide();
+				/*$(".cmd").hide();*/
 				
 				/* se muestran todos los botones publicos */
 				$("#iniciar-sesion").show();

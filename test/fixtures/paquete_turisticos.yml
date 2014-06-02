@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pqt_nombre: MyString
+  pqt_tipo_paquete: 1
+  pqt_tipo_destino: 1
+  pqt_descripcion: MyText
+  pqt_cobertura_servicios: MyText
+  pqt_condiciones: MyText
+  pqt_observacion: MyText
+
+two:
+  pqt_nombre: MyString
+  pqt_tipo_paquete: 1
+  pqt_tipo_destino: 1
+  pqt_descripcion: MyText
+  pqt_cobertura_servicios: MyText
+  pqt_condiciones: MyText
+  pqt_observacion: MyText

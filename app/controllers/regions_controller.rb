@@ -14,6 +14,8 @@ class RegionsController < ApplicationController
 
   # GET /regions/new
   def new
+    @continentes = EntidadTerritorial.where("enter_padre = 1")
+    set_paises
     @region = Region.new
   end
 
@@ -28,7 +30,7 @@ class RegionsController < ApplicationController
   # POST /regions.json
   def create
     @region = Region.new(region_params)
-
+    set_paises
     respond_to do |format|
       if @region.save
         format.html { redirect_to @region, notice: 'Region creada exitosamente.' }
@@ -72,8 +74,6 @@ class RegionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def region_params
-        puts "#######################################################"
-        puts params
       params.require(:region).permit(:reg_nombre, :reg_descripcion, :reg_estado_registro, :entidad_territorial_id)
     end
 end

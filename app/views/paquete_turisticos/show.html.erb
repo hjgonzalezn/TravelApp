@@ -1,0 +1,53 @@
+<% if notice != nil then %>
+	<div class="notibox success">
+		<p id="notice"><%= notice %></p>
+	</div>
+<% end %>
+<div class="wrapper">
+	<div class="content">
+		<div class="form_wrapper">
+			<h3>Paquete tur&iacute;stico</h3>
+			<div class="form">
+				<div class = "form_fields">
+					<div class="tour_content">		
+						<p class="tour"><%= @paquete_turistico.pqt_nombre %></p>
+						
+						<p>
+						  <strong>Categoría:</strong>
+						  <%= @tipo_paquete %>
+						</p>
+						
+						<p>
+						  <%= @paquete_turistico.pqt_tipo_destino %>
+						</p>
+						
+						<p>
+						  <%= raw @paquete_turistico.pqt_descripcion %>
+						</p>
+						
+						<p>
+						  <%= raw @paquete_turistico.pqt_cobertura_servicios %>
+						</p>
+						
+						<% unless @paquete_turistico.pqt_condiciones.blank? %>
+							<p>
+							  <strong>Condiciones:</strong>
+							  <%= raw @paquete_turistico.pqt_condiciones %>
+							</p>
+						<% end %>
+						
+						<% unless @paquete_turistico.pqt_observacion.blank? %>
+							<p>
+							  <strong>Observacion:</strong>
+							  <%= raw @paquete_turistico.pqt_observacion %>
+							</p>
+						<% end %>
+					</div>
+				</div>
+			<div class="bottom">
+				<%= link_to 'Editar', edit_paquete_turistico_path(@paquete_turistico), class: "cmd edit" %> |
+				<%= link_to 'Regresar', paquete_turisticos_path, class: "cmd previous" %>
+			</div>
+		</div><!--form_wrapper-->
+	</div><!--content-->
+</div><!--wrapper-	

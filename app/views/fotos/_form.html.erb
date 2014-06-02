@@ -1,0 +1,64 @@
+<%= form_for(@foto, html: { multipart: true}) do |f| %>
+	<% if @foto.errors.any? %>
+    	<div id="error_explanation">
+      		<h2><%= pluralize(@foto.errors.count, "error", "errores") %> no permite(n) que este registro sea grabado: </h2>
+
+      		<ul>
+      			<% @foto.errors.full_messages.each do |msg| %>
+        			<li><%= msg %></li>
+      			<% end %>
+      		</ul>
+    	</div>
+  <% end %>
+	<div class="form_fields">
+  		<div class="field">
+  			<%= hidden_field(:foto, :foto_categoria, options={ value: @categoria})%>
+  			<%= hidden_field(:foto, :foto_llave_externa, options={ value: @llaveForanea}) %>
+    		<%= f.label :foto_nombre %><br>
+    		<%= f.file_field :foto_nombre %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :foto_mini %><br>
+    		<%= f.file_field :foto_mini %>
+  		</div>  		
+  		<div class="field">
+    		<%= f.label :foto_titulo %><br>
+    		<%= f.text_field :foto_titulo, options={size: 60, maxlength: 50} %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :foto_descripcion %><br>
+    		<%= f.text_field :foto_descripcion, options={size: 80, maxlength: 70} %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :foto_categoria %><br>
+    		<%= f.text_field :foto_categoria, value: @categoria %>
+  		</div>
+  		<div class="field">
+    		<%= f.label :foto_llave_externa %><br>
+    		<%= f.text_field :foto_llave_externa, value: @llaveForanea %>
+  		</div>
+  	</div>
+	<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save", id: :cmd_aceptar %> |
+				<%= link_to 'Consultar', @control, class: "cmd star", id: :cmd_consultar %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<script>
+					$(function(){
+						$("#cmd_aceptar")
+						.click(function(){
+							$('#new_foto').submit();
+						});
+					});
+				</script>	
+				<%= link_to "Aceptar", nil, class: "cmd save", id: :cmd_aceptar %> |
+			<% end %>
+			<% case @categoria %>
+			<% when "entidad_territorial" %>
+				<%= link_to 'Regresar', edit_entidad_territorial_path(@llaveForanea), class: "cmd previous", id: :cmd_regresar %>
+			<% end %>
+  		</div>
+  	</div>
+	
+<% end %>

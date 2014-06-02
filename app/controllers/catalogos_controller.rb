@@ -2,7 +2,7 @@ class CatalogosController < ApplicationController
   include ApplicationHelper
   
   before_action :set_catalogo, only: [:show, :edit, :update, :destroy]
-  before_action :set_estado_registro, only: [:show, :edit, :new]
+  before_action :set_estado_registro, only: [:show, :edit]
   before_action :set_datos_basicos, only: [:index, :edit, :new, :create]
   
   # GET /catalogos
@@ -50,6 +50,7 @@ class CatalogosController < ApplicationController
   # GET /catalogos/new
   def new
     @catalogo = Catalogo.new
+    @catalogo.ctlg_estado_registro = "A"
   end
 
   # GET /catalogos/1/edit
@@ -95,22 +96,13 @@ class CatalogosController < ApplicationController
     end
   end
 
-    def set_estado_registro_actual
-      if action_name == "new" then
-        @estado_registro = "A"
-      elsif action_name == "show" then
-        catalogo = Catalogo.find_by ctlg_categoria: 'ESTADO REGISTRO', ctlg_valor_cdg: @catalogo.ctlg_estado_registro
-        @estado_registro = catalogo.ctlg_valor_desc
-      elsif action_name == "edit" then
-        catalogo = Catalogo.find_by ctlg_categoria: 'ESTADO REGISTRO', ctlg_valor_cdg: @catalogo.ctlg_estado_registro
-        @estado_registro = catalogo.ctlg_valor_cdg
-      end
+    def set_estado_registro
+      @catalogo.ctlg_estado_registro = set_estado_registro_actual(@catalogo.ctlg_estado_registro, action_name)
     end
 
   private
     def set_datos_basicos
       set_estados_registro # todos los estados de registro
-      set_estado_registro_actual
       @categorias = Catalogo.select("ctlg_categoria").distinct.where("ctlg_categoria IS NOT NULL")
       @subcategorias = Catalogo.select("ctlg_subcategoria").distinct.where("ctlg_subcategoria IS NOT NULL")
     end

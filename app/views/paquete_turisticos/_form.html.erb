@@ -1,0 +1,59 @@
+<%= form_for(@paquete_turistico) do |f| %>
+  <% if @paquete_turistico.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@paquete_turistico.errors.count, "error") %> prohibited this paquete_turistico from being saved:</h2>
+
+      <ul>
+      <% @paquete_turistico.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="form_fields">
+  <div class="field">
+    <%= f.label :pqt_nombre, "Nombre *" %><br>
+    <%= f.text_field :pqt_nombre, options={ maxlength:100, size:129} %>
+  </div>
+  <div class="field">
+    <%= f.label :pqt_tipo_paquete, "Tipo paquete *" %><br>
+    <%= f.select :pqt_tipo_paquete, options_for_select(@tipos_paquetes_turisticos, selected: @paquete_turistico.pqt_tipo_paquete)%>
+  </div>
+  <div class="field">
+    <%= f.label :pqt_descripcion, "Descripción *" %><br>
+    <%= f.cktext_area  :pqt_descripcion, options={ cols: 100, rows: 20 } %>
+  </div>
+  <div class="field">
+    <%= f.label :pqt_cobertura_servicios, "Cobertura en servicios" %><br>
+    <%= f.cktext_area :pqt_cobertura_servicios, options={ cols: 100, rows: 10 } %>
+  </div>
+  <div class="field">
+    <%= f.label :pqt_condiciones, "Condiciones" %><br>
+    <%= f.cktext_area :pqt_condiciones, options={ cols: 100, rows: 10 } %>
+  </div>
+  <div class="field">
+    <%= f.label :pqt_observacion, "Observaciones" %><br>
+    <%= f.cktext_area :pqt_observacion, options={ cols: 100, rows: 10 } %>
+  </div>
+ </div>
+<div class="bottom">
+  		<div class="actions">
+    		<% if action_name == "edit"%>
+				<%= f.submit "Aceptar", class: "cmd save", id: :cmd_aceptar %> |
+				<%= link_to 'Consultar', @paquete_turistico, class: "cmd star", id: :cmd_consultar %> |
+			<% elsif action_name == "new" or action_name =="create" %>
+				<script>
+					$(function(){
+						$("#cmd_aceptar")
+						.click(function(){
+							$('#new_paquete_turistico').submit();
+						});
+					});
+				</script>	
+				<%= link_to "Aceptar", nil, class: "cmd save", id: :cmd_aceptar %> |
+			<% end %>
+			<%= link_to 'Regresar', paquete_turisticos_url, class: "cmd previous", id: :cmd_regresar %>
+  		</div>
+  	</div>
+	
+<% end %>

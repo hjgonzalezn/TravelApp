@@ -1,13 +1,15 @@
-<% @entidades_territoriales = EntidadTerritorial.select("id codigo, enter_nombre_oficial descripcion").where("enter_padre = #{params[:enter_padre_id]}").map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, nil) %>
-<% @divisiones_territoriales = DivisionTerritorial.select("id codigo, dvt_nombre descripcion").where("id in (SELECT division_territorial_id FROM division_territorial_pais WHERE entidad_territorial_id = #{params[:enter_padre_id]})").map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, nil)%>
-
-$("#<%= params[:control_id]%>").empty();
-$("#<%= params[:control_id] %>").html("<%= escape_javascript(options_for_select(@entidades_territoriales)) %>");
-$("#entidad_territorial_division_territorial_id").empty();
-$("#entidad_territorial_division_territorial_id").html("<%= escape_javascript(options_for_select(@divisiones_territoriales)) %>");
-
-<% if controller_name.downcase == "entidad_territorials" then %>
-	<% @regiones = Region.select("id codigo, reg_nombre descripcion").where("entidad_territorial_id = #{params[:enter_padre_id]}").map{|r| [r.descripcion, r.codigo]}.insert(nil.to_f, nil) %>
-	$("#entidad_territorial_region_id").empty();
-	$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select(@regiones)) %>");
+<% unless params[:enter_padre_id].blank? %>
+	<% @entidades_territoriales = EntidadTerritorial.select("id codigo, enter_nombre_oficial descripcion").where("enter_padre = #{params[:enter_padre_id]}").map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, nil) %>
+	<% @divisiones_territoriales = DivisionTerritorial.select("id codigo, dvt_nombre descripcion").where("id in (SELECT division_territorial_id FROM division_territorial_pais WHERE entidad_territorial_id = #{params[:enter_padre_id]})").map{|a| [a.descripcion, a.codigo]}.insert(nil.to_f, nil)%>
+	
+	$("#<%= params[:control_id]%>").empty();
+	$("#<%= params[:control_id] %>").html("<%= escape_javascript(options_for_select(@entidades_territoriales)) %>");
+	$("#entidad_territorial_division_territorial_id").empty();
+	$("#entidad_territorial_division_territorial_id").html("<%= escape_javascript(options_for_select(@divisiones_territoriales)) %>");
+	
+	<% if controller_name.downcase == "entidad_territorials" then %>
+		<% @regiones = Region.select("id codigo, reg_nombre descripcion").where("entidad_territorial_id = #{params[:enter_padre_id]}").map{|r| [r.descripcion, r.codigo]}.insert(nil.to_f, nil) %>
+		$("#entidad_territorial_region_id").empty();
+		$("#entidad_territorial_region_id").html("<%= escape_javascript(options_for_select(@regiones)) %>");
+	<% end %>
 <% end %>

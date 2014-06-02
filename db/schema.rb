@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417011951) do
+ActiveRecord::Schema.define(version: 20140519220220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(version: 20140417011951) do
   add_index "entidad_territorials", ["division_territorial_id"], name: "index_entidad_territorials_on_division_territorial_id", using: :btree
   add_index "entidad_territorials", ["region_id"], name: "index_entidad_territorials_on_region_id", using: :btree
 
+  create_table "fotos", force: true do |t|
+    t.string   "foto_nombre"
+    t.string   "foto_titulo"
+    t.string   "foto_descripcion"
+    t.string   "foto_categoria"
+    t.integer  "foto_llave_externa"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "foto_mini"
+  end
+
   create_table "funcion_controls", force: true do |t|
     t.integer  "funcionalidad_id"
     t.integer  "modelo_id"
@@ -139,6 +150,18 @@ ActiveRecord::Schema.define(version: 20140417011951) do
     t.string   "mdl_codigo"
     t.string   "mdl_nombre"
     t.string   "mdl_estado_registro"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "paquete_turisticos", force: true do |t|
+    t.string   "pqt_nombre"
+    t.integer  "pqt_tipo_paquete"
+    t.integer  "pqt_tipo_destino"
+    t.text     "pqt_descripcion"
+    t.text     "pqt_cobertura_servicios"
+    t.text     "pqt_condiciones"
+    t.text     "pqt_observacion"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

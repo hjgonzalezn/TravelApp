@@ -18,7 +18,6 @@ $(document).ready(function() {
 				      <th>Presentacion</th>
 				      <th>Padre</th>
 				      <th>Nivel</th>
-				      <th>Estado registro</th>
 				      <th>Region</th>
 				      <th></th>
 				      <th></th>
@@ -32,7 +31,6 @@ $(document).ready(function() {
 				        <td><%= entidad_territorial.enter_presentacion %></td>
 				        <td><%= entidad_territorial.enter_padre %></td>
 				        <td><%= entidad_territorial.enter_nivel %></td>
-				        <td><%= entidad_territorial.enter_estado_registro %></td>
 				        <% unless entidad_territorial.region.nil? %>
 				        	<td><%= entidad_territorial.region.reg_nombre %></td>
 				        <% else%>

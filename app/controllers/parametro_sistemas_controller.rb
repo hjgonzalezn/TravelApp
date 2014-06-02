@@ -28,7 +28,7 @@ class ParametroSistemasController < ApplicationController
 
     respond_to do |format|
       if @parametro_sistema.save
-        format.html { redirect_to @parametro_sistema, notice: 'Parametro sistema was successfully created.' }
+        format.html { redirect_to @parametro_sistema, notice: 'Parametro del sistema creado exitosamente.' }
         format.json { render action: 'show', status: :created, location: @parametro_sistema }
       else
         format.html { render action: 'new' }
@@ -42,7 +42,7 @@ class ParametroSistemasController < ApplicationController
   def update
     respond_to do |format|
       if @parametro_sistema.update(parametro_sistema_params)
-        format.html { redirect_to @parametro_sistema, notice: 'Parametro sistema was successfully updated.' }
+        format.html { redirect_to @parametro_sistema, notice: 'Parametro del sistema actualizado exitosamente.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

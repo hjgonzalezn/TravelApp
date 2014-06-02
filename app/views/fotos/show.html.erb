@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Foto nombre:</strong>
+  <%= @foto.foto_nombre %>
+</p>
+
+<p>
+  <strong>Foto titulo:</strong>
+  <%= @foto.foto_titulo %>
+</p>
+
+<p>
+  <strong>Foto descripcion:</strong>
+  <%= @foto.foto_descripcion %>
+</p>
+
+<p>
+  <strong>Foto categoria:</strong>
+  <%= @foto.foto_categoria %>
+</p>
+
+<p>
+  <strong>Foto llave externa:</strong>
+  <%= @foto.foto_llave_externa %>
+</p>
+
+<%= link_to 'Edit', edit_foto_path(@foto) %> |
+<%= link_to 'Back', fotos_path %>

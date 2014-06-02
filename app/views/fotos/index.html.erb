@@ -1,0 +1,35 @@
+<h1>Listing fotos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Foto nombre</th>
+      <th>Foto titulo</th>
+      <th>Foto descripcion</th>
+      <th>Foto categoria</th>
+      <th>Foto llave externa</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fotos.each do |foto| %>
+      <tr>
+        <td><%= foto.foto_nombre %></td>
+        <td><%= foto.foto_titulo %></td>
+        <td><%= foto.foto_descripcion %></td>
+        <td><%= foto.foto_categoria %></td>
+        <td><%= foto.foto_llave_externa %></td>
+        <td><%= link_to 'Show', foto %></td>
+        <td><%= link_to 'Edit', edit_foto_path(foto) %></td>
+        <td><%= link_to 'Destroy', foto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Foto', new_foto_path %>

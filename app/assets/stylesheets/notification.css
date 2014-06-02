@@ -12,7 +12,7 @@
 .notibox {
  min-width: 500px;
  width: 100%;
- padding: 5px 10px 0px 50px;
+ padding: 10px 10px 10px 50px;
  margin: 0px 0px 15px 0px;
  font: inherit;
  font-weight:bold;
@@ -153,7 +153,7 @@ margin-right: 10px;
  border: 1px solid #aaa;
 }
 
-.download {
+.download5 {
 /* background */
  background: url(../images/download.png), #efffb9;
  background-color: #efffb9;

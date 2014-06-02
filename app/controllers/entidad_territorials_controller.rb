@@ -1,4 +1,6 @@
 class EntidadTerritorialsController < ApplicationController
+  include ApplicationHelper
+  
   before_action :set_entidad_territorial, only: [:show, :edit, :update, :destroy]
   before_action :set_datos_basicos, only: [:new, :create, :edit, :update]
 
@@ -20,6 +22,10 @@ class EntidadTerritorialsController < ApplicationController
 
   # GET /entidad_territorials/1/edit
   def edit
+    @divisiones_territoriales = DivisionTerritorial.select("id codigo, dvt_nombre descripcion").where("id in (SELECT division_territorial_id FROM division_territorial_pais WHERE entidad_territorial_id = #{@entidad_territorial.enter_padre})").map{|a| [a.descripcion, a.codigo]}
+    @regiones = Region.where("entidad_territorial_id = #{@entidad_territorial.enter_padre}").map{|a| [a.reg_nombre, a.id]}
+    @territorios_padres = set_territorios_padres(@entidad_territorial)
+    @imagenes = Foto.where("foto_categoria = 'entidad_territorial' AND foto_llave_externa = #{@entidad_territorial.id}")
   end
 
   # POST /entidad_territorials
@@ -65,9 +71,18 @@ class EntidadTerritorialsController < ApplicationController
   private
     
     def set_datos_basicos
+      set_estados_registro
+      
+      if @entidad_territorial != nil then
+        set_estado_registro_actual(@entidad_territorial.enter_estado_registro, action_name)
+      else
+        set_estado_registro_actual(nil, action_name)
+      end
+      
       @continentes = EntidadTerritorial.where("enter_padre = 1")
-      set_paises
+      #set_paises
       @divisiones_territoriales = DivisionTerritorial.where("dvt_estado_registro = 'A'")
+      @rutaImagenes = ParametroSistema.select("psis_valor valor").where("psis_codigo = 'IMGET'").map{|t| t.valor}.pop.to_s
     end
     
     # Use callbacks to share common setup or constraints between actions.
@@ -77,6 +92,6 @@ class EntidadTerritorialsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entidad_territorial_params
-      params.require(:entidad_territorial).permit(:enter_nombre_oficial, :enter_presentacion, :enter_padre, :enter_nivel, :enter_estado_registro, :region_id)
+      params.require(:entidad_territorial).permit(:enter_nombre_oficial, :enter_presentacion, :enter_padre, :enter_nivel, :enter_estado_registro, :region_id, :division_territorial_id)
     end
 end

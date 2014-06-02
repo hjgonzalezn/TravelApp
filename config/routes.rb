@@ -6,12 +6,25 @@ TravelApp::Application.routes.draw do  # The priority is based upon order of cre
   resources :menus
   resources :accions
   resources :modelos
-  
-  
+    
   resources :division_territorials
   resources :division_territorial_pais
   get 'entidad_territorials/actualizar_controles_dependientes' => 'entidad_territorials#actualizar_controles_dependientes', as: :actualizar_controles_dependientes
-  resources :entidad_territorials
+  
+  concern :image_attachable do
+    resources :fotos, only: :new
+  end
+  
+  #get '/entidad_territorials/:entidad_territorial_id/fotos/new' => 'fotos#new'
+  resources :paquete_turisticos, concerns: :image_attachable 
+  resources :entidad_territorials, concerns: :image_attachable 
+  
+  #resources :entidad_territorials do
+  #  resources :fotos
+  #end
+  
+  
+  resources :fotos
   
   resources :parametro_sistemas
   
