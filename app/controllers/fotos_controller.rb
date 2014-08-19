@@ -17,8 +17,8 @@ class FotosController < ApplicationController
     @foto = Foto.new
         
     unless params[:entidad_territorial_id].blank? then
-      @categoria = "entidad_territorial"
-      @llaveForanea = params[:entidad_territorial_id] # a quien pertenece la foto
+      @foto.foto_categoria = "entidad_territorial"
+      @foto.foto_llave_externa = params[:entidad_territorial_id] # a quien pertenece la foto
     end
     
   end

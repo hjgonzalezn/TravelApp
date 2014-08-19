@@ -12,8 +12,6 @@
   <% end %>
 	<div class="form_fields">
   		<div class="field">
-  			<%= hidden_field(:foto, :foto_categoria, options={ value: @categoria})%>
-  			<%= hidden_field(:foto, :foto_llave_externa, options={ value: @llaveForanea}) %>
     		<%= f.label :foto_nombre %><br>
     		<%= f.file_field :foto_nombre %>
   		</div>
@@ -31,11 +29,11 @@
   		</div>
   		<div class="field">
     		<%= f.label :foto_categoria %><br>
-    		<%= f.text_field :foto_categoria, value: @categoria %>
+    		<%= f.text_field :foto_categoria %>
   		</div>
   		<div class="field">
     		<%= f.label :foto_llave_externa %><br>
-    		<%= f.text_field :foto_llave_externa, value: @llaveForanea %>
+    		<%= f.text_field :foto_llave_externa %>
   		</div>
   	</div>
 	<div class="bottom">
