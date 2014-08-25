@@ -508,7 +508,7 @@
 
 		html += '</div>';
 
-		$(html).appendTo("body");
+		/*$(html).appendTo("body");*/
 
 		$('<table cellspacing="0" cellpadding="0" border="0"><tr><td class="fancy_title" id="fancy_title_left"></td><td class="fancy_title" id="fancy_title_main"><div></div></td><td class="fancy_title" id="fancy_title_right"></td></tr></table>').appendTo('#fancy_title');
 

@@ -26,3 +26,5 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+[ ![Codeship Status for hjgonzalezn/TravelApp](https://www.codeship.io/projects/489645c0-0ed3-0132-d7c4-1276fda57f98/status)](https://www.codeship.io/projects/32519)

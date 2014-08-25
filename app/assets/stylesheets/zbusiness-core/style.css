@@ -38,8 +38,9 @@ body {	font-family: Arial, Helvetica, sans-serif;
 	height: 150px
 }
 
-#site_title {float: left; padding-top: 36px; padding-left:20px}
+#site_title {float: left; padding-top: 10px; padding-left:20px}
 #site_title img {
+					top:0px;
 					float: left;
 					width: 220px;
 					height:100px;

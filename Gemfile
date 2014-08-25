@@ -44,6 +44,11 @@ gem 'ckeditor'
 
 gem 'carrierwave', '~> 0.10.0'
 
+group :production do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'rails_12factor' #, require: false
+end
+
 #gem 'bootstrap-sass', '~> 3.1.1.1'
 #gem 'tinymce-rails'
 
