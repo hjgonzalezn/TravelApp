@@ -18,9 +18,9 @@
   # pool: 5
   # timeout: 5000
 # 
-
+#postgresql
 production:
-  adapter: postgresql
+  adapter: pg 
   encoding: utf8
   database: travelApp
   username: postgres
