@@ -18,11 +18,17 @@
   # pool: 5
   # timeout: 5000
 # 
-# production:
-  # adapter: sqlite3
-  # database: db/production.sqlite3
-  # pool: 5
-  # timeout: 5000
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: travelApp
+  username: postgres
+  password: Managerpg1320
+  host: localhost
+  pool: 5
+  timeout: 5000
+
 # development:
   # adapter: mysql
   # encoding: utf8
@@ -35,10 +41,10 @@
   # socket: /tmp/mysql.sock
   
 
-development:
-  adapter: postgresql
-  encoding: utf8
-  database: travelApp_development
-  username: postgres
-  password: Managerpg1320
-  host: localhost
+#development:
+#  adapter: postgresql
+#  encoding: utf8
+#  database: travelApp_development
+#  username: postgres
+#  password: Managerpg1320
+#  host: localhost
