@@ -20,9 +20,9 @@
 # 
 #postgresql
 production:
-  adapter: pg 
+  adapter: postgresql 
   encoding: utf8
-  database: travelApp
+  database: travelApp_development
   username: postgres
   password: Managerpg1320
   host: localhost
