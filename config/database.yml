@@ -22,10 +22,10 @@
 production:
   adapter: postgresql 
   encoding: utf8
-  database: travelApp_development
-  username: postgres
-  password: Managerpg1320
-  host: localhost
+  database: ddhom9h1bsddm9
+  username: uhiclgieboytjy
+  password: u07g5udby5Zdp-eQ3BEmBqkWku
+  host: ec2-54-243-50-213.compute-1.amazonaws.com
   pool: 5
   timeout: 5000
 
