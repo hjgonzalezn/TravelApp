@@ -7,7 +7,8 @@ gem 'rails', '4.0.0'
 #gem 'sqlite3'
 
 #gem "mysql", "~> 2.9.1"
-gem "pg", "~> 0.17.0"
+gem 'pg', '~> 0.17.0'
+gem 'activerecord-postgresql-adapter', '~> 0.0.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
